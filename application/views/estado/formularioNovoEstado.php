@@ -4,7 +4,7 @@
     ?>
 </h1>
 
-<?php echo form_open('estado/incluir'); ?>
+<?php echo form_open('estadocontroller/incluirNovoEstado'); ?>
 
 
 <label>Nome</label>
