@@ -17,7 +17,7 @@
             return;
         }
         
-        public function buscarTodasAsLogradouros(){
+        public function buscarTodosOsLogradouros(){
             
             $retorno = $this->db->get('logradouro',100);
             
