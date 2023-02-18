@@ -5,9 +5,10 @@
 <table border=1>
     <tr>
         <td>Código do Estado</td>
-        <td>Nome</td>
+        <td>Nome do Estado</td>
         <td>Sigla</td>
-        <td>Opções</td>
+        <td>Alterar</td>
+        <td>Excluir</td>
     </tr>
 
     <?php
@@ -20,9 +21,11 @@
             "<td>" . $estado->sigla .       "</td>" .
             "<td>
                     <a href='/web/livro_viagem/index.php/estadocontroller/formularioAlterarEstado/" . $estado->id . "'>Alterar</a>
-                    <a href='/web/livro_viagem/index.php/estadocontroller/deletarEstado/" . $estado->id . "'>Deletar</a>
-                </td>" .
-            "</tr>";
+            </td>" .
+            "<td>
+                    <a href='/web/livro_viagem/index.php/estadocontroller/deletarEstado/" . $estado->id . "'>Excluir</a>
+            </td>" .
+        "</tr>";
     }
 
     ?>

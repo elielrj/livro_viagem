@@ -4,17 +4,17 @@
     ?>
 </h1>
 
-<?php echo form_open('estadocontroller/incluirNovoEstado'); ?>
+<?php echo form_open('cidadecontroller/incluirNovoCidade'); ?>
 
 
-<label>Nome</label>
+<label>Nome da Cidade</label>
 
 <input type='text' name='nome' size='30'>
 
 
-<label>Sigla</label>
+<label>Nome do Estado</label>
 
-<input type='text' name='sigla'>
+<input type='text' name='estadoId'>
 
 <br />
 <br />

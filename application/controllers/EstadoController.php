@@ -3,10 +3,10 @@
 
         public function index(){
             
-            $this->load->model('dao/EstadoDAO');         
+            $this->load->model('Estado');       
 
-            $tabela = $this->EstadoDAO->retrive();
-
+            $tabela = $this->Estado->buscarTodosOsEstados();
+            
             $dados = array(
                 'titulo'=>'Cadastro de Estados',
                 'tabela'=> $tabela,
@@ -17,6 +17,7 @@
         }
 
         public function formularioNovoEstado()       {
+            
             $dados = array(
                 'titulo' => 'Cadastro de estados',
                 'pagina' => 'estado/formularioNovoEstado.php',
@@ -27,29 +28,30 @@
 
         public function incluirNovoEstado(){
            
-            $this->load->model('dao/EstadoDAO');
+            $this->load->model('Estado');
 
             $estado = array(
                 'nome' => $this->input->post('nome'),
                 'sigla' => $this->input->post('sigla')
             );
 
-            $this->EstadoDAO->create($estado);
+            $this->Estado->criarEstado($estado);
 
             redirect('estadocontroller');       
         }
 
         public function formularioAlterarEstado($codigo){                
             
-            $this->load->model("dao/EstadoDAO");
+            $this->load->model("Estado");
+            
             $where = array('id'=>$codigo);
 
-            $tabela = $this->EstadoDAO->retriveIdEstado($where);
-
+            $tabela = $this->Estado->buscarEstadoPorId($where);
+            
             $dados = array(
                 'titulo'=>'Alteração do Estado',
                 'pagina'=>'estado/formularioAlterarEstado.php',
-                'tabela'=> $tabela
+                'tabela'=> $tabela,
             );
 
             $this->load->view('index',$dados);
@@ -57,20 +59,21 @@
 
         public function atualizarEstado(){
 
-            $id = $this->input->post('id');
             $nome = $this->input->post('nome');
             $sigla = $this->input->post('sigla');
-
+            
             $estado = array(
-                'nome'=>$nome,
-                'sigla'=>$sigla
+                'nome' => $nome,
+                'sigla' => $sigla
             );
 
+            $id = $this->input->post('id');
+            
             $where = array('id' => $id);
 
-            $this->load->model('dao/EstadoDAO');
+            $this->load->model('Estado');
 
-            $this->EstadoDAO->update($where,$estado);
+            $this->Estado->atualizarEstado($where,$estado);
 
             redirect('estadocontroller');
         }
@@ -79,9 +82,9 @@
             
            $where = array('id' => $codigo);
 
-            $this->load->model('dao/EstadoDAO');
+            $this->load->model('Estado');
 
-            $this->EstadoDAO->delete($where);
+            $this->Estado->deletarEstadoPorId($where);
 
             redirect('estadocontroller');
         }
