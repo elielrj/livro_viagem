@@ -3,7 +3,7 @@
 
         public $id;
         public $nome;
-        public $bairroId;
+        public $cidadeId;
         
          public function criarBairro($bairro)
         {
@@ -17,7 +17,7 @@
             return;
         }
         
-        public function buscarTodasAsBairros(){
+        public function buscarTodosOsBairros(){
             
             $retorno = $this->db->get('bairro',100);
             
