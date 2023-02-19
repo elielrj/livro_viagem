@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `status` TINYINT NOT NULL,
-  `dataDECriacao` DATETIME NOT NULL,
+  `dataDeCriacao` DATETIME NOT NULL,
   `ultimoAcesso` DATETIME NOT NULL,
   `hierarquiaId` INT NOT NULL,
   PRIMARY KEY (`id`),
