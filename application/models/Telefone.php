@@ -4,8 +4,7 @@
         public $id;
         public $numero;
         public $parentescoDoContato;
-        public $contatoDeEmergencia;
-        public $contatoDeLocalizacao;
+        public $contato;
         public $usuarioId;
         
          public function criarTelefone($telefone)

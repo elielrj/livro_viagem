@@ -140,6 +140,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Viagem` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `aprovada` boolean not null,
   `usuarioId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Viagem_Usuario1_idx` (`usuarioId` ASC) VISIBLE,

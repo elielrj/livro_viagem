@@ -33,8 +33,7 @@
             $telefone = array(
                 'numero' => $this->input->post('numero'),
                 'parentescoDoContato' => $this->input->post('parentescoDoContato'),
-                'contatoDeEmergencia' => $this->input->post('contatoDeEmergencia'),
-                'contatoDeLocalizacao' => $this->input->post('contatoDeLocalizacao'),
+                'contato' => $this->input->post('contato'),
                 'usuarioId' => $this->input->post('usuarioId'),
             );
 
@@ -64,15 +63,13 @@
 
             $numero = $this->input->post('numero');
             $parentescoDoContato = $this->input->post('parentescoDoContato');
-            $contatoDeEmergencia = $this->input->post('contatoDeEmergencia');
-            $contatoDeLocalizacao = $this->input->post('contatoDeLocalizacao');
+            $contato = $this->input->post('contato');
             $usuarioId = $this->input->post('usuarioId');
             
             $telefone = array(
                 'numero' =>  $numero,
                 'parentescoDoContato' => $parentescoDoContato,
-                'contatoDeEmergencia' => $contatoDeEmergencia,
-                'contatoDeLocalizacao' => $contatoDeLocalizacao,
+                'contato' => $contato,
                 'usuarioId' => $usuarioId,
             );
 

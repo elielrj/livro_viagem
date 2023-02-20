@@ -19,15 +19,11 @@
 
 
 
-<label>Contato de Emergência</label>
+<label>Contato de Emergência ou Localização</label>
 
-<input type='readonly' name='contatoDeEmergencia' size='30'>
+<input type='readonly' name='contato' size='30'>
 
 
-
-<label>Contato de Localização</label>
-
-<input type='readonly' name='contatoDeLocalizacao' size='30'>
 
 
 <label>Usuário do Telefone</label>

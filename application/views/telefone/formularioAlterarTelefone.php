@@ -14,19 +14,16 @@
 
 
 
-<label>Parentesco do Telefone</label>
+<label>Parentesco do Contato</label>
 
 <input type='text' name='parentescoDoContato' value="<?php echo $tabela[0]->parentescoDoContato ?>" />
 
 
-<label>Contato de Emergência</label>
+<label>Contato de Emergência ou Localização</label>
 
-<input type='text' name='contatoDeEmergencia' value="<?php echo $tabela[0]->contatoDeEmergencia ?>" />
+<input type='text' name='contato' value="<?php echo $tabela[0]->contato?>" />
 
 
-<label>Contato de Localização</label>
-
-<input type='text' name='contatoDeLocalizacao' value="<?php echo $tabela[0]->contatoDeLocalizacao ?>" />
 
 
 

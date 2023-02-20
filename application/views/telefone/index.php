@@ -7,8 +7,7 @@
         <td>Código do Numero</td>
         <td>Número do Telefone</td>
         <td>Parentesco do Contato</td>
-        <td>Contato de Emergência</td>
-        <td>Contato de Localização</td>
+        <td>Contato de Emergência  ou Localização</td>
         <td>Usuário do Telefone</td>
         <td>Alterar</td>
         <td>Excluir</td>
@@ -22,8 +21,7 @@
             "<td>" . $telefone->id .    "</td>" .
             "<td>" . $telefone->numero .        "</td>" .
             "<td>" . $telefone->parentescoDoContato .        "</td>" .
-            "<td>" . $telefone->contatoDeEmergencia .        "</td>" .
-            "<td>" . $telefone->contatoDeLocalizacao .        "</td>" .
+            "<td>" . $telefone->contato .        "</td>" .
             "<td>" . $telefone->usuarioId .        "</td>" .
             "<td>
                     <a href='/web/livro_viagem/index.php/telefonecontroller/formularioAlterarTelefone/" . $telefone->id . "'>Alterar</a>
