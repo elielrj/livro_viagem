@@ -205,7 +205,7 @@ ENGINE = InnoDB;
 -- Table `livro_viagem`.`Telefone`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Telefone` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL auto_increment,
   `numero` VARCHAR(45) NOT NULL,
   `parentescoDoContato` VARCHAR(45) NOT NULL,
   `contatoDeEmergencia` TINYINT NOT NULL,
