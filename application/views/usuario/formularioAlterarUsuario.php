@@ -23,6 +23,16 @@
 
 <input type='text' name='hierarquiaId' value="<?php echo $tabela[0]->hierarquiaId ?>" />
 
+
+<label>Email</label>
+
+<input type='text' name='email' value="<?php echo $tabela[0]->email ?>" />
+
+
+<label>Senha</label>
+
+<input type='text' name='senha' value="<?php echo $tabela[0]->senha ?>" />
+
 <br />
 <br />
 

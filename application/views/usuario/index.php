@@ -10,6 +10,8 @@
         <td>Data da Criação</td>
         <td>Último Acesso</td>
         <td>Hierarquia</td>
+        <td>Email</td>
+        <td>Senha</td>
         <td>Alterar</td>
         <td>Excluir</td>
     </tr>
@@ -26,6 +28,8 @@
             "<td>" . $usuario->dataDeCriacao .       "</td>" . //data de criação
             "<td>" . $usuario->ultimoAcesso .       "</td>" . //último acesso
             "<td>" . $usuario->hierarquiaId .       "</td>" . //hierarquia
+            "<td>" . $usuario->email .       "</td>" . //hierar
+            "<td>" . $usuario->senha .       "</td>" . //hierar
             "<td>
                     <a href='/web/livro_viagem/index.php/usuariocontroller/formularioAlterarUsuario/" . $usuario->id . "'>Alterar</a>
             </td>" .

@@ -7,6 +7,8 @@
         public $dataDeCriacao;
         public $ultimoAcesso;
         public $hierarquiaId;
+        public $email;
+        public $senha;
         
          public function criarUsuario($usuario)
         {

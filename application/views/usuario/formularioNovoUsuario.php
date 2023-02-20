@@ -16,6 +16,14 @@
 
 <input type='text' name='hierarquiaId'>
 
+<label>Email</label>
+
+<input type='text' name='email'>
+
+<label>Hierarquia</label>
+
+<input type='text' name='senha'>
+
 <br />
 <br />
 
