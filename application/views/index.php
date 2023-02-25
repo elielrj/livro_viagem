@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +36,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">teste@test.com<sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -365,7 +366,13 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <?php require $pagina ?>
+                <?php 
+                    
+                    require $pagina;
+
+                    
+                
+                ?>
 
                 </div>
                 <!-- /.container-fluid -->

@@ -3,6 +3,7 @@
 
         public function index(){
             
+    
             $this->load->model('Viagem');       
 
             $tabela = $this->Viagem->buscarTodosOsViagems();

@@ -2,18 +2,62 @@
     class UsuarioController extends CI_Controller{
 
         public function index(){
-            
-            $this->load->model('Usuario');       
+                      
+            $this->load->view('login/login.php');
+        }
 
-            $tabela = $this->Usuario->buscarTodasAsUsuarios();
+        public function logarUsuario(){
+
+            $email = $this->input->post('email');
+
+            $senha = $this->input->post('senha');
             
-            $dados = array(
-                'titulo'=>'Cadastro de Usuários',
-                'tabela'=> $tabela,
-                'pagina'=>'usuario/index.php'
-            );
-            
-            $this->load->view('index',$dados);
+            $this->load->model("Usuario");
+
+            $where = array('email' => $email);
+
+      
+
+            $resultado = $this->Usuario->buscarLoginPorEmail($where);
+
+
+            if(isset($resultado)){
+              
+                echo "<script>alert('Usuário não cadastrado!);</script>";
+               
+                //redirect('');
+
+            }else{
+
+                $senhaEstaValida = $this->verificarSenha($resultado[0]->senha, $senha);
+
+                if($senhaEstaValida){
+
+                    //session_start();
+                   // $_SESSION['email'] = $email;
+                    //$_SESSION['senha'] = $senha;
+
+                   // include_once('session.php');
+
+                    redirect('viagemcontroller');
+                   // echo"<script>alert('Login com sucesso!');</script>";
+                    
+
+                }else{
+                     echo"<script>alert('Senha inválida!');</script>"; 
+                     //redirect('');                   
+                } 
+            }
+
+    
+        }
+
+        private function verificarSenha($senhaInformado,$senhaDoBanco){
+             if($senhaInformado == $senhaDoBanco){
+                return true;
+            }else{
+                return false;
+            }
         }
 
         public function formularioNovoUsuario()       {
