@@ -1,8 +1,9 @@
 <h1><?php echo $titulo ?></h1>
 
-<a href='/web/livro_viagem/index.php/usuariocontroller/formularioNovoUsuario'>NOVO</a>
-
-<table border=1>
+<a class="btn btn-primary btn-sm" href='/web/livro_viagem/index.php/usuariocontroller/formularioNovoUsuario'>NOVO</a>
+</br>
+</br>
+<table class="table table-hover">
     <tr>
         <td>Código do Usuario</td>
         <td>Nome da Usuario</td>

@@ -1,8 +1,22 @@
-<h1><?php echo $titulo ?></h1>
+    <h1><?php echo $titulo ?>  </h1>     
+         
+     
+   
+            <a 
+                class="btn btn-primary btn-sm" 
+                href='/web/livro_viagem/index.php/telefonecontroller/formularioNovoTelefone'
+                >NOVO
+            </a>
+       
+ 
 
-<a href='/web/livro_viagem/index.php/telefonecontroller/formularioNovoTelefone'>NOVO</a>
 
-<table border=1>
+
+
+</br>
+</br>
+
+<table class="table table-hover">
     <tr>
         <td>Código do Numero</td>
         <td>Número do Telefone</td>

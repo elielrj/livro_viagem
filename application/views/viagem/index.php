@@ -1,9 +1,10 @@
 
 <h1><?php echo $titulo ?></h1>
 
-<a href='/web/livro_viagem/index.php/viagemcontroller/formularioNovoViagem'>NOVO</a>
-
-<table border=1>
+<a class="btn btn-primary btn-sm" href='/web/livro_viagem/index.php/viagemcontroller/formularioNovoViagem'>NOVO</a>
+</br>
+</br>
+<table class="table table-hover">
     <tr>
         <td>Código do Viagem</td>
         <td>Aprovada</td>

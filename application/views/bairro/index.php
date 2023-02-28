@@ -1,8 +1,9 @@
 <h1><?php echo $titulo ?></h1>
 
-<a href='/web/livro_viagem/index.php/bairrocontroller/formularioNovoBairro'>NOVO</a>
-
-<table border=1>
+<a class="btn btn-primary btn-sm" href='/web/livro_viagem/index.php/bairrocontroller/formularioNovoBairro'>NOVO</a>
+</br>
+</br>
+<table class="table table-hover">
     <tr>
         <td>Código do Bairro</td>
         <td>Nome do Bairro</td>

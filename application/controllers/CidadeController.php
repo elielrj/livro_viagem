@@ -6,7 +6,7 @@
             $this->load->model('Cidade');       
 
             $tabela = $this->Cidade->buscarTodasAsCidades();
-            
+
             $dados = array(
                 'titulo'=>'Cadastro de Cidades',
                 'tabela'=> $tabela,
@@ -47,11 +47,15 @@
             $where = array('id'=>$codigo);
 
             $tabela = $this->Cidade->buscarCidadePorId($where);
+
+            $this->load->model('Estado');
+            $estados = $this->Estado->buscarTodosOsEstados();
             
             $dados = array(
                 'titulo'=>'Alteração do Cidade',
                 'pagina'=>'cidade/formularioAlterarCidade.php',
                 'tabela'=> $tabela,
+                'estados'=>$estados,
             );
 
             $this->load->view('index',$dados);

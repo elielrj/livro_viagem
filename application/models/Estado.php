@@ -19,17 +19,39 @@
         
         public function buscarTodosOsEstados(){
             
-            $retorno = $this->db->get('estado',100);           
+            $retorno = $this->db->get('estado',100);        
             
-            return $retorno->result();
+            $listaDeEstados = array();
+            
+            foreach($retorno->result() as $estado){
+                
+                $novoEstado = new Estado();
+
+                $novoEstado->id = $estado->id;
+                $novoEstado->nome = $estado->nome;
+                $novoEstado->sigla = $estado->sigla;
+
+                array_push($listaDeEstados,$novoEstado);
+
+            }
+            
+            return $listaDeEstados;
         }
         
         public function buscarEstadoPorId($where)
         {
-            
             $retorno = $this->db->get_where('estado', $where);
 
-            return $retorno->result();
+            foreach($retorno->result() as $estado){
+                
+                $novoEstado= new Estado();
+                
+                $novoEstado->id = $estado->id;
+                $novoEstado->nome = $estado->nome;
+                $novoEstado->sigla = $estado->sigla;
+            }
+
+            return $novoEstado;
         }
         
         

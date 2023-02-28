@@ -57,98 +57,113 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Banco de Dados Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Banco de Dados</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <h6 class="collapse-header">Tabela:</h6>
+                        
+                        <!-- tabela de endereços -->
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/EnderecoController">Endereços</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/EstadoController">Estado</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/CidadeController">Cidade</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/BairroController">Bairro</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/LogradouroController">Logradouro</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/NumeroController">Número</a>
+
+                        <!-- viagem -->
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/viagemController">Viagem</a>
+
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/usuarioController">Usuário</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/telefoneController">Telefone</a>
+                        <a class="collapse-item" href="/web/livro_viagem/index.php/hierarquiaController">Hierarquia</a>
+
+
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Relatórios Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapserelatorio"
+                    aria-expanded="true" aria-controls="collapserelatorio">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Relatórios</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapserelatorio" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">índices:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Cidades visitadas</a>
+                        <a class="collapse-item" href="utilities-border.html">Estados visitados</a>
+                        <a class="collapse-item" href="utilities-animation.html">Posto/Grad</a>            
                     </div>
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
+             <!-- Nav Item - Aprovação de viagens Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAprovarViagem"
+                    aria-expanded="true" aria-controls="collapseAprovarViagem">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Aprovar</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseAprovarViagem" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Viagens:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Todas</a>
+                        <a class="collapse-item" href="utilities-border.html">Pendentes</a>
+                        <a class="collapse-item" href="utilities-animation.html">Aprovadas</a>            
+                    </div>
+                </div>
+            </li>
+
+
+             <!-- Nav Item - Informar de viagens Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInformarViagem"
+                    aria-expanded="true" aria-controls="collapseInformarViagem">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Informar</span>
+                </a>
+                <div id="collapseInformarViagem" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Viagens:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Todas</a>
+                        <a class="collapse-item" href="utilities-border.html">Pendentes</a>
+                        <a class="collapse-item" href="utilities-animation.html">Aprovadas</a>            
+                    </div>
+                </div>
+            </li>
+
+          
+
+            <!-- Nav Item - COnfigurações Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConfiguracoes"
+                    aria-expanded="true" aria-controls="collapseConfiguracoes">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Configurações</span>
+                </a>
+                <div id="collapseConfiguracoes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
 
         </ul>
         <!-- End of Sidebar -->

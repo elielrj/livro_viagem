@@ -1,4 +1,19 @@
 
+#drop database livro_viagem;
+drop database mydb;
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema livro_viagem
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema livro_viagem
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `livro_viagem` DEFAULT CHARACTER SET utf8 ;
 USE `livro_viagem` ;
 
@@ -34,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Cidade` (
   `estadoId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Cidade_Estado_idx` (`estadoId` ASC) VISIBLE,
-  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) VISIBLE,
   CONSTRAINT `fk_Cidade_Estado`
     FOREIGN KEY (`estadoId`)
     REFERENCES `livro_viagem`.`Estado` (`id`)
@@ -52,7 +66,6 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Bairro` (
   `cidadeId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Bairro_Cidade1_idx` (`cidadeId` ASC) VISIBLE,
-  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) VISIBLE,
   CONSTRAINT `fk_Bairro_Cidade1`
     FOREIGN KEY (`cidadeId`)
     REFERENCES `livro_viagem`.`Cidade` (`id`)
@@ -125,8 +138,11 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Usuario` (
   `dataDeCriacao` DATETIME NOT NULL,
   `ultimoAcesso` DATETIME NOT NULL,
   `hierarquiaId` INT NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Usuario_Hierarquia1_idx` (`hierarquiaId` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   CONSTRAINT `fk_Usuario_Hierarquia1`
     FOREIGN KEY (`hierarquiaId`)
     REFERENCES `livro_viagem`.`Hierarquia` (`id`)
@@ -136,81 +152,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `livro_viagem`.`Viagem`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `livro_viagem`.`Viagem` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `aprovada` boolean not null,
-  `usuarioId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Viagem_Usuario1_idx` (`usuarioId` ASC) VISIBLE,
-  CONSTRAINT `fk_Viagem_Usuario1`
-    FOREIGN KEY (`usuarioId`)
-    REFERENCES `livro_viagem`.`Usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `livro_viagem`.`Internacional`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `livro_viagem`.`Internacional` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `aprovada` TINYINT NOT NULL,
-  `tipo` ENUM("PARTICULAR", "TRABALHO") NOT NULL,
-  `enderecoId` INT NOT NULL,
-  `viagemId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Internacional_Endereco1_idx` (`enderecoId` ASC) VISIBLE,
-  INDEX `fk_Internacional_Viagem1_idx` (`viagemId` ASC) VISIBLE,
-  CONSTRAINT `fk_Internacional_Endereco1`
-    FOREIGN KEY (`enderecoId`)
-    REFERENCES `livro_viagem`.`Endereco` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Internacional_Viagem1`
-    FOREIGN KEY (`viagemId`)
-    REFERENCES `livro_viagem`.`Viagem` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `livro_viagem`.`Nacional`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `livro_viagem`.`Nacional` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `aprovada` TINYINT NOT NULL,
-  `tipo` ENUM("PARTICULAR", "TRABALHO") NOT NULL,
-  `enderecoId` INT NOT NULL,
-  `viagemId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Nacional_Endereco1_idx` (`enderecoId` ASC) VISIBLE,
-  INDEX `fk_Nacional_Viagem1_idx` (`viagemId` ASC) VISIBLE,
-  CONSTRAINT `fk_Nacional_Endereco1`
-    FOREIGN KEY (`enderecoId`)
-    REFERENCES `livro_viagem`.`Endereco` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Nacional_Viagem1`
-    FOREIGN KEY (`viagemId`)
-    REFERENCES `livro_viagem`.`Viagem` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `livro_viagem`.`Telefone`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Telefone` (
-  `id` INT NOT NULL auto_increment,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `numero` VARCHAR(45) NOT NULL,
+  `contato` ENUM("EMERGENCIA", "LOCALIZACAO") NOT NULL,
   `parentescoDoContato` VARCHAR(45) NOT NULL,
-  `contatoDeEmergencia` TINYINT NOT NULL,
-  `contatoDeLocalizacao` TINYINT NOT NULL,
   `usuarioId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Telefone_Usuario1_idx` (`usuarioId` ASC) VISIBLE,
@@ -222,3 +170,32 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Telefone` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `livro_viagem`.`Viagem`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `livro_viagem`.`Viagem` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `aprovada` TINYINT NOT NULL,
+  `territorio` ENUM("NACIONAL", "INTERNACIONAL") NOT NULL,
+  `motivo` ENUM("PARTICULAR", "SERVICO") NOT NULL,
+  `usuarioId` INT NOT NULL,
+  `enderecoId` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Viagem_Usuario1_idx` (`usuarioId` ASC) VISIBLE,
+  INDEX `fk_Viagem_Endereco1_idx` (`enderecoId` ASC) VISIBLE,
+  CONSTRAINT `fk_Viagem_Usuario1`
+    FOREIGN KEY (`usuarioId`)
+    REFERENCES `livro_viagem`.`Usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Viagem_Endereco1`
+    FOREIGN KEY (`enderecoId`)
+    REFERENCES `livro_viagem`.`Endereco` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

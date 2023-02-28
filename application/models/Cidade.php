@@ -3,7 +3,7 @@
 
         public $id;
         public $nome;
-        public $estadoId;
+        public $estado;
         
          public function criarCidade($cidade)
         {
@@ -17,11 +17,34 @@
             return;
         }
         
-        public function buscarTodasAsCidades(){
+        public function buscarTodasAsCidades(
+            $quantidadesDeRegistrosParaMostrar = 10,
+            $apartirDoIndiceDoVetor = 0){
             
-            $retorno = $this->db->get('cidade',100);
+            $retorno = $this->db->get('cidade'); //$quantidadesDeRegistrosParaMostrar, $apartirDoIndiceDoVetor
+
+            $listaDeCidades = array();
+
+            $this->load->model('Estado');
+            foreach($retorno->result() as $cidade){
+
+                $novaCidade = new Cidade();
+
+                $novaCidade->id = $cidade->id;
+                $novaCidade->nome = $cidade->nome;
+
+           
+                
+                $whare = array('id' => $cidade->estadoId);
+
+                $estado = $this->Estado->buscarEstadoPorId($whare);
+
+                $novaCidade->estado = $estado;
+
+                array_push($listaDeCidades,$novaCidade);
+            }
             
-            return $retorno->result();
+            return $listaDeCidades;
         }
         
         public function buscarCidadePorId($where)
