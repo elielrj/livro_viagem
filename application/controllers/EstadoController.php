@@ -3,14 +3,29 @@
 
         public function index(){
             
+            $this->listarEstados();
+            
+            
+        }
+
+        public function listarEstados($apartirDoIndiceDoVetor = 0){
+
+            $quantidadesDeRegistrosParaMostrar = 10;
+
             $this->load->model('Estado');       
 
-            $tabela = $this->Estado->buscarTodosOsEstados();
+            $tabela = $this->Estado->buscarTodosOsEstados(
+                $quantidadesDeRegistrosParaMostrar, 
+                ($apartirDoIndiceDoVetor * 10));
+
+            $count = $this->Estado->quantidadeDeRegistros();
             
             $dados = array(
                 'titulo'=>'Cadastro de Estados',
                 'tabela'=> $tabela,
-                'pagina'=>'estado/index.php'
+                'pagina'=>'estado/index.php',
+                'apartirDoIndiceDoVetor'=> $apartirDoIndiceDoVetor,
+                'count'=> $count
             );
             
             $this->load->view('index',$dados);

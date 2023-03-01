@@ -17,9 +17,11 @@
             return;
         }
         
-        public function buscarTodosOsEstados(){
+        public function buscarTodosOsEstados(
+            $quantidadesDeRegistrosParaMostrar,
+            $apartirDoIndiceDoVetor){
             
-            $retorno = $this->db->get('estado',100);        
+            $retorno = $this->db->get('estado',$quantidadesDeRegistrosParaMostrar, $apartirDoIndiceDoVetor);        
             
             $listaDeEstados = array();
             
@@ -60,5 +62,9 @@
             $this->db->delete('estado',$where);
             return;
         } 
+
+        public function quantidadeDeRegistros(){
+            return $this->db->count_all_results('estado');
+        }
     }
 ?>

@@ -18,10 +18,10 @@
         }
         
         public function buscarTodasAsCidades(
-            $quantidadesDeRegistrosParaMostrar = 10,
-            $apartirDoIndiceDoVetor = 0){
+            $quantidadesDeRegistrosParaMostrar,
+            $apartirDoIndiceDoVetor){
             
-            $retorno = $this->db->get('cidade'); //$quantidadesDeRegistrosParaMostrar, $apartirDoIndiceDoVetor
+            $retorno = $this->db->get('cidade',$quantidadesDeRegistrosParaMostrar, $apartirDoIndiceDoVetor); 
 
             $listaDeCidades = array();
 
@@ -60,6 +60,10 @@
         {
             $this->db->delete('cidade',$where);
             return;
+        }
+
+        public function quantidadeDeRegistros(){
+            return $this->db->count_all_results('cidade');
         }
     }
 ?>

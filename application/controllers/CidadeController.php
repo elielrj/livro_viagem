@@ -3,17 +3,32 @@
 
         public function index(){
             
+            $this->listarCidades();
+            
+        }
+
+        public function listarCidades($apartirDoIndiceDoVetor = 0){
+
+            $quantidadesDeRegistrosParaMostrar = 10;
+
             $this->load->model('Cidade');       
 
-            $tabela = $this->Cidade->buscarTodasAsCidades();
+            $tabela = $this->Cidade->buscarTodasAsCidades(
+                $quantidadesDeRegistrosParaMostrar, 
+                ($apartirDoIndiceDoVetor * 10));
+
+            $count = $this->Cidade->quantidadeDeRegistros();
 
             $dados = array(
                 'titulo'=>'Cadastro de Cidades',
                 'tabela'=> $tabela,
-                'pagina'=>'cidade/index.php'
+                'pagina'=>'cidade/index.php',
+                'apartirDoIndiceDoVetor'=> $apartirDoIndiceDoVetor,
+                'count'=> $count
             );
             
             $this->load->view('index',$dados);
+
         }
 
         public function formularioNovoCidade()       {
