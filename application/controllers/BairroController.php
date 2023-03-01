@@ -3,17 +3,32 @@
 
         public function index(){
             
+            $this->listarBairros();
+            
+        }
+
+        public function listarBairros($apartirDoIndiceDoVetor = 0){
+
+            $quantidadesDeRegistrosParaMostrar = 10;
+
             $this->load->model('Bairro');       
 
-            $tabela = $this->Bairro->buscarTodosOsBairros();
+            $tabela = $this->Bairro->buscarTodosOsBairros(
+                $quantidadesDeRegistrosParaMostrar, 
+                ($apartirDoIndiceDoVetor * 10));
+
+            $count = $this->Bairro->quantidadeDeRegistros();
             
             $dados = array(
                 'titulo'=>'Cadastro de Bairros',
                 'tabela'=> $tabela,
-                'pagina'=>'bairro/index.php'
+                'pagina'=>'bairro/index.php',
+                'apartirDoIndiceDoVetor'=> $apartirDoIndiceDoVetor,
+                'count'=> $count
             );
             
             $this->load->view('index',$dados);
+
         }
 
         public function formularioNovoBairro()       {

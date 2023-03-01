@@ -3,7 +3,7 @@
 
         public $id;
         public $nome;
-        public $cidadeId;
+        public $cidade;
         
          public function criarBairro($bairro)
         {
@@ -17,11 +17,35 @@
             return;
         }
         
-        public function buscarTodosOsBairros(){
+        public function buscarTodosOsBairros(
+            $quantidadesDeRegistrosParaMostrar,
+            $apartirDoIndiceDoVetor){
             
-            $retorno = $this->db->get('bairro',100);
+            $retorno = $this->db->get(
+                'bairro',
+                $quantidadesDeRegistrosParaMostrar, 
+                $apartirDoIndiceDoVetor);
+
+            $listaDeBairros = array();
+
+            $this->load->model('Cidade');
+            foreach($retorno->result() as $bairro){
+
+                $novoBairro = new Bairro();
+
+                $novoBairro->id = $bairro->id;
+                $novoBairro->nome = $bairro->nome;
+
+                $where = array('id' => $bairro->cidadeId);
+
+                $cidade = $this->Cidade->buscarCidadePorId($where);
+
+                $novoBairro->cidade = $cidade;
+
+                array_push($listaDeBairros,$novoBairro);
+            }
             
-            return $retorno->result();
+            return $listaDeBairros;
         }
         
         public function buscarBairroPorId($where)
@@ -37,6 +61,10 @@
         {
             $this->db->delete('bairro',$where);
             return;
+        }
+
+        public function quantidadeDeRegistros(){
+            return $this->db->count_all_results('bairro');
         }
     }
 ?>

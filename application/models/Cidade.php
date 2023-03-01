@@ -21,7 +21,10 @@
             $quantidadesDeRegistrosParaMostrar,
             $apartirDoIndiceDoVetor){
             
-            $retorno = $this->db->get('cidade',$quantidadesDeRegistrosParaMostrar, $apartirDoIndiceDoVetor); 
+            $retorno = $this->db->get(
+                'cidade',
+                $quantidadesDeRegistrosParaMostrar, 
+                $apartirDoIndiceDoVetor); 
 
             $listaDeCidades = array();
 
@@ -52,7 +55,21 @@
             
             $retorno = $this->db->get_where('cidade', $where);
 
-            return $retorno->result();
+            
+            $novaCidade = new Cidade();
+            foreach($retorno->result() as $cidade){
+
+                $novaCidade->id = $cidade->id;
+                $novaCidade->nome = $cidade->nome;
+
+                $this->load->model('Estado');
+
+                $where = array('id' => $cidade->estadoId);
+
+                $novaCidade->estado = $this->Estado->buscarEstadoPorId($where);
+            }
+
+            return $novaCidade;
         }
         
         

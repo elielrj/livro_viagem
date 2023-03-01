@@ -21,7 +21,10 @@
             $quantidadesDeRegistrosParaMostrar,
             $apartirDoIndiceDoVetor){
             
-            $retorno = $this->db->get('estado',$quantidadesDeRegistrosParaMostrar, $apartirDoIndiceDoVetor);        
+            $retorno = $this->db->get(
+                'estado',
+                $quantidadesDeRegistrosParaMostrar, 
+                $apartirDoIndiceDoVetor);        
             
             $listaDeEstados = array();
             
@@ -44,9 +47,8 @@
         {
             $retorno = $this->db->get_where('estado', $where);
 
+            $novoEstado= new Estado();
             foreach($retorno->result() as $estado){
-                
-                $novoEstado= new Estado();
                 
                 $novoEstado->id = $estado->id;
                 $novoEstado->nome = $estado->nome;
