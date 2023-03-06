@@ -2,15 +2,21 @@
 
     class Login extends CI_Model{
 
-        public $email;
-        public $senha;
+        public function verificarEmail($where){
 
-        public function buscarLoginPorEmail($where){
-            
-            $retorno = $this->db->get_where('usuario', $where);
+            $resultado = $this->db->get_where('usuario',$where);
 
-            return $retorno->result();
+            return $resultado->result();
         }
+
+        public function verificarSenha($where){
+            
+            $resultado = $this->db->get_where('usuario',$where);   
+            
+            return $resultado->result();
+        }
+
     }
+
 
 ?>

@@ -20,7 +20,7 @@
 
 <input type='text' name='email'>
 
-<label>Hierarquia</label>
+<label>Senha</label>
 
 <input type='text' name='senha'>
 

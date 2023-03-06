@@ -19,7 +19,7 @@
         
         public function buscarTodosOsEstados(
             $quantidadesDeRegistrosParaMostrar,
-            $apartirDoIndiceDoVetor){
+            $apartirDoIndiceDoVetor = 0){
             
             $retorno = $this->db->get(
                 'estado',
@@ -45,7 +45,7 @@
         
         public function buscarEstadoPorId($where)
         {
-            $retorno = $this->db->get_where('estado', $where);
+            $retorno = $this->db->order_by('nome')->get_where('estado', $where);
 
             $novoEstado= new Estado();
             foreach($retorno->result() as $estado){
@@ -67,6 +67,23 @@
 
         public function quantidadeDeRegistros(){
             return $this->db->count_all_results('estado');
+        }
+
+        public function selectEstados(){
+
+            $options = "<option value''>Selecione o Estado</option>";
+
+            $estados = 
+            $this
+            ->db
+            ->order_by('nome')
+            ->get('estado');
+
+            foreach($estados->result() as $estado){
+                $options .= "<option value='{$estado->id}'>{$estado->nome}/{$estado->sigla}</option>";
+            }
+
+            return $options;
         }
     }
 ?>

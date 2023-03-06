@@ -45,7 +45,7 @@
                 'ultimoAcesso' => $dataHoraAgora,
                 'hierarquiaId' => $this->input->post('hierarquiaId'),
                 'email' => $this->input->post('email'),
-                'senha' => $this->input->post('senha'),
+                'senha' => md5($this->input->post('senha')),
             );
 
             $this->Usuario->criarUsuario($usuario);
@@ -76,7 +76,7 @@
             $status = $this->input->post('status');
             $hierarquiaId = $this->input->post('hierarquiaId');
             $email = $this->input->post('email');
-            $senha = $this->input->post('senha');
+            $senha = md5($this->input->post('senha'));
             
             $usuario = array(
                 'nome' => $nome,

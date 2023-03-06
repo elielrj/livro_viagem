@@ -32,10 +32,16 @@
         }
 
         public function formularioNovoBairro()       {
-            
+
+            $this->load->model('Cidade');
+            $qtdRegistros = $this->Cidade->quantidadeDeRegistros();
+
+            $this->load->model('Estado');
+           
             $dados = array(
                 'titulo' => 'Cadastro de bairros',
-                'pagina' => 'bairro/formularioNovoBairro.php',
+                'pagina' => 'bairro/formularioNovoBairro.php',        
+                'optionsEstados' =>  $this->Estado->selectEstados(),
             );
 
             $this->load->view('index', $dados);
@@ -44,6 +50,8 @@
         public function incluirNovoBairro(){
            
             $this->load->model('Bairro');
+
+            
 
             $bairro = array(
                 'nome' => $this->input->post('nome'),

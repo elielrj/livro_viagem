@@ -50,3 +50,10 @@
 
 
 </table>
+
+<!-- início do botão na horizontal --> 
+<?php 
+        if(isset($apartirDoIndiceDoVetor)){
+            include_once ('botoes.php');
+        }; 
+?>

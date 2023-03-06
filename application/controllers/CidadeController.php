@@ -31,11 +31,16 @@
 
         }
 
-        public function formularioNovoCidade()       {
-            
+        public function formularioNovoCidade()       {           
+
+            $this->load->model('Estado');
+            $qtdRegistros = $this->Estado->quantidadeDeRegistros();
+            $estados = $this->Estado->buscarTodosOsEstados(((int)$qtdRegistros));
+
             $dados = array(
                 'titulo' => 'Cadastro de cidades',
                 'pagina' => 'cidade/formularioNovoCidade.php',
+                'estados'=>$estados,
             );
 
             $this->load->view('index', $dados);
@@ -43,13 +48,14 @@
 
         public function incluirNovoCidade(){
            
-            $this->load->model('Cidade');
+            
 
             $cidade = array(
                 'nome' => $this->input->post('nome'),
                 'estadoId' => $this->input->post('estadoId')
             );
 
+            $this->load->model('Cidade');
             $this->Cidade->criarCidade($cidade);
 
             redirect('cidadecontroller');       
@@ -64,7 +70,8 @@
             $tabela = $this->Cidade->buscarCidadePorId($where);
 
             $this->load->model('Estado');
-            $estados = $this->Estado->buscarTodosOsEstados();
+            $qtdRegistros = $this->Estado->quantidadeDeRegistros();
+            $estados = $this->Estado->buscarTodosOsEstados(((int)$qtdRegistros));
             
             $dados = array(
                 'titulo'=>'Alteração do Cidade',

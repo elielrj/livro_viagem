@@ -9,16 +9,16 @@
 
 
 
-<input type='hidden' name='id' value="<?php echo $tabela[0]->id ?>" />
+<input type='hidden' name='id' value="<?php echo $tabela->id;?>" />
 
 
 <label>Nome da Cidade</label>
-<input type='text' name='nome' value="<?php echo $tabela[0]->nome ?>" />
+<input type='text' name='nome' value="<?php echo $tabela->nome ?>" />
 
 
 </br>
 
-<input type='hidden' name='estadoId' value="<?php echo $tabela[0]->estadoId ?>" />
+<input type='hidden' name='estadoId' value="<?php echo $tabela->estado->id ?>"/>
 
 </br>
 <label>Nome do Estado</label>
@@ -28,7 +28,7 @@
 
         foreach($estados as $estado){
 
-            if($estado->id == $tabela[0]->estadoId){
+            if($estado->id == $tabela->estadoId){
                 echo "<option value=" . $estado->id . " selected>" . $estado->nome . " - " . $estado->sigla . "</option>";
             }else{
                 echo "<option value=" . $estado->id . ">" . $estado->nome . " - " . $estado->sigla . "</option>";

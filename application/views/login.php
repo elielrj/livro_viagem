@@ -1,3 +1,10 @@
+<?php
+ //  var_dump("Email " . $this->session->email);
+  // var_dump("Email: " . $this->session->email_valido);
+  //  var_dump("Senha: " . $this->session->senha_valida);
+    //var_dump($this->session);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -44,8 +51,34 @@
                                     
                                         
                                     
-                                        <form class="user" id="form" action="index.php/ViagemController" method="POST" >
+                                        <form class="user" id="form" action="index.php/loginController/logar" method="POST" >
                                         
+
+                                            <?php
+                                                if(isset($_SESSION['email_valido'])):
+                                                    if(!$_SESSION['email_valido']):
+                                                    
+                                            ?>
+                                                    <div class='form-group'>
+                                                        <p>Email inválido!</p>
+                                                    </div>
+                                                    
+                                                
+                                            <?php
+                                                    endif;
+                                                endif; 
+
+                                                if(isset($_SESSION['senha_valida'])):
+                                                    if(!$_SESSION['senha_valida']):
+                                            ?>
+                                                    <div class='form-group'>
+                                                        <p>Senha inválida!</p>
+                                                    </div>
+
+                                            <?php
+                                                    endif;
+                                                endif;
+                                            ?>
 
                                             <!-- email -->
                                             <div class="form-group">
@@ -66,7 +99,7 @@
                                                 <input 
                                                 type="password" 
                                                 class="form-control form-control-user" 
-                                                id="password" 
+                                                id="senha" 
                                                 placeholder="Digite sua senha" 
                                                 name="senha"  
                                                 required >

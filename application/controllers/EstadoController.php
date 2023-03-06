@@ -32,10 +32,14 @@
         }
 
         public function formularioNovoEstado()       {
+
+            $this->load->model('Estado');
+            $optionsEstados = $this->Estado->selectEstados();
             
             $dados = array(
                 'titulo' => 'Cadastro de estados',
                 'pagina' => 'estado/formularioNovoEstado.php',
+                'optionsEstados' => $optionsEstados,
             );
 
             $this->load->view('index', $dados);
