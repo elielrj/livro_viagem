@@ -19,13 +19,7 @@
 
         public function logar(){
 
-        
-
-           
-
-             
                 if($this->verificarEmail()){
-
              
                     if($this->verificarSenha()){
 
@@ -164,6 +158,8 @@
 
            redirect(base_url());
         }
+
+        
         
     }
 ?>

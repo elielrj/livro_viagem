@@ -150,7 +150,7 @@
                                         <a class="small" href="recuperarSenha.php">Esqueceu sua senha?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="criarConta.php">Criar conta!</a>
+                                        <a class="small" href="criarUsuario.php">Criar conta!</a>
                                     </div>
                                 </div>
                             </div>

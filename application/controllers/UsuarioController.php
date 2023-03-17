@@ -31,7 +31,7 @@
 
         public function incluirNovoUsuario(){
            
-            $this->load->model('Usuario');
+           $this->load->model('Usuario');
             
             $this->load->helper('date');
             $timestamp = now('America/Sao_Paulo');
@@ -52,6 +52,8 @@
 
             redirect('usuariocontroller');       
         }
+
+      
 
         public function formularioAlterarUsuario($codigo){                
             

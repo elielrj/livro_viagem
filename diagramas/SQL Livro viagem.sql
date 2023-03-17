@@ -1,6 +1,7 @@
 
-#drop database livro_viagem;
+drop database livro_viagem;
 drop database mydb;
+-- MySQL Workbench Forward Engineering
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -18,21 +19,11 @@ CREATE SCHEMA IF NOT EXISTS `livro_viagem` DEFAULT CHARACTER SET utf8 ;
 USE `livro_viagem` ;
 
 -- -----------------------------------------------------
--- Table `livro_viagem`.`Numero`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `livro_viagem`.`Numero` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `valor` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `livro_viagem`.`Estado`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Estado` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `sigla` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) VISIBLE,
@@ -45,7 +36,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Cidade` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `estadoId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Cidade_Estado_idx` (`estadoId` ASC) VISIBLE,
@@ -62,7 +53,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Bairro` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `cidadeId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Bairro_Cidade1_idx` (`cidadeId` ASC) VISIBLE,
@@ -75,41 +66,19 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `livro_viagem`.`Logradouro`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `livro_viagem`.`Logradouro` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `bairroId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Logradouro_Bairro1_idx` (`bairroId` ASC) VISIBLE,
-  CONSTRAINT `fk_Logradouro_Bairro1`
-    FOREIGN KEY (`bairroId`)
-    REFERENCES `livro_viagem`.`Bairro` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `livro_viagem`.`Endereco`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Endereco` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `logradouroId` INT NOT NULL,
-  `numeroId` INT NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `logradouro` VARCHAR(100) NOT NULL,
+  `numero` VARCHAR(100) NOT NULL,
+  `bairroId` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Endereco_Logradouro1_idx` (`logradouroId` ASC) VISIBLE,
-  INDEX `fk_Endereco_Numero1_idx` (`numeroId` ASC) VISIBLE,
-  CONSTRAINT `fk_Endereco_Logradouro1`
-    FOREIGN KEY (`logradouroId`)
-    REFERENCES `livro_viagem`.`Logradouro` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Endereco_Numero1`
-    FOREIGN KEY (`numeroId`)
-    REFERENCES `livro_viagem`.`Numero` (`id`)
+  INDEX `fk_Endereco_Bairro1_idx` (`bairroId` ASC) VISIBLE,
+  CONSTRAINT `fk_Endereco_Bairro1`
+    FOREIGN KEY (`bairroId`)
+    REFERENCES `livro_viagem`.`Bairro` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -120,8 +89,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Hierarquia` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `postoOuGraduacao` VARCHAR(15) NOT NULL,
-  `sigla` VARCHAR(45) NOT NULL,
+  `postoOuGraduacao` VARCHAR(100) NOT NULL,
+  `sigla` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `postoOuGraduacao_UNIQUE` (`postoOuGraduacao` ASC) VISIBLE,
   UNIQUE INDEX `sigla_UNIQUE` (`sigla` ASC) VISIBLE)
@@ -133,13 +102,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `status` TINYINT NOT NULL,
   `dataDeCriacao` DATETIME NOT NULL,
   `ultimoAcesso` DATETIME NOT NULL,
   `hierarquiaId` INT NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `senha` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Usuario_Hierarquia1_idx` (`hierarquiaId` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
@@ -156,9 +125,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Telefone` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `numero` VARCHAR(45) NOT NULL,
+  `numero` VARCHAR(100) NOT NULL,
   `contato` ENUM("EMERGENCIA", "LOCALIZACAO") NOT NULL,
-  `parentescoDoContato` VARCHAR(45) NOT NULL,
+  `parentescoDoContato` VARCHAR(100) NOT NULL,
   `usuarioId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Telefone_Usuario1_idx` (`usuarioId` ASC) VISIBLE,
@@ -199,3 +168,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+

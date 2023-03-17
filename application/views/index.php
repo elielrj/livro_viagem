@@ -62,7 +62,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Home</span></a>
             </li>
 
             <!-- Divider -->
@@ -84,13 +84,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Tabela:</h6>
                         
-                        <!-- tabela de endereços -->
+                        <!-- tabela de endereços -->                        
+                        <a class="collapse-item" href="<?php echo base_url('index.php/estado');?>">Estado</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/cidade');?>">Cidade</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/bairro');?>">Bairro</a>
                         <a class="collapse-item" href="/web/livro_viagem/index.php/EnderecoController">Endereços</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/EstadoController">Estado</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/CidadeController">Cidade</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/BairroController">Bairro</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/LogradouroController">Logradouro</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/NumeroController">Número</a>
 
                         <!-- viagem -->
                         <a class="collapse-item" href="/web/livro_viagem/index.php/viagemController">Viagem</a>
@@ -411,7 +409,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span> <a href="https://github.com/elielrj"> Copyright ESF &copy; Your Website 2023</a></span>
                     </div>
                 </div>
             </footer>
@@ -437,7 +435,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
-                    </button>
+                    </button>   
                 </div>
                 <div class="modal-body">Sua sessão será encerrada ao sair.</div>
                 <div class="modal-footer">
