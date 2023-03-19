@@ -36,7 +36,10 @@
           $dados = array(
                 'titulo' => self::$PAGINA_TITULO,
                 'pagina' => self::$PAGINA_FORM_CREATE,
-                'select_estado'=>$this->Estado->select(),
+                'select_estado' => $this->selectEstado(),
+                'selected_estado' => array('id' => 24),
+                'select_cidade' => $this->selectCidade(24),
+                'selected_cidade' => array('id' => 4429),
             );
 
             $this->load->view('index', $dados);
@@ -72,39 +75,61 @@
                 'tabela' => $tabela,
                 'select_cidade' => $this->selectCidade($estado_selected[0]['id']),
                 'select_estado' => $this->selectEstado(),
-                'cidade_selected' => $cidade_selected,
-                'estado_selected' => $estado_selected,
+                'cidade_selected' => $cidade_selected[0]['id'],
+                'estado_selected' => $estado_selected[0]['id'],
             );
 
             $this->load->view('index',$dados);
         }
 
-        public function selectCidade($estadoId){
+        public function optionsCidade($estadoId = null){
 
-            $select = [];
+            if($estadoId == null){
 
-            foreach($this->Cidade_Model->retriveEstadoId($estadoId) as $value){
-                
-                $cidade = array($value['id'] => $value['nome']);
+                $data = $this->input->post();
 
-                $select += $cidade;
+                $estadoId = $data['estadoId'];                
+            }          
+            
+            $options = "<option>Selecione uma cidade</option>";
+
+            foreach($this->selectCidade($estadoId) as $key => $value){
+                            
+                $options .= "<option value='{$key}'>{$value}</option>";
             }
+            
+            echo $options;
+        }
 
-            return $select;
+        public function optionsBairro($cidadeId = null){
+
+            if($cidadeId == null){
+
+                $data = $this->input->post();
+
+                $cidadeId = $data['cidadeId'];                
+            }          
+            
+            $options = "<option>Selecione uma bairro</option>";
+
+            foreach($this->selectBairro($cidadeId) as $key => $value){
+                            
+                $options .= "<option value='{$key}'>{$value}</option>";
+            }
+            
+            echo $options;
+        }
+        
+        public function selectBairro($cidadeId){     
+            return $this->Bairro_Model->selectBairro($cidadeId);
+        }
+
+        public function selectCidade($estadoId){            
+            return $this->Cidade_Model->selectCidade($estadoId);
         }
 
         public function selectEstado(){
-
-            $select = [];
-
-            foreach($this->Estado_Model->retrive(null,null) as $value){
-                
-                $estado = array($value['id'] => $value['nome'] ."/". $value['sigla']);
-
-                $select += $estado;
-            }
-
-            return $select;
+            return $this->Estado_Model->selectEstado();
         }
 
         public function atualizar(){
@@ -130,7 +155,7 @@
             redirect('bairro');
         }
 
-        public function select($estadoId = null){
+      /*  public function select($estadoId = null){
 
             $select = [];
 
@@ -142,9 +167,7 @@
             }
 
             return $select;
-        }
-
-
+        }*/
        
         public function tabela($listaDeBairros){
             $line =
@@ -174,7 +197,7 @@
                             <td>{$estado[0]['nome']}</td>
                             <td>{$estado[0]['sigla']}</td>
                             <td><a href='" . base_url() . "index.php/bairro/alterar/" . $bairro['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/bairro/alterar/" . $bairro['id'] . "'>Excluir</a></td>
+                            <td><a href='" . base_url() . "index.php/bairro/deletar/" . $bairro['id'] . "'>Excluir</a></td>
                     </tr>"
                 ;
 

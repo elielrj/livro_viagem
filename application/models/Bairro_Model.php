@@ -91,5 +91,19 @@
         public function quantidade(){
             return $this->db->count_all_results(self::$TABELA_DB);
         }
+
+        public function selectBairro($cidadeId){     
+            
+            $select = [];
+
+            foreach($this->retriveCidadeId($cidadeId) as $value){
+                
+                $cidade = array($value['id'] => $value['nome']);
+
+                $select += $cidade;
+            }
+            
+            return $select;
+        }
     }
 ?>
