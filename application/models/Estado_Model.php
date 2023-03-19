@@ -81,6 +81,20 @@
         public function quantidade(){
             return $this->db->count_all_results(self::$TABELA_DB);
         }
+
+        public function selectEstado(){
+
+            $select = [];
+
+            foreach($this->retrive(null,null) as $value){
+                
+                $estado = array($value['id'] => $value['nome'] ."/". $value['sigla']);
+
+                $select += $estado;
+            }
+
+            return $select;
+        }
     }
 
 
