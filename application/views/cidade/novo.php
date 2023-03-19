@@ -4,6 +4,8 @@
     $input_sigla = array('name' => 'sigla','class' => 'form-control','maxlength' => 2);
     $form_open = array('class' => 'form-group');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
+    $selected = array('name' => 24);
+    $form_dropdown_estado = array('class' => 'form-control', 'id' => 'estadoId' );
     
     echo "<h1>{$titulo}</h1>";
     
@@ -18,7 +20,7 @@
             
             echo "</br>";
              
-        echo form_dropdown("estadoId", $select );
+        echo form_dropdown("estadoId", $select, $selected, $form_dropdown_estado);
 
             echo "</br>";
         

@@ -92,5 +92,19 @@
             return $this->db->count_all_results(self::$TABELA_DB);
         }
 
+        public function selectCidade($estadoId){            
+
+            $select = [];
+
+            foreach($this->retriveEstadoId($estadoId) as $value){
+                
+                $cidade = array($value['id'] => $value['nome']);
+
+                $select += $cidade;
+            }
+
+            return $select;
+        }
+
     }
 ?>
