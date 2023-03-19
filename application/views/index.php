@@ -88,7 +88,7 @@
                         <a class="collapse-item" href="<?php echo base_url('index.php/estado');?>">Estado</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/cidade');?>">Cidade</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/bairro');?>">Bairro</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/EnderecoController">Endereços</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/endereco');?>">Endereços</a>
 
                         <!-- viagem -->
                         <a class="collapse-item" href="/web/livro_viagem/index.php/viagemController">Viagem</a>

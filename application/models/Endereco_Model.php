@@ -8,19 +8,19 @@
             parent::__construct();
         }
         
-        public function criar($cidade){
+        public function criar($endereco){
 
             $this->db->insert(
                 self::$TABELA_DB, 
-                $cidade);
+                $endereco);
         }
         
-        public function update($cidade){
+        public function update($endereco){
 
             $this->db->update(
                 self::$TABELA_DB,
-                $cidade, 
-                array('id'=> $cidade['id'])
+                $endereco, 
+                array('id'=> $endereco['id'])
             );
         }
         
@@ -32,7 +32,7 @@
                 $indiceInicial
             ); 
 
-            return $this->montarObjetoCidade($resultado->result());
+            return $this->montarObjetoEndereco($resultado->result());
         }
         
         public function retriveId($id){
@@ -43,7 +43,7 @@
                 array('id'=> $id)
             );   
             
-            return $this->montarObjetoCidade($resultado->result());
+            return $this->montarObjetoEndereco($resultado->result());
         }
 
         public function retriveEstadoId($estadoId){
@@ -54,7 +54,7 @@
                 ->order_by('nome')
                 ->get(self::$TABELA_DB); 
             
-            return $this->montarObjetoCidade($resultado->result());
+            return $this->montarObjetoEndereco($resultado->result());
         }
 
         public function delete($id){
@@ -63,28 +63,32 @@
                 array('id'=> $id));
         }
         
-        public function montarObjetoCidade($result){
+        public function montarObjetoEndereco($result){
 
-            $listaDeCidades = array();
+            $listaDeEnderecos = array();
 
             foreach($result as $linha){
-                $cidade = $this->cidade(
+                $endereco = $this->endereco(
                     $linha->id,
                     $linha->nome,
-                    $linha->estadoId
+                    $linha->logradouro,
+                    $linha->numero,
+                    $linha->bairroId
                 );
 
-                array_push($listaDeCidades, $cidade);
+                array_push($listaDeEnderecos, $endereco);
            }
-            return $listaDeCidades;
+            return $listaDeEnderecos;
         }
         
-        public function cidade($id,$nome,$estadoId){            
+        public function endereco($id,$nome,$logradouro,$numero,$bairroId){            
         
             return array(
                 'id' => $id,
                 'nome' => $nome,
-                'estadoId' => $estadoId
+                'logradouro' => $logradouro,
+                'numero' => $numero,
+                'bairroId' => $bairroId
             );
         }
         
