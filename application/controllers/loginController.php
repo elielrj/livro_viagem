@@ -13,7 +13,7 @@
                 $this->load->view('login.php');
 
             }else{
-                redirect('ViagemController');
+                redirect('viagem');
             }
         }
 
@@ -89,31 +89,22 @@
 
         public function criarSessao(){
 
-            $whereUsuario = array('email' => $this->input->post('email'));
+            $email = $this->input->post('email');
             
-            $this->load->model('Usuario');
             
-            $usuario = $this->Usuario->buscarUsuarioPorId($whereUsuario);
+            $usuario = $this->Usuario_Model->retriveEmail($email);
 
-            $whereHierarquia = array('id' => $usuario[0]->hierarquiaId);
+            $hierarquia = $this->Hierarquia_Model->retriveId($usuario[0]['hierarquiaId']);
 
-            $this->load->model('Hierarquia');
-            $resultado = $this->Hierarquia->buscarHierarquiaPorId($whereHierarquia);
-
-            $hierarquia = array(
-                'id' => $resultado[0]->id,
-                'postoOuGraduacao' => $resultado[0]->postoOuGraduacao,
-                'sigla' => $resultado[0]->sigla,
-            );
-
+            
            $data = array(
-            'id' => $usuario[0]->id,
-            'nome' => $usuario[0]->nome,
-            'status' => $usuario[0]->status,
-            'dataDeCriacao' => $usuario[0]->dataDeCriacao,
-            'ultimoAcesso' => $usuario[0]->ultimoAcesso,
+            'id' => $usuario[0]['id'],
+            'nome' => $usuario[0]['nome'],
+            'status' => $usuario[0]['status'],
+            'dataDeCriacao' => $usuario[0]['dataDeCriacao'],
+            'ultimoAcesso' => $usuario[0]['ultimoAcesso'],
             'hierarquia' => $hierarquia,
-            'email' => $usuario[0]->email,
+            'email' => $usuario[0]['email'],
            );
 
      

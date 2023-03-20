@@ -11,30 +11,30 @@
 
     echo form_open('bairro/criar', $form_open);
 
-    echo form_label('Estado');
+        echo form_label('Estado');
 
-    echo "</br>";
+            echo "</br>";
 
-    echo form_dropdown("estadoId", $select_estado, $selected_estado, $form_dropdown_estado);
+        echo form_dropdown("estadoId", $select_estado, $selected_estado, $form_dropdown_estado);
 
-    echo "</br>";
+            echo "</br>";
 
-    echo form_label('Cidade');
+        echo form_label('Cidade');
 
-    echo "</br>";
+            echo "</br>";
 
-    echo form_dropdown("cidadeId", $select_cidade, $selected_cidade, $form_dropdown_cidade);
+        echo form_dropdown("cidadeId", $select_cidade, $selected_cidade, $form_dropdown_cidade);
 
-    echo "</br>";
+            echo "</br>";
 
-    echo form_label('Bairro');
-    echo form_input($input_nome);
+        echo form_label('Bairro');
+        echo form_input($input_nome);
 
-    echo "</br>";
+            echo "</br>";
 
-    echo form_submit('enviar', 'Enviar', $form_submit_btn);
-    echo "<a href=" . base_url('index.php/bairro') .
-        " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
+        echo form_submit('enviar', 'Enviar', $form_submit_btn);
+        echo "<a href=" . base_url('index.php/bairro') .
+            " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
 
 
     echo form_close();

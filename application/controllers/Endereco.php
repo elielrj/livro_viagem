@@ -57,7 +57,8 @@
                 ucwords(strtolower($data['nome'])),
                 ucwords(strtolower($data['logradouro'])),
                 ucwords(strtolower($data['numero'])),
-                $data['bairroId']
+                $data['bairroId'],
+                $this->session->id(),
             );
 
             $this->Endereco_Model->criar($endereco);
@@ -102,7 +103,8 @@
                 ucwords(strtolower($data['nome'])),
                 ucwords(strtolower($data['logradouro'])),
                 ucwords(strtolower($data['numero'])),
-                $data['bairroId']
+                $data['bairroId'],
+                $data['usuarioId'],
             );
 
             $this->Endereco_Model->update($endereco);

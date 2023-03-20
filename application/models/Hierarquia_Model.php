@@ -1,25 +1,25 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-    class Bairro_Model extends CI_Model {
+    class Hierarquia_Model extends CI_Model{
 
-        public static $TABELA_DB = 'bairro';
+        public static $TABELA_DB = 'hierarquia';
         
         public function __construct(){
             parent::__construct();
         }
         
-        public function criar($bairro){
+        public function criar($hierarquia){
             $this->db->insert(
                 self::$TABELA_DB, 
-                $bairro);
+                $hierarquia);
         }
         
-        public function update($bairro){
+        public function update($hierarquia){
 
             $this->db->update(
                 self::$TABELA_DB,
-                $bairro, 
-                array('id'=> $bairro['id'])
+                $hierarquia, 
+                array('id'=> $hierarquia['id'])
             );
         }
         
@@ -31,7 +31,7 @@
                 $indiceInicial
             ); 
 
-            return $this->montarObjetoBairro($resultado->result());
+            return $this->montarObjetoHierarquia($resultado->result());
         }
 
         public function retriveId($id){
@@ -42,19 +42,7 @@
                 array('id'=> $id)
             );   
             
-            return $this->montarObjetoBairro($resultado->result());
-        }
-
-        
-        public function retriveCidadeId($cidadeId){
-            
-            $resultado = 
-            $this->db
-                ->where('cidadeId',$cidadeId)
-                ->order_by('nome')
-                ->get(self::$TABELA_DB); 
-            
-            return $this->montarObjetoBairro($resultado->result());
+            return $this->montarObjetoHierarquia($resultado->result());
         }
 
         public function delete($id){
@@ -63,28 +51,31 @@
                 array('id'=> $id));
         }
 
-        public function montarObjetoBairro($result){
+        public function montarObjetoHierarquia($result){
 
-            $listaDeBairros = array();
+            $listaDeHierarquias = array();
 
             foreach($result as $linha){
-                $bairro = $this->bairro(
+                $hierarquia = $this->hierarquia(
                     $linha->id,
-                    $linha->nome,
-                    $linha->cidadeId
+                    $linha->postoOuGraduacao,
+                    $linha->sigla
                 );
 
-                array_push($listaDeBairros, $bairro);
+                array_push($listaDeHierarquias, $hierarquia);
            }
-            return $listaDeBairros;
+            return $listaDeHierarquias;
         }
         
-        public function bairro($id,$nome,$cidadeId){            
+        public function hierarquia(
+            $id,
+            $postoOuGraduacao,
+            $sigla){            
         
             return array(
                 'id' => $id,
-                'nome' => $nome,
-                'cidadeId' => $cidadeId
+                'postoOuGraduacao' => $postoOuGraduacao,
+                'sigla' => $sigla
             );
         }
 
@@ -92,18 +83,19 @@
             return $this->db->count_all_results(self::$TABELA_DB);
         }
 
-        public function selectBairro($cidadeId){     
+        public function selectHierarquia(){     
             
             $select = [];
 
-            foreach($this->retriveCidadeId($cidadeId) as $value){
+            foreach($this->retrive(null,null) as $value){
                 
-                $cidade = array($value['id'] => $value['nome']);
+                $hierarquia = array($value['id'] => $value['postoOuGraduacao'] . "/". $value['sigla']);
 
-                $select += $cidade;
+                $select += $hierarquia;
             }
             
             return $select;
         }
+
     }
 ?>

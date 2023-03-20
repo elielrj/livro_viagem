@@ -48,11 +48,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url();?>">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"><?php echo $this->session->hierarquia['sigla'] . $this->session->nome; ?></div>
+                <div class="sidebar-brand-text mx-3"><?php echo $this->session->hierarquia[0]['sigla'] . $this->session->nome; ?></div>
             </a>
 
             <!-- Divider -->
@@ -91,11 +91,11 @@
                         <a class="collapse-item" href="<?php echo base_url('index.php/endereco');?>">Endereços</a>
 
                         <!-- viagem -->
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/viagemController">Viagem</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Viagem</a>
 
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/usuarioController">Usuário</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/telefoneController">Telefone</a>
-                        <a class="collapse-item" href="/web/livro_viagem/index.php/hierarquiaController">Hierarquia</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
 
 
                     </div>

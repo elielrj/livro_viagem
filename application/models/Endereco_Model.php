@@ -46,16 +46,16 @@
             return $this->montarObjetoEndereco($resultado->result());
         }
 
-        public function retriveEstadoId($estadoId){
+        public function retriveUsuarioId($usuarioId){
             
             $resultado = 
             $this->db
-                ->where('estadoId',$estadoId)
-                ->order_by('nome')
-                ->get(self::$TABELA_DB); 
+            ->where('usuarioId', $usuarioId)
+            ->order_by('nome')
+            ->get(self::$TABELA_DB);   
             
             return $this->montarObjetoEndereco($resultado->result());
-        }
+        }        
 
         public function delete($id){
             $this->db->delete(
@@ -73,7 +73,8 @@
                     $linha->nome,
                     $linha->logradouro,
                     $linha->numero,
-                    $linha->bairroId
+                    $linha->bairroId,
+                    $linha->usuarioId,
                 );
 
                 array_push($listaDeEnderecos, $endereco);
@@ -81,19 +82,51 @@
             return $listaDeEnderecos;
         }
         
-        public function endereco($id,$nome,$logradouro,$numero,$bairroId){            
+        public function endereco($id,$nome,$logradouro,$numero,$bairroId,$usuarioId){            
         
             return array(
                 'id' => $id,
                 'nome' => $nome,
                 'logradouro' => $logradouro,
                 'numero' => $numero,
-                'bairroId' => $bairroId
+                'bairroId' => $bairroId,
+                'usuarioId' => $usuarioId,
             );
         }
         
         public function quantidade(){
             return $this->db->count_all_results(self::$TABELA_DB);
         }
+
+        public function toString($endereco){
+            
+
+            $bairro = $this->Bairro_Model->retriveId($endereco['bairroId']);
+            $cidade = $this->Cidade_Model->retriveId($bairro[0]['cidadeId']);
+            $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
+
+            $endereco_string = "{$endereco['logradouro']}, {$endereco['numero']}, {$bairro[0]['nome']}"
+                . "{$cidade[0]['nome']}, {$estado[0]['nome']}";
+            
+            return $endereco_string;
+        }
+
+        public function selectEndereco($usuario){  
+
+            $select = [];
+
+            $listaDeEnderecosDoUsuario = $this->retriveUsuarioId($usuario[0]['id']);
+
+            foreach($listaDeEnderecosDoUsuario as $value){
+                
+                $endereco = array($value['id'] => $this->toString($value));
+
+                $select += $endereco;
+            }
+            return $select;
+        }
+
+        
+
     }
 ?>

@@ -1,42 +1,19 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?> 
+
+<!-- título -->    
 <h1><?php echo $titulo ?></h1>
 
-<a class="btn btn-primary btn-sm" href='/web/livro_viagem/index.php/hierarquiacontroller/formularioNovoHierarquia'>NOVO</a>
-</br>
-</br>
-<table class="table table-hover">
-    <tr>
-        <td>Código do Hierarquia</td>
-        <td>Pouto ou Graduação</td>
-        <td>Sigla</td>
-        <td>Alterar</td>
-        <td>Excluir</td>
-    </tr>
+    <a class="btn btn-primary btn-sm" 
+        href="<?php echo base_url('index.php/hierarquia/novo')?>">
+        NOVO</a>
+    
+    </br>
+    </br>
 
-    <?php
+    <!-- tabela -->
+    <table class="table table-hover">
+        <?php echo $tabela; ?>
+    </table>
 
-    foreach ($tabela as $hierarquia) {
-        echo
-        "<tr>" .
-            "<td>" . $hierarquia->id .    "</td>" .
-            "<td>" . $hierarquia->postoOuGraduacao .        "</td>" .
-            "<td>" . $hierarquia->sigla .        "</td>" .
-            "<td>
-                    <a href='/web/livro_viagem/index.php/hierarquiacontroller/formularioAlterarHierarquia/" . $hierarquia->id . "'>Alterar</a>
-            </td>" .
-            "<td>
-                    <a href='/web/livro_viagem/index.php/hierarquiacontroller/deletarHierarquia/" . $hierarquia->id . "'>Excluir</a>
-            </td>" .
-        "</tr>";
-    }
-
-    ?>
-
-
-</table>
-
-<!-- início do botão na horizontal --> 
-<?php 
-        if(isset($apartirDoIndiceDoVetor)){
-            include_once ('botoes.php');
-        }; 
-?>
+    <!-- botão na horizontal --> 
+    <?php echo "<div class='row'>{$botoes}</div>"; ?>

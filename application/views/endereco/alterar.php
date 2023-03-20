@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); 
 
     $input_id = array('name' => 'id','type' => 'hidden', 'value' => $tabela[0]['id']);
+    $input_usuarioId = array('name' => 'usuarioId','type' => 'hidden', 'value' => $tabela[0]['usuarioId']);
     $input_nome = array('name' => 'nome', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['nome']);
     $input_logradouro = array('name' => 'logradouro', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['logradouro']);
     $input_numero = array('name' => 'numero', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['numero']);
@@ -54,6 +55,10 @@
 
     echo form_dropdown("bairroId", $select_bairro, $selected_bairro, $form_dropdown_bairro);
 
+    echo "</br>";
+    
+    echo form_input($input_usuarioId);
+   
     echo "</br>";
 
     echo form_submit('enviar', 'Enviar', $form_submit_btn);
