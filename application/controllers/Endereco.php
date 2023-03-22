@@ -15,8 +15,10 @@
             $this->listar();
         }
 
-        public function listar($indice = 0){
+        public function listar($indice = 1){
 
+            $indice--;
+            
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
@@ -25,7 +27,27 @@
                 'tabela'=> $this->tabela(
                     $this->Endereco_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
+            );
+            
+            $this->load->view('index',$dados);
+        }
+
+        public function listarPorUsuarioId($indice = 1){
+
+            $indice--;
+            
+            $usuarioId = $this->session->id;
+
+            $mostrar = 10;
+            $indiceInicial  = $indice * $mostrar;
+
+            $dados = array(
+                'titulo'=> self::$PAGINA_TITULO,
+                'tabela'=> $this->tabela(
+                    $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar)),
+                'pagina'=> self::$PAGINA_INDEX,
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -58,7 +80,7 @@
                 ucwords(strtolower($data['logradouro'])),
                 ucwords(strtolower($data['numero'])),
                 $data['bairroId'],
-                $this->session->id(),
+                $this->session->id,
             );
 
             $this->Endereco_Model->criar($endereco);
@@ -134,7 +156,7 @@
         public function tabela($listaDeEnderecos){
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Nome do Endereço</td>
                         <td>Logradouro</td>
@@ -143,6 +165,7 @@
                         <td>Cidade</td>
                         <td>Estado</td>
                         <td>Sigla</td>
+                        <td>Cadastrador</td>
                         <td>Alterar</td>
                         <td>Excluir</td>
                     </tr>
@@ -152,12 +175,13 @@
            
                 foreach($listaDeEnderecos as $endereco){
 
+                    $usuario = $this->Usuario_Model->retriveId($endereco['usuarioId']); 
                     $bairro = $this->Bairro_Model->retriveId($endereco['bairroId']);
                     $cidade = $this->Cidade_Model->retriveId($bairro[0]['cidadeId']);
                     $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
 
                     $line .= 
-                        "<tr> 
+                        "<tr class='text-center'> 
                                 <td>{$endereco['id']}</td>
                                 <td>{$endereco['nome']}</td>
                                 <td>{$endereco['logradouro']}</td>
@@ -166,6 +190,7 @@
                                 <td>{$cidade[0]['nome']}</td>
                                 <td>{$estado[0]['nome']}</td>
                                 <td>{$estado[0]['sigla']}</td>
+                                <td>{$usuario[0]['nome']}</td>
                                 <td><a href='" . base_url() . "index.php/endereco/alterar/" . $endereco['id'] . "'>Alterar</a></td>
                                 <td><a href='" . base_url() . "index.php/endereco/deletar/" . $endereco['id'] . "'>Excluir</a></td>
                         </tr>"
@@ -180,31 +205,15 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('endereco');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Endereco_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
-
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
-
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/endereco/listar/{$index}'>" . ($index + 1) . "</a>
-                        </div>"
-                    ;
-                }
-
-                $buttons .= "</div>";
-
-                return $buttons;
         }
         
     }

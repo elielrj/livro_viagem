@@ -11,9 +11,11 @@
     </br>
 
     <!-- tabela -->
-    <table class="table table-hover">
+
+    <table class="table table-responsive-md table-hover">
         <?php echo $tabela; ?>
     </table>
+  
 
     <!-- botão na horizontal --> 
     <?php echo "<div class='row'>{$botoes}</div>"; ?>

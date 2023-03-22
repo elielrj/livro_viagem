@@ -14,17 +14,17 @@
 
     echo form_open('endereco/criar', $form_open);
 
-    echo form_label('Nome do Endereço');
+    echo form_label('Nome do Endereço (Exemplo: Home, Casa de Praia, Casa do Pai, Férias)');
     echo form_input($input_nome);
 
     echo "</br>";
 
-    echo form_label('Logradouro');
+    echo form_label('Logradouro (Rua x, Av Y, Travessa Z)');
     echo form_input($input_logradouro);
 
     echo "</br>";
 
-    echo form_label('Número');
+    echo form_label('Número (Incluir complemento, se houver)');
     echo form_input($input_numero);
 
     echo "</br>";

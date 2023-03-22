@@ -11,7 +11,7 @@
     </br>
 
     <!-- tabela -->
-    <table class="table table-hover">
+    <table class="table table-responsive-md table-hover">
         <?php echo $tabela; ?>
     </table>
 

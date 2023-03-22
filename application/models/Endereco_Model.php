@@ -46,13 +46,13 @@
             return $this->montarObjetoEndereco($resultado->result());
         }
 
-        public function retriveUsuarioId($usuarioId){
-            
+        public function retriveUsuarioId($usuarioId,$indiceInicial,$mostrar){
+          
             $resultado = 
             $this->db
             ->where('usuarioId', $usuarioId)
             ->order_by('nome')
-            ->get(self::$TABELA_DB);   
+            ->get(self::$TABELA_DB,$indiceInicial,$mostrar);   
             
             return $this->montarObjetoEndereco($resultado->result());
         }        
@@ -115,11 +115,11 @@
 
             $select = [];
 
-            $listaDeEnderecosDoUsuario = $this->retriveUsuarioId($usuario[0]['id']);
+            $listaDeEnderecosDoUsuario = $this->retriveUsuarioId($usuario[0]['id'],null,null);
 
             foreach($listaDeEnderecosDoUsuario as $value){
                 
-                $endereco = array($value['id'] => $this->toString($value));
+                $endereco = array($value['id'] => "{$value['nome']} ({$this->toString($value)})");
 
                 $select += $endereco;
             }

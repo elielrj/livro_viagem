@@ -15,7 +15,10 @@
             $this->listar();
         }
         
-        public function listar($indice = 0){
+        public function listar($indice = 1){
+
+            $indice--;
+            
 
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
@@ -25,11 +28,32 @@
                 'tabela'=> $this->tabela(
                     $this->Viagem_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
         }
+
+        public function listarPorUsuarioId($indice = 1){
+
+            $indice--;
+            
+            $usuarioId = $this->session->id;
+
+            $mostrar = 10;
+            $indiceInicial  = $indice * $mostrar;
+
+            $dados = array(
+                'titulo'=> self::$PAGINA_TITULO,
+                'tabela'=> $this->tabela(
+                    $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar)),
+                'pagina'=> self::$PAGINA_INDEX,
+                'botoes'=> $this->botoes($indice,$mostrar),
+            );
+            
+            $this->load->view('index',$dados);
+        }
+
 
         public function novo(){
 
@@ -124,7 +148,7 @@
         public function tabela($listaDeBairros){
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Aprovada</td>
                         <td>Território</td>
@@ -146,17 +170,20 @@
                 $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
                 $endereco_string = $this->Endereco_Model->toString($endereco[0]);
 
+                $color = ($viagem['aprovada'] == 0) ? 'red' : 'green';
+                $resultado = (($viagem['aprovada'] == 1) ? 'Sim' : 'Não');
+
                 $line .= 
-                    "<tr> 
+                    "<tr class='text-center'> 
                             <td>{$viagem['id']}</td>
-                            <td>" . (($viagem['aprovada'] == 1) ? 'Sim' : 'Não') ."</td>
+                            <td><p class='text-center' style='color:$color'>" . $resultado ."</td>
                             <td>{$viagem['territorio']}</td>
                             <td>{$viagem['motivo']}</td>
                             <td>{$usuario[0]['nome']}</td>
-                            <td>{$endereco_string}</td>
+                            <td>" . nl2br($endereco_string) . "</td>
                             <td>{$viagem['dataIda']}</td>
                             <td>{$viagem['dataVolta']}</td>
-                            <td>{$viagem['observacao']}</td>
+                            <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
                             <td><a href='" . base_url() . "index.php/viagem/alterar/" . $viagem['id'] . "'>Alterar</a></td>
                             <td><a href='" . base_url() . "index.php/viagem/deletar/" . $viagem['id'] . "'>Excluir</a></td>
                     </tr>"
@@ -169,31 +196,54 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('viagem');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Viagem_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
-
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
-
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/bairviagemro/listar/{$index}'>" . ($index + 1) . "</a>
-                        </div>"
-                    ;
-                }
-
-                $buttons .= "</div>";
-
-                return $buttons;
         }
 
+        public function cidadesNacionaisMaisVisitadas(){
+
+            $listaDeCidades =  $this->Viagem_Model->cidadesNacionaisMaisVisitadas();
+
+            $tabela = $this->tabelaDeCidadesMaisVisitadas($listaDeCidades);
+
+            $dados = array(
+                'titulo' => 'Cidades mais visitadas',
+                'pagina' => 'viagem/relatorio.php',
+                'tabela' => $tabela,
+            );
+
+            $this->load->view('index',$dados);
+        }
+
+        public function tabelaDeCidadesMaisVisitadas($listaDeCidades){
+            $line =
+                "
+                    <tr class='text-center'>
+                        <td>Cidade</td>
+                        <td>Quantidade</td>
+                        <td>Estado</td>
+                    </tr>
+                "
+            ;
+
+            foreach($listaDeCidades as $cidade){
+
+                $line .= 
+                    "<tr class='text-center'> 
+                            <td>{$cidade['cidade_nome']}</td>
+                            <td>{$cidade['count']}</td>
+                            <td>{$cidade['estado_nome']}</td>
+                    </tr>"
+                ;
+
+            }
+            return $line;
+        }
     }

@@ -140,5 +140,7 @@ $autoload['model'] = array(
     'Viagem_Model',
     'Usuario_Model',
     'Hierarquia_Model',
-    'Telefone_Model'
+    'Telefone_Model',
+    'Funcao_Model',
+    'NivelDeAcesso_Model',
 );

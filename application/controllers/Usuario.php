@@ -12,11 +12,20 @@
         }
 
         public function index(){   
-            $this->listar();
+
+            if(!isset($this->session->email)){
+
+                $this->load->view('login.php');
+
+            }else{
+                $this->listar();
+            }            
         }
 
-        public function listar($indice = 0){
+        public function listar($indice = 1){
 
+            $indice--;
+            
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
@@ -25,7 +34,7 @@
                 'tabela'=> $this->tabela(
                     $this->Usuario_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -37,6 +46,7 @@
                 'titulo' => self::$PAGINA_TITULO,
                 'pagina' => self::$PAGINA_FORM_CREATE,
                 'select_hierarquia' => $this->selectHierarquia(),
+                'select_funcao' => $this->selectFuncao(),
             );
 
             $this->load->view('index', $dados);
@@ -60,6 +70,7 @@
                 $data['hierarquiaId'],
                 $data['email'],
                 md5($data['senha']),
+                $data['funcaoId'],
             );
 
             $this->Usuario_Model->criar($usuario);
@@ -77,6 +88,8 @@
                 'tabela'=> $tabela,
                 'select_hierarquia' => $this->selectHierarquia(),
                 'selected_hierarquia' => $tabela[0]['hierarquiaId'],
+                'select_funcao' => $this->selectFuncao(),
+                'selected_funcao' => $tabela[0]['funcaoId'],
             );
 
             $this->load->view('index',$dados);
@@ -102,6 +115,7 @@
                 $data['hierarquiaId'],
                 $data['email'],
                 md5($data['senha']),
+                $data['funcaoId'],
             );
 
             $this->Usuario_Model->update($usuario);
@@ -119,11 +133,15 @@
         public function selectHierarquia(){
             return $this->Hierarquia_Model->selectHierarquia();
         }
+
+        public function selectFuncao(){
+            return $this->Funcao_Model->selectFuncao();
+        }
         
         public function tabela($listaDeUsuarios){
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Nome</td>
                         <td>Status</td>
@@ -132,6 +150,8 @@
                         <td>Hierarquia</td>
                         <td>Email</td>
                         <td>Senha</td>
+                        <td>Função</td>
+                        <td>Nível de Acesso</td>
                         <td>Alterar</td>
                         <td>Excluir</td>
                     </tr>
@@ -139,11 +159,13 @@
             ;
 
             foreach($listaDeUsuarios as $usuario){
-
+ 
                 $hierarquia = $this->Hierarquia_Model->retriveId($usuario['hierarquiaId']);
+                $funcao = $this->Funcao_Model->retriveId($usuario['funcaoId']);
+                $nivelDeAcesso = $this->NivelDeAcesso_Model->retriveId($funcao[0]['nivelDeAcessoId']);
 
                 $line .= 
-                    "<tr> 
+                    "<tr class='text-center'> 
                             <td>{$usuario['id']}</td>
                             <td>{$usuario['nome']}</td>
                             <td>{$usuario['status']}</td>
@@ -152,6 +174,8 @@
                             <td>{$hierarquia[0]['sigla']}</td>
                             <td>{$usuario['email']}</td>
                             <td>{$usuario['senha']}</td>
+                            <td>{$funcao[0]['descricao']}</td>
+                            <td>{$nivelDeAcesso[0]['poder']}</td>
                             <td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
                             <td><a href='" . base_url() . "index.php/usuario/deletar/" . $usuario['id'] . "'>Excluir</a></td>
                     </tr>"
@@ -164,31 +188,131 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('usuario');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Usuario_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
+        }
 
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
+        public function removerSessao(){
 
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/usuario/listar/{$index}'>" . ($index + 1) . "</a>
-                        </div>"
-                    ;
+            $data = array(
+                'id',
+                'nome' ,
+                'status',
+                'dataDeCriacao',
+                'ultimoAcesso',
+                'hierarquia',
+                'email',
+                'email_valido',
+                'senha_valida',
+           );
+
+            $this->session->sess_destroy();
+
+            redirect(base_url());
+        }
+
+        public function criarSessao(){
+
+            $email = $this->input->post('email');            
+            
+            $usuario = $this->Usuario_Model->retriveEmail($email);
+
+            $hierarquia = $this->Hierarquia_Model->retriveId($usuario[0]['hierarquiaId']);
+
+            $funcao = $this->Funcao_Model->retriveId($usuario[0]['funcaoId']);
+
+            $nivelDeAcesso = $this->NivelDeAcesso_Model->retriveId($funcao[0]['nivelDeAcessoId']);
+            
+           $data = array(
+            'id' => $usuario[0]['id'],
+            'nome' => $usuario[0]['nome'],
+            'status' => $usuario[0]['status'],
+            'dataDeCriacao' => $usuario[0]['dataDeCriacao'],
+            'ultimoAcesso' => $usuario[0]['ultimoAcesso'],
+            'hierarquia' => $hierarquia[0],
+            'email' => $usuario[0]['email'],
+            'funcao' => $funcao[0],
+            'nivelDeAcesso' => $nivelDeAcesso[0],
+           );     
+
+           $this->session->set_userdata($data);            
+        }
+
+        public function logar(){
+
+                if($this->verificarEmail()){
+             
+                    if($this->verificarSenha()){
+
+                     $this->criarSessao();
+                     //$this->redirecionaParaTelaViagem();
+                     //$this->index();
+                        redirect('viagem');
+                    }else{
+                        //$this->redirecionarParaTelaLogin();
+                    }
+
+                }else{
+                    //$this->redirecionarParaTelaLogin();
                 }
 
-                $buttons .= "</div>";
+    
+            //$this->index();
+            //redirect('LoginController');
+            redirect(base_url());
+        }
 
-                return $buttons;
+        public function verificarEmail(){
+
+            $email = $this->input->post('email');
+
+            $where = array('email' => $email);
+
+            $this->load->model('Login');
+
+           
+           $resultado = $this->Login->verificarEmail($where); 
+
+
+           if(isset($resultado[0])){
+
+                $this->session->set_userdata('email_valido',true);
+
+           }else{
+                $this->session->set_userdata('email_valido',false);
+           }
+
+            return isset($resultado[0]);
+
+        }
+
+        public function verificarSenha(){
+
+            $senha = md5($this->input->post('senha'));
+
+            $where = array('senha' => $senha);
+
+            $this->load->model('Login');
+
+
+           $resultado = $this->Login->verificarSenha($where);
+
+           if(isset($resultado[0])){
+
+                $this->session->set_userdata('senha_valida',true);
+
+           }else{
+                $this->session->set_userdata('senha_valida',false);
+           }
+
+           return isset($resultado[0]);
         }
         
     }

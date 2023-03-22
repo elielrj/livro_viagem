@@ -9,6 +9,7 @@
     $form_open = array('class' => 'form-group');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
     $form_dropdown_hierarquia = array('class' => 'form-control', 'id' => 'hierarquiaId');
+    $form_dropdown_funcao = array('class' => 'form-control', 'id' => 'funcaoId' );
 
 
     echo "<h1>{$titulo}</h1>";
@@ -55,6 +56,11 @@
             echo "</br>";
 
         echo form_input($input_senha);
+
+            echo "</br>";
+
+        echo form_label('Função');
+        echo form_dropdown("funcaoId", $select_funcao, $selected_funcao , $form_dropdown_funcao);
 
             echo "</br>";
 

@@ -1,18 +1,8 @@
 <?php
-
-//var_dump($this->session->email);
-/*
-
-    if(empty($this->session->email)){
-        header("Location:" . base_url());
-        exit();
-    }*/
-
     if(!isset($_SESSION['email'])){
         header("Location:" . base_url());
         exit();
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +42,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"><?php echo $this->session->hierarquia[0]['sigla'] . $this->session->nome; ?></div>
+                <div class="sidebar-brand-text mx-3"><?php echo $this->session->hierarquia['sigla'] . $this->session->nome; ?></div>
             </a>
 
             <!-- Divider -->
@@ -60,7 +50,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?php echo base_url('index.php/usuario');?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Home</span></a>
             </li>
@@ -96,8 +86,44 @@
                         <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/nivelDeAcesso');?>">Nível de Acesso</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/funcao');?>">Função</a>
 
 
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Informar Viagem Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInformarViagem"
+                    aria-expanded="true" aria-controls="collapseInformarViagem">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Viagem</span>
+                </a>
+                <div id="collapseInformarViagem" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">índices:</h6>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem/novo');?>">Informar</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem/listarPorUsuarioId');?>">Consultar</a>      
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Endereço Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEndereco"
+                    aria-expanded="true" aria-controls="collapseEndereco">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Endereco</span>
+                </a>
+                <div id="collapseEndereco" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">índices:</h6>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/endereco/novo');?>">Cadastrar</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/endereco/listarPorUsuarioId');?>">Consultar</a>      
                     </div>
                 </div>
             </li>
@@ -113,9 +139,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">índices:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Cidades visitadas</a>
-                        <a class="collapse-item" href="utilities-border.html">Estados visitados</a>
-                        <a class="collapse-item" href="utilities-animation.html">Posto/Grad</a>            
+                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem/cidadesNacionaisMaisVisitadas');?>">Cidades visitadas</a>
                     </div>
                 </div>
             </li>
@@ -131,7 +155,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Viagens:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Todas</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Todas</a>
                         <a class="collapse-item" href="utilities-border.html">Pendentes</a>
                         <a class="collapse-item" href="utilities-animation.html">Aprovadas</a>            
                     </div>
@@ -440,7 +464,7 @@
                 <div class="modal-body">Sua sessão será encerrada ao sair.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="LoginController/removerSessao">Sair</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('index.php/usuario/removerSessao');?>">Sair</a>
                 </div>
             </div>
         </div>

@@ -14,8 +14,10 @@
             $this->listar();
         }
 
-        public function listar($indice = 0){
+        public function listar($indice = 1){
 
+            $indice--;
+            
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
@@ -24,7 +26,7 @@
                 'tabela'=> $this->tabela(
                     $this->Telefone_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -101,7 +103,7 @@
 
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Número</td>
                         <td>Contato</td>
@@ -118,7 +120,7 @@
                 $usuario = $this->Usuario_Model->retriveId($telefone['usuarioId']);
 
                 $line .= 
-                    "<tr> 
+                    "<tr class='text-center'> 
                             <td>{$telefone['id']}</td>
                             <td>{$telefone['numero']}</td>
                             <td>{$telefone['contato']}</td>
@@ -136,31 +138,15 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('telefone');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Telefone_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
-
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
-
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/telefone/listar/{$index}'>" . ($index + 1) . "</a>
-                        </div>"
-                    ;
-                }
-
-                $buttons .= "</div>";
-
-                return $buttons;
         }
 
     }

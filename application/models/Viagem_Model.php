@@ -46,13 +46,13 @@
         }
 
         
-        public function retriveUsuarioId($usuarioId){
+        public function retriveUsuarioId($usuarioId,$indiceInicial,$mostrar){
             
             $resultado = 
             $this->db
                 ->where('usuarioId',$usuarioId)
                 ->order_by('dataIda')
-                ->get(self::$TABELA_DB); 
+                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
             
             return $this->montarObjetoViagem($resultado->result());
         }
@@ -114,6 +114,60 @@
             return $this->db->count_all_results(self::$TABELA_DB);
         }
 
+        /*
+      
+        $query = $this->db->query('SELECT name, title, email FROM my_table');
 
+            foreach ($query->result() as $row)
+            {
+                    echo $row->title;
+                    echo $row->name;
+                    echo $row->email;
+            }
+
+            echo 'Total Results: ' . $query->num_rows();
+        */
+        public function cidadesNacionaisMaisVisitadas(){
+            
+            $query = $this->db->query(
+                "
+                    SELECT v.territorio, c.nome, c.id, c.estadoId, COUNT(*) 
+                        FROM viagem as v
+
+                        INNER JOIN endereco as e
+                        ON e.id = v.enderecoId and v.territorio = 'NACIONAL'
+
+                        JOIN bairro as b
+                        ON e.bairroId = b.id
+
+                        JOIN cidade as c
+                        ON b.cidadeId = c.id
+
+                        GROUP BY c.nome
+                        HAVING count(*) >= 0
+                ");
+            
+            $dados = [];
+
+            $count = "COUNT(*)";
+
+            foreach ($query->result() as $row)
+            {
+
+                $estado = $this->Estado_Model->retriveId($row->estadoId);
+                $estado_nome = $estado[0]['nome'] . "/" . $estado[0]['sigla'];
+
+                $cidade = array( 
+                    'cidade_nome' => $row->nome,
+                    'count' => $row->$count,
+                    'estado_nome' => $estado_nome,
+                );
+
+                array_push($dados,$cidade);
+            }
+
+            //var_dump($dados);
+            return $dados;
+        }
     }
 ?>

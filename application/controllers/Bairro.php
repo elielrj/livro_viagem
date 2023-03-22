@@ -15,8 +15,10 @@
             $this->listar();
         }
 
-        public function listar($indice = 0){
+        public function listar($indice = 1){
 
+            $indice--;
+            
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
@@ -25,7 +27,7 @@
                 'tabela'=> $this->tabela(
                     $this->Bairro_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -172,7 +174,7 @@
         public function tabela($listaDeBairros){
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Bairro</td>
                         <td>Cidade</td>
@@ -190,13 +192,13 @@
                 $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
 
                 $line .= 
-                    "<tr> 
+                    "<tr class='text-center'> 
                             <td>{$bairro['id']}</td>
                             <td>{$bairro['nome']}</td>
                             <td>{$cidade[0]['nome']}</td>
                             <td>{$estado[0]['nome']}</td>
                             <td>{$estado[0]['sigla']}</td>
-                            <td><a href='" . base_url() . "index.php/bairro/alterar/" . $bairro['id'] . "'>Alterar</a></td>
+                            <td class='text-center'><a href='" . base_url() . "index.php/bairro/alterar/" . $bairro['id'] . "'>Alterar</a></td>
                             <td><a href='" . base_url() . "index.php/bairro/deletar/" . $bairro['id'] . "'>Excluir</a></td>
                     </tr>"
                 ;
@@ -208,31 +210,15 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('bairro');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Bairro_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
-
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
-
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/bairro/listar/{$index}'>" . ($index + 1) . "</a>
-                        </div>"
-                    ;
-                }
-
-                $buttons .= "</div>";
-
-                return $buttons;
         }
         
     }

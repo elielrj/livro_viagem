@@ -15,8 +15,10 @@
             $this->listar();
         }
 
-        public function listar($indice = 0){
+        public function listar($indice = 1){
 
+            $indice--;
+            
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
@@ -25,7 +27,7 @@
                 'tabela'=> $this->tabela(
                     $this->Cidade_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -140,7 +142,7 @@
         public function tabela($listaDeCidade){
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Cidade</td>
                         <td>Estado</td>
@@ -156,7 +158,7 @@
                 $estado = $this->Estado_Model->retriveId($cidade['estadoId']);
                 
                 $line .= 
-                    "<tr> 
+                    "<tr class='text-center'> 
                             <td>{$cidade['id']}</td>
                             <td>{$cidade['nome']}</td>
                             <td>{$estado[0]['nome']}</td>
@@ -173,32 +175,15 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('cidade');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Cidade_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
-
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
-
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/cidade/listar/{$index}' >" . ($index + 1) . "</a>
-                        </div>"
-                    ;
-                }
-
-                $buttons .= "</div>";
-
-                return $buttons;
         }
     }
 ?>

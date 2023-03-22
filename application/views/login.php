@@ -1,10 +1,3 @@
-<?php
- //  var_dump("Email " . $this->session->email);
-  // var_dump("Email: " . $this->session->email_valido);
-  //  var_dump("Senha: " . $this->session->senha_valida);
-    //var_dump($this->session);
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -51,7 +44,7 @@
                                     
                                         
                                     
-                                        <form class="user" id="form" action="index.php/loginController/logar" method="POST" >
+                                        <form class="user" id="form" action="index.php/usuario/logar" method="POST" >
                                         
 
                                             <?php

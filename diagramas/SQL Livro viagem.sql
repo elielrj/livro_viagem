@@ -1,7 +1,7 @@
 
 drop database livro_viagem;
 drop database mydb;
--- MySQL Workbench Forward Engineering
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -66,25 +66,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `livro_viagem`.`Endereco`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `livro_viagem`.`Endereco` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(100) NOT NULL,
-  `logradouro` VARCHAR(100) NOT NULL,
-  `numero` VARCHAR(100) NOT NULL,
-  `bairroId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Endereco_Bairro1_idx` (`bairroId` ASC) VISIBLE,
-  CONSTRAINT `fk_Endereco_Bairro1`
-    FOREIGN KEY (`bairroId`)
-    REFERENCES `livro_viagem`.`Bairro` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `livro_viagem`.`Hierarquia`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `livro_viagem`.`Hierarquia` (
@@ -94,6 +75,35 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Hierarquia` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `postoOuGraduacao_UNIQUE` (`postoOuGraduacao` ASC) VISIBLE,
   UNIQUE INDEX `sigla_UNIQUE` (`sigla` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `livro_viagem`.`NivelDeAcesso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `livro_viagem`.`NivelDeAcesso` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `poder` ENUM("Ler", "Escrever", "Despachar", "Administrar") NOT NULL,
+  `status` TINYINT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `livro_viagem`.`Funcao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `livro_viagem`.`Funcao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(45) NOT NULL,
+  `status` TINYINT NOT NULL,
+  `nivelDeAcessoId` INT NOT NULL,
+  PRIMARY KEY (`id`, `nivelDeAcessoId`),
+  INDEX `fk_Funcao_NivelDeAcesso1_idx` (`nivelDeAcessoId` ASC) VISIBLE,
+  CONSTRAINT `fk_Funcao_NivelDeAcesso1`
+    FOREIGN KEY (`nivelDeAcessoId`)
+    REFERENCES `livro_viagem`.`NivelDeAcesso` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -109,12 +119,45 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Usuario` (
   `hierarquiaId` INT NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `senha` VARCHAR(100) NOT NULL,
+  `funcaoId` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Usuario_Hierarquia1_idx` (`hierarquiaId` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  INDEX `fk_Usuario_Funcao1_idx` (`funcaoId` ASC) VISIBLE,
   CONSTRAINT `fk_Usuario_Hierarquia1`
     FOREIGN KEY (`hierarquiaId`)
     REFERENCES `livro_viagem`.`Hierarquia` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_Funcao1`
+    FOREIGN KEY (`funcaoId`)
+    REFERENCES `livro_viagem`.`Funcao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `livro_viagem`.`Endereco`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `livro_viagem`.`Endereco` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `logradouro` VARCHAR(100) NOT NULL,
+  `numero` VARCHAR(100) NOT NULL,
+  `bairroId` INT NOT NULL,
+  `usuarioId` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Endereco_Bairro1_idx` (`bairroId` ASC) VISIBLE,
+  INDEX `fk_Endereco_Usuario1_idx` (`usuarioId` ASC) VISIBLE,
+  CONSTRAINT `fk_Endereco_Bairro1`
+    FOREIGN KEY (`bairroId`)
+    REFERENCES `livro_viagem`.`Bairro` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Endereco_Usuario1`
+    FOREIGN KEY (`usuarioId`)
+    REFERENCES `livro_viagem`.`Usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -149,6 +192,9 @@ CREATE TABLE IF NOT EXISTS `livro_viagem`.`Viagem` (
   `motivo` ENUM("PARTICULAR", "SERVICO") NOT NULL,
   `usuarioId` INT NOT NULL,
   `enderecoId` INT NOT NULL,
+  `dataIda` DATE NOT NULL,
+  `dataVolta` DATE NOT NULL,
+  `observacao` VARCHAR(250) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Viagem_Usuario1_idx` (`usuarioId` ASC) VISIBLE,
   INDEX `fk_Viagem_Endereco1_idx` (`enderecoId` ASC) VISIBLE,

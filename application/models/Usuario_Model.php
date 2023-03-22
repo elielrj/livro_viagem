@@ -75,7 +75,8 @@
                     $linha->ultimoAcesso,
                     $linha->hierarquiaId,
                     $linha->email,
-                    $linha->senha
+                    $linha->senha,
+                    $linha->funcaoId,
                 );
 
                 array_push($listaDeUsuarios, $usuario);
@@ -91,7 +92,8 @@
             $ultimoAcesso,
             $hierarquiaId,
             $email,
-            $senha){            
+            $senha,
+            $funcaoId){            
         
             return array(
                 'id' => $id,
@@ -102,6 +104,7 @@
                 'hierarquiaId' => $hierarquiaId,
                 'email' => $email,
                 'senha' => $senha,
+                'funcaoId' => $funcaoId,
             );
         }
 

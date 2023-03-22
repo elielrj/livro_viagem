@@ -2,10 +2,6 @@
 
 <!-- título -->    
 <h1><?php echo $titulo ?></h1>
-
-    <a class="btn btn-primary btn-sm" 
-        href="<?php echo base_url('index.php/viagem/novo')?>">
-        NOVO</a>
     
     </br>
     </br>
@@ -16,6 +12,3 @@
             <?php echo $tabela; ?>
         </table>
     </table>
-
-    <!-- botão na horizontal --> 
-    <?php echo "<div class='row'>{$botoes}</div>"; ?>

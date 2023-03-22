@@ -29,7 +29,7 @@
             $resultado = $this->db->get(
                 self::$TABELA_DB,
                 $mostrar,
-                $indiceInicial
+                $indiceInicial                
             ); 
 
             return $this->montarObjetoCidade($resultado->result());

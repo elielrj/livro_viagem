@@ -4,7 +4,7 @@
     $input_aprovada = array('name' => 'aprovada','type' => 'hidden', 'value' => false);
     $input_usuario = array('name' => 'usuarioId','type' => 'hidden', 'value' => $usuario[0]['id']);
     $form_dropdown_endereco = array('class' => 'form-control', 'id' => 'bairroId');
-    $input_date_ida = array('name' => 'dataIda', 'class' => '', 'type' => 'date');
+    $input_date_ida = array('name' => 'dataIda', 'class' => 'panel panel-default', 'type' => 'date');
     $input_date_volta = array('name' => 'dataVolta', 'class' => '', 'type' => 'date');
     $form_textarea = array('class' => 'form-control');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');

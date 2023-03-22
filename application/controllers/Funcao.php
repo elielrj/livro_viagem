@@ -1,11 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-    class Estado extends CI_Controller{
+    class Funcao extends CI_Controller{
 
-        public static $PAGINA_TITULO = 'Cadastro de Estados';
-        public static $PAGINA_INDEX = 'estado/index.php';
-        public static $PAGINA_FORM_CREATE = 'estado/novo.php';
-        public static $PAGINA_FORM_UPDATE = 'estado/alterar.php';
+        public static $PAGINA_TITULO = 'Cadastro de Funções';
+        public static $PAGINA_INDEX = 'funcao/index.php';
+        public static $PAGINA_FORM_CREATE = 'funcao/novo.php';
+        public static $PAGINA_FORM_UPDATE = 'funcao/alterar.php';
 
         public function __contruct(){            
             parent::__contruct();              
@@ -25,7 +25,7 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Estado_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Funcao_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botoes($indice,$mostrar),
             );
@@ -38,6 +38,7 @@
             $dados = array(
                 'titulo' => self::$PAGINA_TITULO,
                 'pagina' => self::$PAGINA_FORM_CREATE,
+                'select_nivelDeAcesso' => $this->NivelDeAcesso_Model->selectNivelDeAcesso(),
             );
 
             $this->load->view('index', $dados);
@@ -47,24 +48,29 @@
 
             $data = $this->input->post();
             
-            $estado = 
-            $this->Estado_Model->estado(
+            $funcao = 
+            $this->Funcao_Model->funcao(
                 null,
-                ucwords(strtolower($data['nome'])),
-                mb_strtoupper($data['sigla']),
+                ucwords(strtoupper($data['descricao'])),
+                $data['status'],
+                $data['nivelDeAcessoId'],
             );
 
-            $this->Estado_Model->create($estado);
+            $this->Funcao_Model->criar($funcao);
 
-            redirect('estado');       
+            redirect('funcao');       
         }
 
         public function alterar($id){                
-                        
+                      
+            $tabela = $this->Funcao_Model->retriveId($id);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'pagina'=> self::$PAGINA_FORM_UPDATE,
-                'tabela'=> $this->Estado_Model->retriveId($id),
+                'tabela'=> $tabela,
+                'select_nivelDeAcesso' => $this->NivelDeAcesso_Model->selectNivelDeAcesso(),
+                'selected_nivelDeAcesso' => $tabela[0]['nivelDeAcessoId'],
             );
 
             $this->load->view('index',$dados);
@@ -74,62 +80,53 @@
 
             $data = $this->input->post();
             
-            $estado = 
-            $this->Estado_Model->estado(
+            $funcao = 
+            $this->Funcao_Model->funcao(
                 $data['id'],
-                ucwords(strtolower(($data['nome']))),
-                mb_strtoupper($data['sigla'])
+                ucwords(strtoupper($data['descricao'])),
+                $data['status'],
+                $data['nivelDeAcessoId'],
             );
 
-            $this->Estado_Model->update($estado);
+            $this->Funcao_Model->update($funcao);
 
-            redirect('estado');
+            redirect('funcao');
         }
 
         public function deletar($id){            
 
-            $this->Estado_Model->delete($id);
+            $this->Funcao_Model->delete($id);
 
-            redirect('estado');
+            redirect('funcao');
         }
 
- /*       public function select($estadoId = null){
-
-            $options = "<option value''>Selecione o Estado</option>";
-
-            foreach($this->listar() as $estado){
-
-                $selected = ($estado->id == $estadoId) ? "selected" : "";
-
-                $options .= "<option value='{$estado->id}' {$selected}>{$estado->nome}/{$estado->sigla}</option>";
-            }
-
-            return $options;
-        }*/
-
-        public function tabela($listaDeEstados){
+        public function tabela($listaDeFucoes){
 
             $line =
                 "
                     <tr class='text-center'>
                         <td>Id</td>
-                        <td>Estado</td>
-                        <td>Sigla</td>
+                        <td>Poder</td>
+                        <td>Status</td>
+                        <td>Nível de Acesso</td>
                         <td>Alterar</td>
                         <td>Excluir</td>
                     </tr>
                 "
             ;
 
-            foreach($listaDeEstados as $estado){
+            foreach($listaDeFucoes as $funcao){
+
+                $nivelDeAcesso = $this->NivelDeAcesso_Model->retriveId($funcao['nivelDeAcessoId']);
 
                 $line .= 
                     "<tr class='text-center'> 
-                            <td>{$estado['id']}</td>
-                            <td>{$estado['nome']}</td>
-                            <td>{$estado['sigla']}</td>
-                            <td><a href='" . base_url() . "index.php/estado/alterar/" . $estado['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/estado/deletar/" . $estado['id'] . "'>Excluir</a></td>
+                            <td>{$funcao['id']}</td>
+                            <td>{$funcao['descricao']}</td>
+                            <td>{$funcao['status']}</td>
+                            <td>{$nivelDeAcesso[0]['poder']}</td>
+                            <td><a href='" . base_url() . "index.php/funcao/alterar/" . $funcao['id'] . "'>Alterar</a></td>
+                            <td><a href='" . base_url() . "index.php/funcao/deletar/" . $funcao['id'] . "'>Excluir</a></td>
                     </tr>"
                 ;
 
@@ -142,12 +139,12 @@
             $mostrar){
 
                 include_once('Botao.php');
-                $botao = new Botao('estado');
+                $botao = new Botao('funcao');
                 
                 return 
                 $botao->paginar(
                     $indiceInicial,
-                    $this->Estado_Model->quantidade(),
+                    $this->Funcao_Model->quantidade(),
                     $mostrar);
         }
     }

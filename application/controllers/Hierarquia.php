@@ -14,8 +14,10 @@
             $this->listar();
         }
 
-        public function listar($indice = 0){
+        public function listar($indice = 1){
 
+            $indice--;
+            
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
@@ -24,7 +26,7 @@
                 'tabela'=> $this->tabela(
                     $this->Hierarquia_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indiceInicial,$mostrar),
+                'botoes'=> $this->botoes($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -95,7 +97,7 @@
         public function tabela($listaDeHierarquias){
             $line =
                 "
-                    <tr>
+                    <tr class='text-center'>
                         <td>Id</td>
                         <td>Posto ou Graduação</td>
                         <td>Sigla</td>
@@ -108,7 +110,7 @@
             foreach($listaDeHierarquias as $hierarquia){
 
                 $line .= 
-                    "<tr> 
+                    "<tr class='text-center'> 
                             <td>{$hierarquia['id']}</td>
                             <td>{$hierarquia['postoOuGraduacao']}</td>
                             <td>{$hierarquia['sigla']}</td>
@@ -124,31 +126,15 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-                 
-                include_once('ContadorDeBotoesDaPagina.php');
-                $contador = new ContadorDeBotoesDaPagina();
 
-                $contador->contarNumeroDePaginas(
+                include_once('Botao.php');
+                $botao = new Botao('hierarquia');
+                
+                return 
+                $botao->paginar(
                     $indiceInicial,
                     $this->Hierarquia_Model->quantidade(),
                     $mostrar);
-        
-                $buttons = "<div class='row'>";
-                for($index = $contador->inicio ; $index < $contador->ultimaPagina ; $index++){
-
-                    $disabled = ($index == $contador->apartirDoIndiceDoVetor) ? 'disabled' : '';
-
-                    $buttons .= 
-                        "<div class='col-md-1'>
-                            <a class='btn btn-primary {$disabled}' 
-                                href='" . base_url() . "index.php/hierarquia/listar/{$index}'>" . ($index + 1) . "</a>
-                        </div>"
-                    ;
-                }
-
-                $buttons .= "</div>";
-
-                return $buttons;
         }
 
     }
