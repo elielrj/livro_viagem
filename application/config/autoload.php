@@ -135,7 +135,6 @@ $autoload['language'] = array();
 $autoload['model'] = array(
     'Estado_Model',
     'Cidade_Model',
-    'Bairro_Model',
     'Endereco_Model',
     'Viagem_Model',
     'Usuario_Model',

@@ -62,8 +62,6 @@
                 'selected_estado' => array('id' => 24),
                 'select_cidade' => $this->selectCidade(24),
                 'selected_cidade' => array('id' => 4429),
-                'select_bairro' => $this->selectBairro(4429),
-                'selected_bairro' => array('id' => 13),
             );
 
             $this->load->view('index', $dados);
@@ -79,7 +77,8 @@
                 ucwords(strtolower($data['nome'])),
                 ucwords(strtolower($data['logradouro'])),
                 ucwords(strtolower($data['numero'])),
-                $data['bairroId'],
+                ucwords(strtolower($data['bairro'])),
+                $data['cidadeId'],
                 $this->session->id,
             );
 
@@ -92,9 +91,8 @@
 
             $tabela = $this->Endereco_Model->retriveId($id);
 
-            $bairro_selected = $this->Bairro_Model->retriveId($tabela[0]['bairroId']);
 
-            $cidade_selected = $this->Cidade_Model->retriveId($bairro_selected[0]['cidadeId']);
+            $cidade_selected = $this->Cidade_Model->retriveId($tabela[0]['cidadeId']);
 
             $estado_selected = $this->Estado_Model->retriveId($cidade_selected[0]['estadoId']);
             
@@ -103,13 +101,11 @@
                 'pagina' => self::$PAGINA_FORM_UPDATE,
                 'tabela' => $tabela,
                 
-                'select_bairro' => $this->selectBairro($cidade_selected[0]['id']),
                 'select_cidade' => $this->selectCidade($estado_selected[0]['id']),
                 'select_estado' => $this->selectEstado(),                
                 
                 'selected_cidade' => $cidade_selected[0]['id'],
                 'selected_estado' => $estado_selected[0]['id'],                
-                'selected_bairro' => $bairro_selected[0]['id'],                
             );
 
             $this->load->view('index',$dados);
@@ -125,7 +121,8 @@
                 ucwords(strtolower($data['nome'])),
                 ucwords(strtolower($data['logradouro'])),
                 ucwords(strtolower($data['numero'])),
-                $data['bairroId'],
+                ucwords(strtolower($data['bairro'])),
+                $data['cidadeId'],
                 $data['usuarioId'],
             );
 
@@ -139,10 +136,6 @@
             $this->Endereco_Model->delete($id);
 
             redirect('endereco');
-        }
-
-        public function selectBairro($cidadeId){            
-            return $this->Bairro_Model->selectBairro($cidadeId);
         }
 
         public function selectCidade($estadoId){            
@@ -176,8 +169,7 @@
                 foreach($listaDeEnderecos as $endereco){
 
                     $usuario = $this->Usuario_Model->retriveId($endereco['usuarioId']); 
-                    $bairro = $this->Bairro_Model->retriveId($endereco['bairroId']);
-                    $cidade = $this->Cidade_Model->retriveId($bairro[0]['cidadeId']);
+                    $cidade = $this->Cidade_Model->retriveId($endereco['cidadeId']);
                     $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
 
                     $line .= 
@@ -186,7 +178,7 @@
                                 <td>{$endereco['nome']}</td>
                                 <td>{$endereco['logradouro']}</td>
                                 <td>{$endereco['numero']}</td>
-                                <td>{$bairro[0]['nome']}</td>
+                                <td>{$endereco['bairro']}</td>
                                 <td>{$cidade[0]['nome']}</td>
                                 <td>{$estado[0]['nome']}</td>
                                 <td>{$estado[0]['sigla']}</td>

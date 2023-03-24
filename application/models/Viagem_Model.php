@@ -134,17 +134,14 @@
             
             $query = $this->db->query(
                 "
-                    SELECT v.territorio, c.nome, c.id, c.estadoId, COUNT(*) 
+                    SELECT v.territorio, c.nome, c.estadoId, c.id, COUNT(*) 
                         FROM viagem as v
 
                         INNER JOIN endereco as e
                         ON e.id = v.enderecoId and v.territorio = 'NACIONAL'
 
-                        JOIN bairro as b
-                        ON e.bairroId = b.id
-
                         JOIN cidade as c
-                        ON b.cidadeId = c.id
+                        ON e.cidadeId = c.id
 
                         GROUP BY c.nome
                         HAVING count(*) >= 0

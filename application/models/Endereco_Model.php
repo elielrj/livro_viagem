@@ -73,7 +73,8 @@
                     $linha->nome,
                     $linha->logradouro,
                     $linha->numero,
-                    $linha->bairroId,
+                    $linha->bairro,
+                    $linha->cidadeId,
                     $linha->usuarioId,
                 );
 
@@ -82,14 +83,15 @@
             return $listaDeEnderecos;
         }
         
-        public function endereco($id,$nome,$logradouro,$numero,$bairroId,$usuarioId){            
+        public function endereco($id,$nome,$logradouro,$numero,$bairro,$cidadeId,$usuarioId){            
         
             return array(
                 'id' => $id,
                 'nome' => $nome,
                 'logradouro' => $logradouro,
                 'numero' => $numero,
-                'bairroId' => $bairroId,
+                'bairro' => $bairro,
+                'cidadeId' => $cidadeId,
                 'usuarioId' => $usuarioId,
             );
         }
@@ -101,11 +103,10 @@
         public function toString($endereco){
             
 
-            $bairro = $this->Bairro_Model->retriveId($endereco['bairroId']);
-            $cidade = $this->Cidade_Model->retriveId($bairro[0]['cidadeId']);
+            $cidade = $this->Cidade_Model->retriveId($endereco['cidadeId']);
             $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
 
-            $endereco_string = "{$endereco['logradouro']}, {$endereco['numero']}, {$bairro[0]['nome']}"
+            $endereco_string = "{$endereco['logradouro']}, {$endereco['numero']}, {$endereco['bairro']}"
                 . "{$cidade[0]['nome']}, {$estado[0]['nome']}";
             
             return $endereco_string;

@@ -185,5 +185,24 @@
                     $this->Cidade_Model->quantidade(),
                     $mostrar);
         }
+
+        public function optionsCidade($estadoId = null){
+
+            if($estadoId == null){
+
+                $data = $this->input->post();
+
+                $estadoId = $data['estadoId'];                
+            }          
+            
+            $options = "<option>Selecione uma cidade</option>";
+
+            foreach($this->Cidade_Model->selectCidade($estadoId) as $key => $value){
+                            
+                $options .= "<option value='{$key}'>{$value}</option>";
+            }
+            
+            echo $options;
+        }
     }
 ?>

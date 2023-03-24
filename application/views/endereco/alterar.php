@@ -3,13 +3,13 @@
     $input_id = array('name' => 'id','type' => 'hidden', 'value' => $tabela[0]['id']);
     $input_usuarioId = array('name' => 'usuarioId','type' => 'hidden', 'value' => $tabela[0]['usuarioId']);
     $input_nome = array('name' => 'nome', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['nome']);
+    $input_bairro = array('name' => 'bairro', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['bairro']);
     $input_logradouro = array('name' => 'logradouro', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['logradouro']);
     $input_numero = array('name' => 'numero', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['numero']);
     $form_open = array('class' => 'form-group');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
     $form_dropdown_estado = array('class' => 'form-control', 'id' => 'estadoId' );
     $form_dropdown_cidade = array('class' => 'form-control', 'id' => 'cidadeId');
-    $form_dropdown_bairro = array('class' => 'form-control', 'id' => 'bairroId');
 
 
     echo "<h1>{$titulo}</h1>";
@@ -52,8 +52,7 @@
     echo form_label('Bairro');
 
     echo "</br>";
-
-    echo form_dropdown("bairroId", $select_bairro, $selected_bairro, $form_dropdown_bairro);
+    echo form_input($input_bairro);
 
     echo "</br>";
     
@@ -82,13 +81,10 @@
             $('#cidadeId').attr('disabled','disabled');
             $('#cidadeId').html('<option>Carregando...</option>');
             
-            $('#bairroId').html('<option>Selecione uma cidade...</option>');
-            $('#bairroId').attr('disabled','disabled');
-
             var estadoId = $('#estadoId').val();
             
             $.post(
-                "<?php echo base_url('index.php/bairro/optionsCidade') ?>",
+                "<?php echo base_url('index.php/cidade/optionsCidade') ?>",
                 {estadoId:estadoId},
                 function(data){
                     $('#cidadeId').html(data);
@@ -96,23 +92,6 @@
                 }
             );
         });    
-        
-        $('#cidadeId').change(function(){
-
-            $('#bairroId').attr('disabled','disabled');
-            $('#bairroId').html('<option>Carregando...</option>');
-
-            var cidadeId = $('#cidadeId').val();
-            
-            $.post(
-                "<?php echo base_url('index.php/bairro/optionsBairro') ?>",
-                {cidadeId:cidadeId},
-                function(data){
-                    $('#bairroId').html(data);
-                    $('#bairroId').removeAttr('disabled');
-                }
-            );
-        }); 
         
     });
 </script>

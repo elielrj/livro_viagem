@@ -95,6 +95,7 @@
                 $dataIda->format('Y-m-d'),
                 $dataVolta->format('Y-m-d'),
                 $data['observacao'],
+                false,
             );
 
             $this->Viagem_Model->criar($viagem);
@@ -136,6 +137,7 @@
                 $data['dataIda'],
                 $data['dataVolta'],
                 $data['observacao'],
+                $data['analisada'],
             );
 
             $this->Viagem_Model->update($viagem);
@@ -241,7 +243,7 @@
             $this->load->view('index',$dados);
         }
 
-        public function tabela($listaDeBairros){
+        public function tabela($listaDeViagens){
             $line =
                 "
                     <tr class='text-center'>
@@ -261,7 +263,7 @@
                 "
             ;
 
-            foreach($listaDeBairros as $viagem){
+            foreach($listaDeViagens as $viagem){
 
                 $usuario = $this->Usuario_Model->retriveId($viagem['usuarioId']);
                 $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
@@ -294,7 +296,7 @@
             return $line;
         }
 
-        public function tabelaAprovar($listaDeBairros){
+        public function tabelaAprovar($listaDeViagens){
             $line =
                 "
                     <tr class='text-center'>
@@ -314,7 +316,7 @@
                 "
             ;
 
-            foreach($listaDeBairros as $viagem){
+            foreach($listaDeViagens as $viagem){
 
                 $usuario = $this->Usuario_Model->retriveId($viagem['usuarioId']);
                 $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
@@ -372,7 +374,7 @@
             return $line;
         }
 
-        public function tabelaAnalisadas($listaDeBairros){
+        public function tabelaAnalisadas($listaDeViagens){
             $line =
                 "
                     <tr class='text-center'>
@@ -390,7 +392,7 @@
                 "
             ;
 
-            foreach($listaDeBairros as $viagem){
+            foreach($listaDeViagens as $viagem){
 
                 $usuario = $this->Usuario_Model->retriveId($viagem['usuarioId']);
                 $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
