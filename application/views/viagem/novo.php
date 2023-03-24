@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
     $form_open = array('class' => 'form-group');
-    $input_aprovada = array('name' => 'aprovada','type' => 'hidden', 'value' => false);
+    $input_aprovada = array('name' => 'aprovada','type' => 'hidden');
     $input_usuario = array('name' => 'usuarioId','type' => 'hidden', 'value' => $usuario[0]['id']);
     $form_dropdown_endereco = array('class' => 'form-control', 'id' => 'bairroId');
     $input_date_ida = array('name' => 'dataIda', 'class' => 'panel panel-default', 'type' => 'date');

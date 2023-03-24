@@ -3,7 +3,12 @@
     class Viagem extends CI_Controller{
 
         public static $PAGINA_TITULO = 'Cadastro de Viagens';
+        public static $PAGINA_TITULO_NAO_AUTORIZADAS = 'Viagens Não Autorizadas';
+        public static $PAGINA_TITULO_AUTORIZADAS = 'Viagens Autorizadas';
+        public static $PAGINA_TITULO_NAO_ANALISADA = 'Viagens Não Analisada';
+        public static $PAGINA_TITULO_VIGEM_ANALISADA = 'Viagens Analisada';
         public static $PAGINA_INDEX = 'viagem/index.php';
+        public static $PAGINA_APROVAR = 'viagem/aprovar.php';
         public static $PAGINA_FORM_CREATE = 'viagem/novo.php';
         public static $PAGINA_FORM_UPDATE = 'viagem/alterar.php';
 
@@ -82,7 +87,7 @@
             $viagem = 
             $this->Viagem_Model->viagem(
                 null,
-                $data['aprovada'],
+                null,
                 $data['territorio'],
                 $data['motivo'],
                 $data['usuarioId'],
@@ -145,6 +150,97 @@
             redirect('viagem');
         }
 
+        public function aprovar($id){                
+            $this->aprovarAnalisarViagem($id,true);
+        }
+
+        public function naoAprovar($id){              
+            $this->aprovarAnalisarViagem($id,false);
+        }
+
+        private function aprovarAnalisarViagem($id,$estaAprovada){
+            $viagem = $this->Viagem_Model->retriveId($id);
+
+            $viagem[0]['aprovada'] = $estaAprovada;
+            $viagem[0]['analisada'] = true;
+
+            $this->Viagem_Model->update($viagem[0]);
+
+            redirect('viagem/viagensNaoAnalisada');
+        }
+/*
+        public function  viagensNaoAprovadas($indice = 1){
+
+            $indice--;
+            
+            $mostrar = 10;
+            $indiceInicial  = $indice * $mostrar;
+
+            $dados = array(
+                'titulo'=> self::$PAGINA_TITULO_NAO_AUTORIZADAS,
+                'tabela'=> $this->tabelaAprovar(
+                    $this->Viagem_Model->retriveViagensNaoAprovadas($indiceInicial,$mostrar)),
+                'pagina'=> self::$PAGINA_INDEX,
+                'botoes'=> $this->botoes($indice,$mostrar),
+            );
+            
+            $this->load->view('index',$dados);
+        }
+
+        public function  viagensAprovadas($indice = 1){
+
+            $indice--;
+            
+            $mostrar = 10;
+            $indiceInicial  = $indice * $mostrar;
+
+            $dados = array(
+                'titulo'=> self::$PAGINA_TITULO_AUTORIZADAS,
+                'tabela'=> $this->tabelaAprovar(
+                    $this->Viagem_Model->retriveViagensAprovadas($indiceInicial,$mostrar)),
+                'pagina'=> self::$PAGINA_INDEX,
+                'botoes'=> $this->botoes($indice,$mostrar),
+            );
+            
+            $this->load->view('index',$dados);
+        }
+*/
+        public function  viagensNaoAnalisada($indice = 1){
+
+            $indice--;
+            
+            $mostrar = 10;
+            $indiceInicial  = $indice * $mostrar;
+
+            $dados = array(
+                'titulo'=> self::$PAGINA_TITULO_NAO_ANALISADA,
+                'tabela'=> $this->tabelaAprovar(
+                    $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar)),
+                'pagina'=> self::$PAGINA_APROVAR,
+                'botoes'=> $this->botoes($indice,$mostrar),
+            );
+            
+            $this->load->view('index',$dados);
+        }
+
+        public function  viagensAnalisada($indice = 1){
+
+            $indice--;
+            
+            $mostrar = 10;
+            $indiceInicial  = $indice * $mostrar;
+
+            $dados = array(
+                'titulo'=> self::$PAGINA_TITULO_VIGEM_ANALISADA,
+                'tabela'=> $this->tabelaAnalisadas(
+                    $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar)),
+                'pagina'=> self::$PAGINA_APROVAR,
+                'botoes'=> $this->botoes($indice,$mostrar),
+            );
+            
+            $this->load->view('index',$dados);
+        }
+
         public function tabela($listaDeBairros){
             $line =
                 "
@@ -152,12 +248,13 @@
                         <td>Id</td>
                         <td>Aprovada</td>
                         <td>Território</td>
-                        <td>Motivo da Viagem</td>
+                        <td>Motivo</td>
                         <td>Usuário</td>
                         <td>Endereço</td>
                         <td>Data Ida</td>
                         <td>Data Volta</td>
                         <td>Observação</td>
+                        <td>Análisada</td>
                         <td>Alterar</td>
                         <td>Excluir</td>
                     </tr>
@@ -170,13 +267,16 @@
                 $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
                 $endereco_string = $this->Endereco_Model->toString($endereco[0]);
 
-                $color = ($viagem['aprovada'] == 0) ? 'red' : 'green';
-                $resultado = (($viagem['aprovada'] == 1) ? 'Sim' : 'Não');
+                $color_aprovado = ($viagem['aprovada'] == 0) ? 'red' : 'green';
+                $aprovado = (($viagem['aprovada'] == 1) ? 'Sim' : 'Não');
+
+                $color_analisada = ($viagem['analisada'] == 0) ? 'red' : 'green';
+                $analisada = (($viagem['analisada'] == 1) ? 'Sim' : 'Não');
 
                 $line .= 
                     "<tr class='text-center'> 
                             <td>{$viagem['id']}</td>
-                            <td><p class='text-center' style='color:$color'>" . $resultado ."</td>
+                            <td><p class='text-center' style='color:$color_aprovado'>" . $aprovado ."</td>
                             <td>{$viagem['territorio']}</td>
                             <td>{$viagem['motivo']}</td>
                             <td>{$usuario[0]['nome']}</td>
@@ -184,8 +284,159 @@
                             <td>{$viagem['dataIda']}</td>
                             <td>{$viagem['dataVolta']}</td>
                             <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
+                            <td><p class='text-center' style='color:$color_analisada'>" . $analisada ."</td>
                             <td><a href='" . base_url() . "index.php/viagem/alterar/" . $viagem['id'] . "'>Alterar</a></td>
                             <td><a href='" . base_url() . "index.php/viagem/deletar/" . $viagem['id'] . "'>Excluir</a></td>
+                    </tr>"
+                ;
+
+            }
+            return $line;
+        }
+
+        public function tabelaAprovar($listaDeBairros){
+            $line =
+                "
+                    <tr class='text-center'>
+                        <td>Id</td>
+                        <td>Aprovada</td>
+                        <td>Território</td>
+                        <td>Motivo</td>
+                        <td>Usuário</td>
+                        <td>Endereço</td>
+                        <td>Data Ida</td>
+                        <td>Data Volta</td>
+                        <td>Observação</td>
+                        <td>Análisada</td>
+                        <td>Autorizar</td>
+                        <td>Não Autorizar</td>
+                    </tr>
+                "
+            ;
+
+            foreach($listaDeBairros as $viagem){
+
+                $usuario = $this->Usuario_Model->retriveId($viagem['usuarioId']);
+                $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
+                $endereco_string = $this->Endereco_Model->toString($endereco[0]);
+
+                $analisada = (($viagem['analisada'] == 1) ? 'Sim' : 'Não');
+
+                $aprovada = ($viagem['aprovada'] == null) 
+                    ? '(Não Análisada)' 
+                    : ($viagem['aprovada'] == 1) 
+                        ? 'Aprovada' 
+                        : 'Não Aprovada';
+                    
+
+                if($viagem['aprovada'] == null){
+                    
+                    $aprovada = '(Não Análisada)';
+                    $color_aprovado = 'red';
+                    $color_analisada = 'red';
+
+                }else if($viagem['aprovada'] == 1){
+
+                    $aprovada = 'Sim';
+                    $color_aprovado = 'green';
+                    $color_analisada = 'green';
+
+                }else if($viagem['aprovada'] == 0){
+
+                    $aprovada = 'Não';
+                    $color_aprovado = 'red';
+                    $color_analisada = 'green';
+
+                }
+
+                $line .= 
+                    "<tr class='text-center'> 
+                            <td>{$viagem['id']}</td>
+                            <td><p class='text-center' style='color:$color_aprovado'>" . nl2br($aprovada) . "</p></td>
+                            <td>{$viagem['territorio']}</td>
+                            <td>{$viagem['motivo']}</td>
+                            <td>{$usuario[0]['nome']}</td>
+                            <td>" . nl2br($endereco_string) . "</td>
+                            <td>{$viagem['dataIda']}</td>
+                            <td>{$viagem['dataVolta']}</td>
+                            <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
+                            <td><p class='text-center' style='color:$color_analisada'>" . $analisada . "</td>
+                            <td><a href='" . base_url() . "index.php/viagem/aprovar/" . nl2br($viagem['id']) . "'>Autorizar</a></td>
+                            <td><p class='text-center' style='color:$color_aprovado'>
+                                <a href='" . base_url() . "index.php/viagem/naoAprovar/" . nl2br($viagem['id']) . "'>Não Autorizar</a></p>
+                            </td>
+                    </tr>"
+                ;
+
+            }
+            return $line;
+        }
+
+        public function tabelaAnalisadas($listaDeBairros){
+            $line =
+                "
+                    <tr class='text-center'>
+                        <td>Id</td>
+                        <td>Aprovada</td>
+                        <td>Território</td>
+                        <td>Motivo</td>
+                        <td>Usuário</td>
+                        <td>Endereço</td>
+                        <td>Data Ida</td>
+                        <td>Data Volta</td>
+                        <td>Observação</td>
+                        <td>Análisada</td>
+                    </tr>
+                "
+            ;
+
+            foreach($listaDeBairros as $viagem){
+
+                $usuario = $this->Usuario_Model->retriveId($viagem['usuarioId']);
+                $endereco = $this->Endereco_Model->retriveId($viagem['enderecoId']);
+                $endereco_string = $this->Endereco_Model->toString($endereco[0]);
+
+                $analisada = (($viagem['analisada'] == 1) ? 'Sim' : 'Não');
+
+                $aprovada = ($viagem['aprovada'] == null) 
+                    ? '(Não Análisada)' 
+                    : ($viagem['aprovada'] == 1) 
+                        ? 'Aprovada' 
+                        : 'Não Aprovada';
+                    
+
+                if($viagem['aprovada'] == null){
+                    
+                    $aprovada = '(Não Análisada)';
+                    $color_aprovado = 'red';
+                    $color_analisada = 'red';
+
+                }else if($viagem['aprovada'] == 1){
+
+                    $aprovada = 'Sim';
+                    $color_aprovado = 'green';
+                    $color_analisada = 'green';
+
+                }else if($viagem['aprovada'] == 0){
+
+                    $aprovada = 'Não';
+                    $color_aprovado = 'red';
+                    $color_analisada = 'green';
+
+                }
+
+                $line .= 
+                    "<tr class='text-center'> 
+                            <td>{$viagem['id']}</td>
+                            <td><p class='text-center' style='color:$color_aprovado'>" . nl2br($aprovada) . "</p></td>
+                            <td>{$viagem['territorio']}</td>
+                            <td>{$viagem['motivo']}</td>
+                            <td>{$usuario[0]['nome']}</td>
+                            <td>" . nl2br($endereco_string) . "</td>
+                            <td>{$viagem['dataIda']}</td>
+                            <td>{$viagem['dataVolta']}</td>
+                            <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
+                            <td><p class='text-center' style='color:$color_analisada'>" . $analisada . "</td>
                     </tr>"
                 ;
 

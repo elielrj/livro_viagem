@@ -63,36 +63,43 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Banco de Dados Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Banco de Dados</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Tabela:</h6>
-                        
-                        <!-- tabela de endereços -->                        
-                        <a class="collapse-item" href="<?php echo base_url('index.php/estado');?>">Estado</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/cidade');?>">Cidade</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/bairro');?>">Bairro</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/endereco');?>">Endereços</a>
+            <?php
+                if($this->session->nivelDeAcesso['poder']=='Administrar'):
+            ?>
+                <!-- Nav Item - Banco de Dados Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Banco de Dados</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Tabela:</h6>
+                            
+                            <!-- tabela de endereços -->                        
+                            <a class="collapse-item" href="<?php echo base_url('index.php/estado');?>">Estado</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/cidade');?>">Cidade</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/bairro');?>">Bairro</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/endereco');?>">Endereços</a>
 
-                        <!-- viagem -->
-                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Viagem</a>
+                            <!-- viagem -->
+                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Viagem</a>
 
-                        <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/nivelDeAcesso');?>">Nível de Acesso</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/funcao');?>">Função</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/nivelDeAcesso');?>">Nível de Acesso</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/funcao');?>">Função</a>
 
 
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+
+            <?php
+                endif;
+            ?>
 
             <!-- Nav Item - Informar Viagem Collapse Menu -->
             <li class="nav-item">
@@ -144,42 +151,30 @@
                 </div>
             </li>
 
-             <!-- Nav Item - Aprovação de viagens Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAprovarViagem"
-                    aria-expanded="true" aria-controls="collapseAprovarViagem">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Aprovar</span>
-                </a>
-                <div id="collapseAprovarViagem" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Viagens:</h6>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Todas</a>
-                        <a class="collapse-item" href="utilities-border.html">Pendentes</a>
-                        <a class="collapse-item" href="utilities-animation.html">Aprovadas</a>            
+            <?php 
+                if($this->session->nivelDeAcesso['poder'] == 'Despachar'):
+            ?>
+                <!-- Nav Item - Aprovação de viagens Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAprovarViagem"
+                        aria-expanded="true" aria-controls="collapseAprovarViagem">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Aprovar</span>
+                    </a>
+                    <div id="collapseAprovarViagem" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">índices:</h6>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem/viagensNaoAnalisada');?>">Não Analisada</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem/viagensAnalisada');?>">Analisada</a>          
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
 
-
-             <!-- Nav Item - Informar de viagens Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInformarViagem"
-                    aria-expanded="true" aria-controls="collapseInformarViagem">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Informar</span>
-                </a>
-                <div id="collapseInformarViagem" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Viagens:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Todas</a>
-                        <a class="collapse-item" href="utilities-border.html">Pendentes</a>
-                        <a class="collapse-item" href="utilities-animation.html">Aprovadas</a>            
-                    </div>
-                </div>
-            </li>
+            <?php
+                endif;
+            ?>
+            
 
           
 

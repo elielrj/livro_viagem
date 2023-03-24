@@ -79,6 +79,7 @@
                     $linha->dataIda,
                     $linha->dataVolta,
                     $linha->observacao,
+                    $linha->analisada,
                 );
 
                 array_push($listaDeViagens, $viagem);
@@ -95,7 +96,8 @@
             $enderecoId,
             $dataIda,
             $dataVolta,
-            $observacao){            
+            $observacao,
+            $analisada){            
         
             return array(
                 'id' => $id,
@@ -107,6 +109,7 @@
                 'dataIda' => $dataIda,
                 'dataVolta' => $dataVolta,
                 'observacao' => $observacao,
+                'analisada' => $analisada,
             );
         }
 
@@ -168,6 +171,52 @@
 
             //var_dump($dados);
             return $dados;
+        }
+/*
+        public function retriveViagensNaoAprovadas($indiceInicial,$mostrar){
+            
+            $resultado = 
+            $this->db
+                ->where('aprovada', false)
+                ->where('analisada', true)
+                ->order_by('dataIda')
+                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
+            
+            return $this->montarObjetoViagem($resultado->result());
+        }
+
+        public function retriveViagensAprovadas($indiceInicial,$mostrar){
+            
+            $resultado = 
+            $this->db
+                ->where('aprovada', true)
+                ->where('analisada', true)
+                ->order_by('dataIda')
+                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
+            
+            return $this->montarObjetoViagem($resultado->result());
+        }
+*/
+        public function retriveViagensNaoAnalisada($indiceInicial,$mostrar){
+            
+            $resultado = 
+            $this->db
+                ->where('analisada', false)
+                ->order_by('dataIda')
+                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
+            
+            return $this->montarObjetoViagem($resultado->result());
+        }
+
+        public function retriveViagensAnalisada($indiceInicial,$mostrar){
+            
+            $resultado = 
+            $this->db
+                ->where('analisada', true)
+                ->order_by('dataIda')
+                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
+            
+            return $this->montarObjetoViagem($resultado->result());
         }
     }
 ?>
