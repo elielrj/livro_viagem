@@ -7,7 +7,8 @@
     $form_dropdown_endereco = array('class' => 'form-control');
     $input_date_ida = array('name' => 'dataIda', 'class' => '', 'type' => 'date','value' => $tabela[0]['dataIda']);
     $input_date_volta = array('name' => 'dataVolta', 'class' => '', 'type' => 'date','value' => $tabela[0]['dataVolta']);
-    $form_textarea = array('class' => 'form-control');
+    $input_observacao = array('name' => 'observacao', 'class' => 'form-control', 'maxlength' => 100,'value' => $tabela[0]['observacao']);
+
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
 
     $status_territorio_nacional = false;
@@ -42,23 +43,27 @@
 
             echo "</br>";
 
-        //* território  *//
+        echo "<div class='form-row'><div class='col'>";
+            //* território  *//
 
-        echo form_label('Território da Viagem:');
-             echo "</br>";
-        echo form_radio('territorio', 'NACIONAL', $status_territorio_nacional) . form_label('Nacional');
-            echo "</br>";
-        echo form_radio('territorio', 'INTERNACIONAL',$status_territorio_internacional) . form_label('Internacional');
+            echo form_label('Território da Viagem:');
+                echo "</br>";
+            echo form_radio('territorio', 'NACIONAL', $status_territorio_nacional) . form_label('Nacional');
+                echo "</br>";
+            echo form_radio('territorio', 'INTERNACIONAL',$status_territorio_internacional) . form_label('Internacional');
 
-            echo "</br>";
+                echo "</br>";
 
-        //* motivo  *//
+        echo "</div><div class='col'>";
+            //* motivo  *//
 
-        echo form_label('Motivo da Viagem:');
-             echo "</br>";
-        echo form_radio('motivo', 'PARTICULAR', $motivo_particular) . form_label('Particular');
-            echo "</br>";
-        echo form_radio('motivo', 'SERVICO', $motivo_servico) . form_label('Serviço');
+            echo form_label('Motivo da Viagem:');
+                echo "</br>";
+            echo form_radio('motivo', 'PARTICULAR', $motivo_particular) . form_label('Particular');
+                echo "</br>";
+            echo form_radio('motivo', 'SERVICO', $motivo_servico) . form_label('Serviço');
+
+        echo "</div></div>";
 
             echo "</br>";
 
@@ -68,22 +73,30 @@
             echo "</br>";
 
         //* endereço  *//
+        echo form_label('Endereços do usuário (Selecione um endereço cadastrado)');
+             echo "</br>";
         echo form_dropdown('enderecoId', $select_endereco, '', $form_dropdown_endereco);
 
             echo "</br>";
-        //* data de ida  *//
-        echo form_input($input_date_ida);
 
-            echo "</br>";
+        //* data de ida  *//
+        echo "<div class='form-row'><div class='col'>";
+
+            echo form_label('Data de Ida') . " " . form_input($input_date_ida);
+
+        echo "</div><div class='col'>";
 
         //* data de volta  *//
 
-        echo form_input($input_date_volta);
+            echo form_label('Data de Retorno') . " " . form_input($input_date_volta);
+
+        echo "</div></div>";
 
             echo "</br></br>";
 
         //* observacao  *//
-        echo form_textarea('observacao', $tabela[0]['observacao'], $form_textarea);
+        echo form_label('Observação (Descreva sucintamente)');
+        echo form_input($input_observacao);
 
             echo "</br>";
 
