@@ -112,7 +112,7 @@
             return $this->db->count_all_results(self::$TABELA_DB);
         }
 
-        public function buscarUsuario(){
+        public function buscarUsuario(){//todo buscar usuario Logado
            
             $email = $this->session->email;
            
@@ -127,6 +127,20 @@
 
         public function selectedEndereco($usuario){
             return $this->Endereco_Model->selectedEndereco($usuario);
+        }
+
+        public function verificarEmail($where){
+
+            $resultado = $this->db->get_where('usuario',$where);
+
+            return $resultado->result();
+        }
+
+        public function verificarSenha($where){
+            
+            $resultado = $this->db->get_where('usuario',$where);   
+            
+            return $resultado->result();
         }
     }
 ?>
