@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
     $form_open = array('class' => 'form-group');
-    $input_numero = array('name' => 'numero', 'type' => 'phone');
-    $input_parentesco_contato = array('name' => 'parentescoDoContato', 'class' => 'form-group');
-    $input_usuario = array('name' => 'usuarioId','type' => 'hidden', 'value' => $usuarioId);
+    $input_numero = array('name' => 'numero', 'class' => 'form-control', 'type' => 'telephone', 'maxlength' => 11 , 'minlength' => 11, 'placeholder' => "(xx) xxxxx-xxxx");
+    $input_parentesco_contato = array('name' => 'parentescoDoContato', 'class' => 'form-control form-group', 'maxlength' => 100 );
+    $input_usuario = array('name' => 'usuarioId','class' => 'form-control', 'type' => 'hidden', 'value' => $usuarioId);
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
 
 

@@ -7,7 +7,7 @@
     $form_dropdown_endereco = array('class' => 'form-control');
     $input_date_ida = array('name' => 'dataIda', 'class' => '', 'type' => 'date','value' => $tabela[0]['dataIda']);
     $input_date_volta = array('name' => 'dataVolta', 'class' => '', 'type' => 'date','value' => $tabela[0]['dataVolta']);
-    $input_observacao = array('name' => 'observacao', 'class' => 'form-control', 'maxlength' => 100,'value' => $tabela[0]['observacao']);
+    $input_observacao = array('name' => 'observacao', 'class' => 'form-control', 'maxlength' => 150,'value' => $tabela[0]['observacao']);
 
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
 

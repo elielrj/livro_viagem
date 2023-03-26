@@ -69,7 +69,7 @@
                 'titulo'=> self::$PAGINA_TITULO,
                 'pagina'=> self::$PAGINA_FORM_UPDATE,
                 'tabela'=> $tabela,
-                'select_nivelDeAcesso' => $this->selectNivelDeAcesso(),
+                'select_nivelDeAcesso' => $this->Funcao_Model->selectNivelDeAcesso(),
                 'selected_nivelDeAcesso' => $tabela[0]['nivelDeAcesso'],
             );
 

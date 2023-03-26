@@ -6,7 +6,7 @@
     $form_dropdown_endereco = array('class' => 'form-control');
     $input_date_ida = array('name' => 'dataIda', 'class' => 'daterange', 'type' => 'date');
     $input_date_volta = array('name' => 'dataVolta', 'class' => '', 'type' => 'date');
-    $input_observacao = array('name' => 'observacao', 'class' => 'form-control', 'maxlength' => 100);
+    $input_observacao = array('name' => 'observacao', 'class' => 'form-control', 'maxlength' => 150);
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
 
 
@@ -57,7 +57,6 @@
         echo form_dropdown('enderecoId', $select_endereco, '', $form_dropdown_endereco);
 
             echo "</br>";
-
         
         //* data de ida  *//
         echo "<div class='form-row'><div class='col'>";

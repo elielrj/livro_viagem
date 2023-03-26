@@ -1,7 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
     $input_nome = array('name' => 'nome','class' => 'form-control', 'maxlength' => 100);
-    $input_sigla = array('name' => 'sigla','class' => 'form-control','maxlength' => 2);
     $form_open = array('class' => 'form-group');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
     $selected = array('name' => 24);

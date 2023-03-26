@@ -5,7 +5,7 @@
     $input_nome = array('name' => 'nome', 'class' => 'form-control', 'maxlength' => 100,'value' => $tabela[0]['nome']);
     $input_dataDeCriacao = array('name' => 'dataDeCriacao', 'class' => 'form-control',  'type' => 'hidden', 'value' => $tabela[0]['dataDeCriacao']);        
     $input_email = array('name' => 'email', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['email']);        
-    $input_senha = array('name' => 'senha', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['senha']);
+    $input_senha = array('name' => 'senha', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['senha'], 'minlength' => 6);
     $form_open = array('class' => 'form-group');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
     $form_dropdown_hierarquia = array('class' => 'form-control', 'id' => 'hierarquiaId');

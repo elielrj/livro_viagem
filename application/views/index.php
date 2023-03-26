@@ -76,20 +76,15 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Tabela:</h6>
-                            
-                            <!-- tabela de endereços -->                        
+                                                 
                             <a class="collapse-item" href="<?php echo base_url('index.php/estado');?>">Estado</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/cidade');?>">Cidade</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/endereco');?>">Endereços</a>
-
-                            <!-- viagem -->
                             <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Viagem</a>
-
                             <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/funcao');?>">Função</a>
-
 
                         </div>
                     </div>

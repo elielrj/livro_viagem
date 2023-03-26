@@ -24,7 +24,7 @@
             echo "</br>";
 
         echo form_label('Nível de Acesso');
-        echo form_dropdown("nivelDeAcesso", $select_nivelDeAcesso, '' , $form_dropdown_nivelDeAcesso);
+        echo form_dropdown("nivelDeAcesso", $select_nivelDeAcesso, '', $form_dropdown_nivelDeAcesso);
 
             echo "</br>";
         

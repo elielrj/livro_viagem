@@ -2,7 +2,7 @@
 
     $input_status = array('name' => 'status', 'class' => 'form-control', 'value' => false, 'type' => 'hidden', 'value' => true);
     $input_nome = array('name' => 'nome', 'class' => 'form-control', 'maxlength' => 100);
-    $input_senha = array('name' => 'senha', 'class' => 'form-control', 'maxlength' => 100);
+    $input_senha = array('name' => 'senha', 'class' => 'form-control', 'maxlength' => 100, 'minlength' => 6);
     $input_email = array('name' => 'email', 'class' => 'form-control', 'maxlength' => 100);
     $form_open = array('class' => 'form-group');
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
