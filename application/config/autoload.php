@@ -58,7 +58,14 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','session');
+$autoload['libraries'] = array(
+    'database',
+    'session',
+    'NivelDeAcesso',
+    'Contato',
+    'Motivo',
+    'Territorio'
+);
 
 /*
 | -------------------------------------------------------------------
@@ -141,5 +148,4 @@ $autoload['model'] = array(
     'Hierarquia_Model',
     'Telefone_Model',
     'Funcao_Model',
-    'NivelDeAcesso_Model',
 );
