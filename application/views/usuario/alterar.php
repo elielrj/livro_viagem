@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); 
 
     $input_id = array('name' => 'id','type' => 'hidden', 'value' => $tabela[0]['id']);
-    $input_status = array('name' => 'status', 'class' => 'form-control', 'value' => false, 'type' => 'hidden');
+    $input_status = array('name' => 'status', 'class' => 'form-control', 'value' => true, 'type' => 'hidden');
     $input_nome = array('name' => 'nome', 'class' => 'form-control', 'maxlength' => 100,'value' => $tabela[0]['nome']);
     $input_dataDeCriacao = array('name' => 'dataDeCriacao', 'class' => 'form-control',  'type' => 'hidden', 'value' => $tabela[0]['dataDeCriacao']);        
     $input_email = array('name' => 'email', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['email']);        
