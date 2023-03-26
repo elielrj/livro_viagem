@@ -59,9 +59,9 @@
             foreach($result as $linha){
                 $funcao = $this->funcao(
                     $linha->id,
-                    $linha->descricao,
+                    $linha->nome,
                     $linha->status,
-                    $linha->nivelDeAcessoId,
+                    $linha->nivelDeAcesso,
                 );
 
                 array_push($listaDeFuncoes, $funcao);
@@ -69,13 +69,13 @@
             return $listaDeFuncoes;
         }
         
-        public function funcao($id,$descricao,$status,$nivelDeAcessoId){            
+        public function funcao($id,$nome,$status,$nivelDeAcesso){            
         
             return array(
                 'id' => $id,
-                'descricao' => $descricao,
+                'nome' => $nome,
                 'status' => $status,
-                'nivelDeAcessoId' => $nivelDeAcessoId,
+                'nivelDeAcesso' => $nivelDeAcesso,
             );
         }
         
@@ -89,13 +89,24 @@
 
             foreach($this->retrive(null,null) as $value){
                 
-                $funcao = array($value['id'] => $value['descricao']);
+                $funcao = array($value['id'] => $value['nome']);
 
                 $select += $funcao;
             }
             return $select;
         }
         
+        public function selectNivelDeAcesso(){      
+            
+            $this->load->library('NivelDeAcesso');
 
+            $options = "<option value='" . NivelDeAcesso::$LER ."'>" . NivelDeAcesso::$LER ."</option>";
+            $options .= "<option value='" . NivelDeAcesso::$ESCREVER ."'>" . NivelDeAcesso::$ESCREVER ."</option>";
+            $options .= "<option value='" . NivelDeAcesso::$DESPACHAR ."'>" . NivelDeAcesso::$DESPACHAR ."</option>";
+            $options .= "<option value='" . NivelDeAcesso::$ADMINISTRAR ."'>" . NivelDeAcesso::$ADMINISTRAR ."</option>";
+            $options .= "<option value='" . NivelDeAcesso::$ROOT ."'>" . NivelDeAcesso::$ROOT ."</option>";
+            
+            return $options;
+        }
     }
 ?>

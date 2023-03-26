@@ -38,7 +38,7 @@
             $dados = array(
                 'titulo' => self::$PAGINA_TITULO,
                 'pagina' => self::$PAGINA_FORM_CREATE,
-                'select_nivelDeAcesso' => $this->NivelDeAcesso_Model->selectNivelDeAcesso(),
+                'select_nivelDeAcesso' => $this->Funcao_Model->selectNivelDeAcesso(),
             );
 
             $this->load->view('index', $dados);
@@ -51,9 +51,9 @@
             $funcao = 
             $this->Funcao_Model->funcao(
                 null,
-                ucwords(strtoupper($data['descricao'])),
+                ucwords(strtoupper($data['nome'])),
                 $data['status'],
-                $data['nivelDeAcessoId'],
+                $data['nivelDeAcesso'],
             );
 
             $this->Funcao_Model->criar($funcao);
@@ -69,8 +69,8 @@
                 'titulo'=> self::$PAGINA_TITULO,
                 'pagina'=> self::$PAGINA_FORM_UPDATE,
                 'tabela'=> $tabela,
-                'select_nivelDeAcesso' => $this->NivelDeAcesso_Model->selectNivelDeAcesso(),
-                'selected_nivelDeAcesso' => $tabela[0]['nivelDeAcessoId'],
+                'select_nivelDeAcesso' => $this->selectNivelDeAcesso(),
+                'selected_nivelDeAcesso' => $tabela[0]['nivelDeAcesso'],
             );
 
             $this->load->view('index',$dados);
@@ -83,9 +83,9 @@
             $funcao = 
             $this->Funcao_Model->funcao(
                 $data['id'],
-                ucwords(strtoupper($data['descricao'])),
+                ucwords(strtoupper($data['nome'])),
                 $data['status'],
-                $data['nivelDeAcessoId'],
+                $data['nivelDeAcesso'],
             );
 
             $this->Funcao_Model->update($funcao);
@@ -117,14 +117,12 @@
 
             foreach($listaDeFucoes as $funcao){
 
-                $nivelDeAcesso = $this->NivelDeAcesso_Model->retriveId($funcao['nivelDeAcessoId']);
-
                 $line .= 
                     "<tr class='text-center'> 
                             <td>{$funcao['id']}</td>
-                            <td>{$funcao['descricao']}</td>
+                            <td>{$funcao['nome']}</td>
                             <td>{$funcao['status']}</td>
-                            <td>{$nivelDeAcesso[0]['poder']}</td>
+                            <td>{$funcao['nivelDeAcesso']}</td>
                             <td><a href='" . base_url() . "index.php/funcao/alterar/" . $funcao['id'] . "'>Alterar</a></td>
                             <td><a href='" . base_url() . "index.php/funcao/deletar/" . $funcao['id'] . "'>Excluir</a></td>
                     </tr>"
@@ -147,6 +145,8 @@
                     $this->Funcao_Model->quantidade(),
                     $mostrar);
         }
+
+        
     }
 
 ?>

@@ -162,7 +162,6 @@
  
                 $hierarquia = $this->Hierarquia_Model->retriveId($usuario['hierarquiaId']);
                 $funcao = $this->Funcao_Model->retriveId($usuario['funcaoId']);
-                $nivelDeAcesso = $this->NivelDeAcesso_Model->retriveId($funcao[0]['nivelDeAcessoId']);
 
                 $line .= 
                     "<tr class='text-center'> 
@@ -174,8 +173,8 @@
                             <td>{$hierarquia[0]['sigla']}</td>
                             <td>{$usuario['email']}</td>
                             <td>{$usuario['senha']}</td>
-                            <td>{$funcao[0]['descricao']}</td>
-                            <td>{$nivelDeAcesso[0]['poder']}</td>
+                            <td>{$funcao[0]['nome']}</td>
+                            <td>{$funcao[0]['nivelDeAcesso']}</td>
                             <td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
                             <td><a href='" . base_url() . "index.php/usuario/deletar/" . $usuario['id'] . "'>Excluir</a></td>
                     </tr>"
@@ -227,8 +226,6 @@
             $hierarquia = $this->Hierarquia_Model->retriveId($usuario[0]['hierarquiaId']);
 
             $funcao = $this->Funcao_Model->retriveId($usuario[0]['funcaoId']);
-
-            $nivelDeAcesso = $this->NivelDeAcesso_Model->retriveId($funcao[0]['nivelDeAcessoId']);
             
            $data = array(
             'id' => $usuario[0]['id'],
@@ -239,7 +236,7 @@
             'hierarquia' => $hierarquia[0],
             'email' => $usuario[0]['email'],
             'funcao' => $funcao[0],
-            'nivelDeAcesso' => $nivelDeAcesso[0],
+            'nivelDeAcesso' => $funcao[0]['nivelDeAcesso'],
            );     
 
            $this->session->set_userdata($data);            
@@ -275,10 +272,10 @@
 
             $where = array('email' => $email);
 
-            $this->load->model('Login');
+            //$this->load->model('Login');
 
            
-           $resultado = $this->Login->verificarEmail($where); 
+           $resultado = $this->Usuario_Model->verificarEmail($where); 
 
 
            if(isset($resultado[0])){
@@ -299,10 +296,10 @@
 
             $where = array('senha' => $senha);
 
-            $this->load->model('Login');
+            //$this->load->model('Login');
 
 
-           $resultado = $this->Login->verificarSenha($where);
+           $resultado = $this->Usuario_Model->verificarSenha($where);
 
            if(isset($resultado[0])){
 
