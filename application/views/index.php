@@ -64,7 +64,7 @@
             </div>
 
             <?php
-                if($this->session->nivelDeAcesso['poder']=='Administrar'):
+                if($this->session->nivelDeAcesso == NivelDeAcesso::$ADMINISTRAR || $this->session->nivelDeAcesso == NivelDeAcesso::$ROOT):
             ?>
                 <!-- Nav Item - Banco de Dados Collapse Menu -->
                 <li class="nav-item">
@@ -88,7 +88,6 @@
                             <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/nivelDeAcesso');?>">Nível de Acesso</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/funcao');?>">Função</a>
 
 
@@ -101,7 +100,7 @@
             ?>
 
             <?php
-                if($this->session->nivelDeAcesso['poder'] !='Ler'):
+                if($this->session->nivelDeAcesso != NivelDeAcesso::$LER):
             ?>
                 <!-- Nav Item - Informar Viagem Collapse Menu -->
                 <li class="nav-item">
@@ -159,7 +158,7 @@
             </li>
 
             <?php 
-                if($this->session->nivelDeAcesso['poder'] == 'Despachar'):
+                if($this->session->nivelDeAcesso == NivelDeAcesso::$DESPACHAR || $this->session->nivelDeAcesso == NivelDeAcesso::$ROOT):
             ?>
                 <!-- Nav Item - Aprovação de viagens Collapse Menu -->
                 <li class="nav-item">
