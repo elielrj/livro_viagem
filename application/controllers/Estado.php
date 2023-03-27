@@ -140,12 +140,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('estado');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'estado',
                     $indiceInicial,
                     $this->Estado_Model->quantidade(),
                     $mostrar);

@@ -126,12 +126,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('hierarquia');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'telefone',
                     $indiceInicial,
                     $this->Hierarquia_Model->quantidade(),
                     $mostrar);

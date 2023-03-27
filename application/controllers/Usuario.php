@@ -187,12 +187,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('usuario');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'usuario',
                     $indiceInicial,
                     $this->Usuario_Model->quantidade(),
                     $mostrar);

@@ -100,11 +100,12 @@
             
             $this->load->library('NivelDeAcesso');
 
-            $options = "<option value='" . NivelDeAcesso::$LER ."'>" . NivelDeAcesso::$LER ."</option>";
-            $options .= "<option value='" . NivelDeAcesso::$ESCREVER ."'>" . NivelDeAcesso::$ESCREVER ."</option>";
-            $options .= "<option value='" . NivelDeAcesso::$DESPACHAR ."'>" . NivelDeAcesso::$DESPACHAR ."</option>";
-            $options .= "<option value='" . NivelDeAcesso::$ADMINISTRAR ."'>" . NivelDeAcesso::$ADMINISTRAR ."</option>";
-            $options .= "<option value='" . NivelDeAcesso::$ROOT ."'>" . NivelDeAcesso::$ROOT ."</option>";
+            $options = array(
+                NivelDeAcesso::$LER => NivelDeAcesso::$LER,
+                NivelDeAcesso::$ESCREVER => NivelDeAcesso::$ESCREVER,
+                NivelDeAcesso::$DESPACHAR => NivelDeAcesso::$DESPACHAR,
+                NivelDeAcesso::$ADMINISTRAR => NivelDeAcesso::$ADMINISTRAR,
+                NivelDeAcesso::$ROOT => NivelDeAcesso::$ROOT);
             
             return $options;
         }

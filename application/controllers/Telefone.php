@@ -138,12 +138,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('telefone');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'telefone',
                     $indiceInicial,
                     $this->Telefone_Model->quantidade(),
                     $mostrar);

@@ -10,10 +10,6 @@
         private $quantidadesDeRegistrosParaMostrar;
         private $quantidadeDeRegistrosNoDB;
 
-        public function __construct($linkPincipal){
-            $this->linkPincipal = $linkPincipal;
-        }
-
         private function contarNumeroDePaginas(
             $apartirDoIndiceDoVetor,
             $quantidadeDeRegistrosNoDB,
@@ -58,7 +54,7 @@
 
 
 
-        public function paginar($indiceInicial, $quantidade, $mostrar){
+        public function paginar($linkPincipal, $indiceInicial, $quantidade, $mostrar){
 
             $this->contarNumeroDePaginas($indiceInicial, $quantidade, $mostrar);
 

@@ -51,7 +51,7 @@
             $funcao = 
             $this->Funcao_Model->funcao(
                 null,
-                ucwords(strtoupper($data['nome'])),
+                ucwords(strtolower($data['nome'])),
                 $data['status'],
                 $data['nivelDeAcesso'],
             );
@@ -83,7 +83,7 @@
             $funcao = 
             $this->Funcao_Model->funcao(
                 $data['id'],
-                ucwords(strtoupper($data['nome'])),
+                ucwords(strtolower($data['nome'])),
                 $data['status'],
                 $data['nivelDeAcesso'],
             );
@@ -135,12 +135,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('funcao');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'funcao',
                     $indiceInicial,
                     $this->Funcao_Model->quantidade(),
                     $mostrar);

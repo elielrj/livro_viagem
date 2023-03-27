@@ -197,12 +197,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('endereco');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'endereco',
                     $indiceInicial,
                     $this->Endereco_Model->quantidade(),
                     $mostrar);

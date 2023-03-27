@@ -449,12 +449,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('viagem');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'viagem',
                     $indiceInicial,
                     $this->Viagem_Model->quantidade(),
                     $mostrar);

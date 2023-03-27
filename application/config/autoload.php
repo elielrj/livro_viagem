@@ -64,7 +64,8 @@ $autoload['libraries'] = array(
     'NivelDeAcesso',
     'Contato',
     'Motivo',
-    'Territorio'
+    'Territorio',
+    'Botao',
 );
 
 /*

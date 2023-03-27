@@ -175,12 +175,10 @@
         public function botoes(
             $indiceInicial,
             $mostrar){
-
-                include_once('Botao.php');
-                $botao = new Botao('cidade');
                 
                 return 
-                $botao->paginar(
+                $this->botao->paginar(
+                    'cidade',
                     $indiceInicial,
                     $this->Cidade_Model->quantidade(),
                     $mostrar);
