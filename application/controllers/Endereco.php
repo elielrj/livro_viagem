@@ -182,11 +182,18 @@
                                 <td>{$cidade[0]['nome']}</td>
                                 <td>{$estado[0]['nome']}</td>
                                 <td>{$estado[0]['sigla']}</td>
-                                <td>{$usuario[0]['nome']}</td>
-                                <td><a href='" . base_url() . "index.php/endereco/alterar/" . $endereco['id'] . "'>Alterar</a></td>
-                                <td><a href='" . base_url() . "index.php/endereco/deletar/" . $endereco['id'] . "'>Excluir</a></td>
-                        </tr>"
-                    ;
+                                <td>{$usuario[0]['nome']}</td>";
+                            if(                                
+                                $endereco['usuarioId'] == $this->session->id ||
+                                $this->session->funcao['nivelDeAcesso'] == NivelDeAcesso::$ROOT
+                                ):
+                                $line .= "<td><a href='" . base_url() . "index.php/endereco/alterar/" . $endereco['id'] . "'>Alterar</a></td>
+                                <td><a href='" . base_url() . "index.php/endereco/deletar/" . $endereco['id'] . "'>Excluir</a></td>";
+                            elseif($endereco['usuarioId'] != $this->session->id):
+                                $line .= "<td>-</td>
+                                <td>-</td>";
+                            endif;
+                                $line .= "</tr>";
 
                 }
                 return $line;

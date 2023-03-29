@@ -66,6 +66,7 @@ $autoload['libraries'] = array(
     'Motivo',
     'Territorio',
     'Botao',
+    'Tabela',
 );
 
 /*

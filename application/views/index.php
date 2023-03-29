@@ -38,7 +38,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url();?>">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url('index.php/viagem');?>">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -50,7 +50,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo base_url('index.php/usuario');?>">
+                <a class="nav-link" href="<?php echo base_url('index.php/viagem/cidadesNacionaisMaisVisitadas');?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Home</span></a>
             </li>
@@ -62,120 +62,26 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-
-            <?php
-                if($this->session->nivelDeAcesso == NivelDeAcesso::$ADMINISTRAR || $this->session->nivelDeAcesso == NivelDeAcesso::$ROOT):
-            ?>
-                <!-- Nav Item - Banco de Dados Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Banco de Dados</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Tabela:</h6>
-                                                 
-                            <a class="collapse-item" href="<?php echo base_url('index.php/estado');?>">Estado</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/cidade');?>">Cidade</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/endereco');?>">Endereços</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem');?>">Viagem</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/usuario');?>">Usuário</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/telefone');?>">Telefone</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/hierarquia');?>">Hierarquia</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/funcao');?>">Função</a>
-
-                        </div>
-                    </div>
-                </li>
-
-            <?php
-                endif;
-            ?>
-
-            <?php
-                if($this->session->nivelDeAcesso != NivelDeAcesso::$LER):
-            ?>
-                <!-- Nav Item - Informar Viagem Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInformarViagem"
-                        aria-expanded="true" aria-controls="collapseInformarViagem">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Viagem</span>
-                    </a>
-                    <div id="collapseInformarViagem" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">índices:</h6>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem/novo');?>">Informar</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem/listarPorUsuarioId');?>">Consultar</a>      
-                        </div>
-                    </div>
-                </li>
             
-
-                <!-- Nav Item - Endereço Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEndereco"
-                        aria-expanded="true" aria-controls="collapseEndereco">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Endereco</span>
-                    </a>
-                    <div id="collapseEndereco" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">índices:</h6>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/endereco/novo');?>">Cadastrar</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/endereco/listarPorUsuarioId');?>">Consultar</a>      
-                        </div>
-                    </div>
-                </li>
-
-            <?php
-                endif;
-            ?>
-
-            <!-- Nav Item - Relatórios Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapserelatorio"
-                    aria-expanded="true" aria-controls="collapserelatorio">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Relatórios</span>
-                </a>
-                <div id="collapserelatorio" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">índices:</h6>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/viagem/cidadesNacionaisMaisVisitadas');?>">Cidades visitadas</a>
-                    </div>
-                </div>
-            </li>
-
+              
             <?php 
-                if($this->session->nivelDeAcesso == NivelDeAcesso::$DESPACHAR || $this->session->nivelDeAcesso == NivelDeAcesso::$ROOT):
-            ?>
-                <!-- Nav Item - Aprovação de viagens Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAprovarViagem"
-                        aria-expanded="true" aria-controls="collapseAprovarViagem">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Aprovar</span>
-                    </a>
-                    <div id="collapseAprovarViagem" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">índices:</h6>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem/viagensNaoAnalisada');?>">Não Analisada</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/viagem/viagensAnalisada');?>">Analisada</a>          
-                        </div>
-                    </div>
-                </li>
 
-            <?php
-                endif;
-            ?>
+                //Menu Banco de Dados 
+                require_once('index/menu_banco_de_dados.php'); 
+            
+                // Menu Viagem 
+                require_once('index/menu_viagem.php'); 
 
+                // Menu Endereço  
+                require_once('index/menu_endereco.php'); 
+
+                // Menu Relatórios  
+                require_once('index/menu_relatorio.php'); 
+
+                // Menu Aprovação 
+                require_once('index/menu_aprovar.php'); 
+            
+            ?>
 
         </ul>
         <!-- End of Sidebar -->

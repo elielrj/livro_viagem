@@ -129,6 +129,13 @@
 
             redirect('usuario');
         }
+
+        public function recuperarUsuario($id){            
+
+            $this->Usuario_Model->recuperarUsuario($id);
+
+            redirect('usuario');
+        }
         
         public function selectHierarquia(){
             return $this->Hierarquia_Model->selectHierarquia();
@@ -174,11 +181,17 @@
                             <td>{$usuario['email']}</td>
                             <td>{$usuario['senha']}</td>
                             <td>{$funcao[0]['nome']}</td>
-                            <td>{$funcao[0]['nivelDeAcesso']}</td>
-                            <td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/usuario/deletar/" . $usuario['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
+                            <td>{$funcao[0]['nivelDeAcesso']}</td>";
+                            if($usuario['status'] == 1):
+                                 $line .=
+                                "<td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
+                                <td><a href='" . base_url() . "index.php/usuario/deletar/" . $usuario['id'] . "'>Excluir</a></td>";
+                            elseif($usuario['status'] == 0):
+                                $line .=
+                                "<td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
+                                 <td><a href='" . base_url() . "index.php/usuario/recuperarUsuario/" . $usuario['id'] . "'>Recuperar</a></td>";
+                            endif;
+                                $line .= "</tr>";
 
             }
             return $line;
@@ -234,7 +247,7 @@
             'hierarquia' => $hierarquia[0],
             'email' => $usuario[0]['email'],
             'funcao' => $funcao[0],
-            'nivelDeAcesso' => $funcao[0]['nivelDeAcesso'],
+            //'nivelDeAcesso' => $funcao[0]['nivelDeAcesso'],
            );     
 
            $this->session->set_userdata($data);            
