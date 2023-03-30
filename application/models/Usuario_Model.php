@@ -76,7 +76,7 @@
                     $linha->hierarquiaId,
                     $linha->email,
                     $linha->senha,
-                    $linha->funcaoId,
+                    $linha->funcaoId
                 );
 
                 array_push($listaDeUsuarios, $usuario);

@@ -61,7 +61,7 @@
                     $linha->numero,
                     $linha->contato,
                     $linha->parentescoDoContato,
-                    $linha->usuarioId,
+                    $linha->usuarioId
                 );
 
                 array_push($listaDeTelefones, $telefone);

@@ -4,7 +4,14 @@
 -- AAAA-MM-DD HH:MM:SS 
 use livro_viagem;
 
-INSERT INTO `usuario`(
-`id`, `nome`, `status`, `dataDeCriacao`, `ultimoAcesso`, `hierarquiaId`, `email`, `senha`
+
+
+insert INTO `Funcao` (
+`id`,`nome`,`nivelDeAcesso`,`status`
+)
+VALUES ('1','Root', 1 ,true);
+
+INSERT INTO `Usuario`(
+`id`, `nome`, `status`, `dataDeCriacao`, `ultimoAcesso`, `hierarquiaId`, `email`, `senha`, funcaoId
 ) 
-VALUES ('1','Eliel',true,now(),now(),'15','elielrj@gmail.com',md5(9524));
+VALUES ('1','Eliel',true,now(),now(),'15','elielrj@gmail.com',md5(9524), 1);
