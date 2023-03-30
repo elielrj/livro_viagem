@@ -17,7 +17,7 @@
         }
 
         public function index(){   
-            $this->listar();
+            $this->listarPorUsuarioId();
         }
         
         public function listar($indice = 1){
@@ -285,12 +285,22 @@
                             <td>" . nl2br($endereco_string) . "</td>
                             <td>{$viagem['dataIda']}</td>
                             <td>{$viagem['dataVolta']}</td>
-                            <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
-                            <td><p class='text-center' style='color:$color_analisada'>" . $analisada ."</td>
-                            <td><a href='" . base_url() . "index.php/viagem/alterar/" . $viagem['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/viagem/deletar/" . $viagem['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
+                            <td><p>" . nl2br($viagem['observacao']) . "</p></td>
+                            <td><p style='color:$color_analisada'>" . $analisada ."</td>";
+                            if(
+                                ($viagem['analisada'] == 0 && 
+                                $viagem['usuarioId'] == $this->session->id) ||
+                                $this->session->funcao['nivelDeAcesso'] == NivelDeAcesso::$ROOT
+                                ):
+                                $line .= "<td><a href='" . base_url() . "index.php/viagem/alterar/" . $viagem['id'] . "'>Alterar</a></td>
+                                <td><a href='" . base_url() . "index.php/viagem/deletar/" . $viagem['id'] . "'>Excluir</a></td>";
+                            elseif($viagem['analisada'] == 1 || $viagem['usuarioId'] != $this->session->id):
+                                $line .= "<td>-</td>
+                                <td>-</td>";
+                            endif;
+                                $line .= "</tr>";
+
+
 
             }
             return $line;
@@ -361,8 +371,8 @@
                             <td>" . nl2br($endereco_string) . "</td>
                             <td>{$viagem['dataIda']}</td>
                             <td>{$viagem['dataVolta']}</td>
-                            <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
-                            <td><p class='text-center' style='color:$color_analisada'>" . $analisada . "</td>
+                            <td><p>" . nl2br($viagem['observacao']) . "</p></td>
+                            <td><p style='color:$color_analisada'>" . $analisada . "</td>
                             <td><a href='" . base_url() . "index.php/viagem/aprovar/" . nl2br($viagem['id']) . "'>Autorizar</a></td>
                             <td><p class='text-center' style='color:$color_aprovado'>
                                 <a href='" . base_url() . "index.php/viagem/naoAprovar/" . nl2br($viagem['id']) . "'>Não Autorizar</a></p>
@@ -437,8 +447,8 @@
                             <td>" . nl2br($endereco_string) . "</td>
                             <td>{$viagem['dataIda']}</td>
                             <td>{$viagem['dataVolta']}</td>
-                            <td><p class='text-justify'>" . nl2br($viagem['observacao']) . "</p></td>
-                            <td><p class='text-center' style='color:$color_analisada'>" . $analisada . "</td>
+                            <td><p>" . nl2br($viagem['observacao']) . "</p></td>
+                            <td><p style='color:$color_analisada'>" . $analisada . "</td>
                     </tr>"
                 ;
 

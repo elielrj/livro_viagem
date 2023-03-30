@@ -52,7 +52,7 @@
     echo "</br>";
 
     echo form_submit('enviar', 'Enviar', $form_submit_btn);
-    echo "<a href=" . base_url('index.php/bairro') .
+    echo "<a href=" . base_url('index.php/endereco') .
         " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
 
 

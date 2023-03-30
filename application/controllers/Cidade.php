@@ -22,12 +22,14 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $tabela = $this->tabela->cidade($this->Cidade_Model->retrive($indiceInicial,$mostrar));
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
-                    $this->Cidade_Model->retrive($indiceInicial,$mostrar)),
+                'tabela'=> $tabela /*$this->tabela(
+                    $this->Cidade_Model->retrive($indiceInicial,$mostrar))*/,
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao(),
             );
             
             $this->load->view('index',$dados);
@@ -68,7 +70,7 @@
                 'titulo' => self::$PAGINA_TITULO,
                 'pagina' => self::$PAGINA_FORM_UPDATE,
                 'tabela' => $tabela,
-                'select' => $this->select()
+                'select' => $this->selectEstado()
             );
 
             $this->load->view('index',$dados);
@@ -97,48 +99,21 @@
             redirect('cidade');
         }
 
-        public function select(){
+        public function botao(){
+            return 
+                $this->botao->paginar(
+                    'cidade',
+                    $indice,
+                    $this->Cidade_Model->quantidade(),
+                    $mostrar
+                );
+        }
 
-            $select = [];
-
-            foreach($this->Estado_Model->retrive(null,null) as $value){
-                
-                $estado = array($value['id'] => $value['nome'] ."/". $value['sigla']);
-
-                $select += $estado;
-            }
-
-            return $select;
+        public function selectEstado(){
+            return
+                $this->Estado_Model->selectEstado();
         }
         
-/*        public function selectCidadesPorIdEstado($where = null){
-
-            $options = "<option value''>Selecione uma Cidade</option>";
-
-            $cidade = 
-                $this
-                ->db
-                ->where('estadoId',$where)
-                ->order_by('nome')
-                ->get('cidade');
-
-            foreach($cidade->result() as $cidade){
-                $options .= "<option value='{$cidade->id}'>{$cidade->nome}</option>".PHP_EOL;
-            }
-
-            return $options;
-
-            $select = array();
-
-            foreach($this->Estado_Model->retrive(null,null) as $value){
-
-               
-                $select = array($value['id'] => "{$value['nome']} {$value['sigla']}");
-            }
-
-            return $select;
-        }*/
-
         public function tabela($listaDeCidade){
             $line =
                 "
@@ -172,17 +147,7 @@
             return $line;
         }
 
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
-                    'cidade',
-                    $indiceInicial,
-                    $this->Cidade_Model->quantidade(),
-                    $mostrar);
-        }
+        
 
         public function optionsCidade($estadoId = null){
 
