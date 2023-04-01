@@ -27,7 +27,7 @@
                 'tabela'=> $this->tabela(
                     $this->Estado_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -93,20 +93,6 @@
             redirect('estado');
         }
 
- /*       public function select($estadoId = null){
-
-            $options = "<option value''>Selecione o Estado</option>";
-
-            foreach($this->listar() as $estado){
-
-                $selected = ($estado->id == $estadoId) ? "selected" : "";
-
-                $options .= "<option value='{$estado->id}' {$selected}>{$estado->nome}/{$estado->sigla}</option>";
-            }
-
-            return $options;
-        }*/
-
         public function tabela($listaDeEstados){
 
             $line =
@@ -137,16 +123,13 @@
             return $line;
         }
 
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
+        public function botao($indice,$mostrar){
+            return $this->botao->paginar(
                     'estado',
-                    $indiceInicial,
+                    $indice,
                     $this->Estado_Model->quantidade(),
-                    $mostrar);
+                    $mostrar
+                );
         }
     }
 
