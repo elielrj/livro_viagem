@@ -1,90 +1,76 @@
 <?php
 
-    class TabelaCidade{
+    include_once('Link.php');
 
-        
+    class TabelaCidade extends Link{
 
-
-        public function listarCidades($listaDeCidades){
-
-            $tabela = $this->tr();
-
-            foreach($listaDeCidades as $cidade)
-            {
-                $tabela .= $this->tr($cidade);
-            }
-        }
-
-        private function tr($cidade = null)
+        public function cidade($cidades)
         {
-            return 
-                "
-                    <tr class='text-center'>
-                        {$this->tdId(($cidade != null) ? $cidade['id'] : null)}
-                        {$this->tdCidade(($cidade != null) ? $cidade['nome'] : null)}
-                        {$this->estado(($cidade != null) ? $cidade['estado'] : null)}
-                        {$this->sigla(($cidade != null) ? $cidade['sigla'] : null)}
-                        {$this->tdAlterar(($cidade != null) ? $cidade['id'] : null)}
-                        {$this->tdExcluir(($cidade != null) ? $cidade['id'] : null)}
-                    </tr>
-                ";
+            $tabela = $this->linhaDeCabecalhoDaCidade();
+
+            foreach($cidades as $cidade)
+            {
+                $tabela .= $this->linhaDeCidade($cidade);
+            }
+            return $tabela;
         }
 
-        private function tdId($id = 'Id')
+        private function linhaDeCabecalhoDaCidade()
+        {
+            return
+                "<tr class='text-center'> 
+                    <td>Id</td>
+                    <td>Cidade</td>
+                    <td>Estado</td>
+                    <td>Sigla</td>
+                    <td>Alterar</td>
+                    <td>Excluir</td>               
+                </tr>";
+        }
+
+        private function linhaDeCidade($cidade)
+        {
+            return
+                "<tr class='text-center'>" .
+                
+                    $this->cidadeId($cidade['id']) .
+                    $this->cidadeNome($cidade['nome']) .
+                    $this->cidadeNomeDoEstado($cidade['estado']) .
+                    $this->cidadeSiglaDoEstado($cidade['sigla']) .
+                    $this->cidadeAlterar($cidade['id']) .
+                    $this->cidadeExcluir($cidade['id']) .
+                                
+                "</tr>";
+        }
+
+        private function cidadeId($id)
         {
             return "<td>{$id}</td>";
         }
 
-        private function tdCidade($cidade = 'Cidade')
-        { 
-            return "<td>{$cidade}</td>";
+        private function cidadeNome($nome)
+        {
+            return "<td>{$nome}</td>";
         }
 
-        private function tdEstado($estado = 'Estado')
-        { 
+        private function cidadeNomeDoEstado($estado)
+        {
             return "<td>{$estado}</td>";
         }
 
-        private function tdSigla($sigla = 'Sigla')
-        { 
+        private function cidadeSiglaDoEstado($sigla)
+        {
             return "<td>{$sigla}</td>";
         }
 
-        private function tdAlterar($id = null)
-        { 
-            if($id == null){
-                return 'Alterar';
-            }else{
-
-                return 
-                "
-                    <td>
-                        <a href='" . base_url() . "index.php/cidade/alterar/{$id}'>
-                            Alterar
-                        </a>
-                    </td>
-                "
-            ;
-
-            }
+        private function cidadeAlterar($id)
+        {
+            return "<td>{$this->linkAlterar('cidade',$id)}</td>";
         }
 
-        private function tdExcluir($id = null)
-        { 
-            if($id == null){
-                return 'Excluir';
-            }else{
-
-                return 
-                "
-                    <td>
-                        <a href='" . base_url() . "index.php/cidade/alterar/{$id}'>
-                            Alterar
-                        </a>
-                    </td>
-                "
-            ;
-
-            }
+        private function cidadeExcluir($id)
+        {
+            return "<td>{$this->linkExcluir('cidade',$id)}</td>";
         }
+        
     }
