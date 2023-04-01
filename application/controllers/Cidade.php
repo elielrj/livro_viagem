@@ -22,38 +22,27 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
-            //$this->load->library('Tabela');
-            //$tabela = $this->tabela->cidade($this->Cidade_Model->retrive($indiceInicial,$mostrar));
+            $cidadesParaListar = $this->Cidade_Model->retrive($indiceInicial,$mostrar);
 
-            $cidades = $this->Cidade_Model->retrive($indiceInicial,$mostrar);
+            $listaDeCidadesParaExibirEmTabela = [];
 
-
-            //include_once('Tabela.php');
-            //$tabela = new Tabela();
-
-            $lista = [];
-            foreach($cidades as $cidade){
+            foreach($cidadesParaListar as $cidade){
 
                 $estado = $this->Estado_Model->retriveId($cidade['estadoId']);
 
-                $data =
-                array(
+                $linhaDaTabela = array(
                     'id' => $cidade['id'],
                     'nome' => $cidade['nome'],
                     'estado' => $estado[0]['nome'],
                     'sigla' => $estado[0]['sigla']
                 );
 
-                array_push($lista,$data);
-                
-            }
-            
-            
+                array_push($listaDeCidadesParaExibirEmTabela,$linhaDaTabela);                
+            }          
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=>  $this->tabela->cidade($lista)/*$this->tabela(
-                    $this->Cidade_Model->retrive($indiceInicial,$mostrar))*/,
+                'tabela'=>  $this->tabela->cidade($listaDeCidadesParaExibirEmTabela),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -119,15 +108,12 @@
         }
 
         public function deletar($id){            
-
             $this->Cidade_Model->delete($id);
-
             redirect('cidade');
         }
 
         public function botao($indice,$mostrar){
-            return 
-                $this->botao->paginar(
+            return $this->botao->paginar(
                     'cidade',
                     $indice,
                     $this->Cidade_Model->quantidade(),
@@ -136,13 +122,9 @@
         }
 
         public function selectEstado(){
-            return
-                $this->Estado_Model->selectEstado();
+            return $this->Estado_Model->selectEstado();
         }
-
-
         
-
         public function optionsCidade($estadoId = null){
 
             if($estadoId == null){
