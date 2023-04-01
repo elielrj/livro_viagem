@@ -8,7 +8,7 @@
             parent::__construct();
         }
         
-        public function criar($cidade){
+        public function create($cidade){
 
             $this->db->insert(
                 self::$TABELA_DB, 

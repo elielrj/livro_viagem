@@ -24,7 +24,7 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
+                'tabela'=> $this->tabela->estado(
                     $this->Estado_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
@@ -91,36 +91,6 @@
             $this->Estado_Model->delete($id);
 
             redirect('estado');
-        }
-
-        public function tabela($listaDeEstados){
-
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Estado</td>
-                        <td>Sigla</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
-
-            foreach($listaDeEstados as $estado){
-
-                $line .= 
-                    "<tr class='text-center'> 
-                            <td>{$estado['id']}</td>
-                            <td>{$estado['nome']}</td>
-                            <td>{$estado['sigla']}</td>
-                            <td><a href='" . base_url() . "index.php/estado/alterar/" . $estado['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/estado/deletar/" . $estado['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
-
-            }
-            return $line;
         }
 
         public function botao($indice,$mostrar){

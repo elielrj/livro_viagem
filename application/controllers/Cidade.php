@@ -72,7 +72,7 @@
                 $data['estadoId']
             );
 
-            $this->Cidade_Model->criar($cidade);
+            $this->Cidade_Model->create($cidade);
 
             redirect('cidade');       
         }
