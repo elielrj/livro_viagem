@@ -25,13 +25,13 @@
         }
         
         public function retrive($indiceInicial,$mostrar){
-            
+           
             $resultado = $this->db->get(
                 self::$TABELA_DB,
                 $mostrar,
                 $indiceInicial                
             ); 
-
+ 
             return $this->montarObjetoCidade($resultado->result());
         }
         

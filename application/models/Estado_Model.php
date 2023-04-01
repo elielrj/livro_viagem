@@ -43,7 +43,7 @@
                 self::$TABELA_DB,
                 array('id'=> $id)
             );   
-            
+        
             return $this->montarObjetoEstado($resultado->result());
         }
 

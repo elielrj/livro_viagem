@@ -22,14 +22,40 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
-            $tabela = $this->tabela->cidade($this->Cidade_Model->retrive($indiceInicial,$mostrar));
+            //$this->load->library('Tabela');
+            //$tabela = $this->tabela->cidade($this->Cidade_Model->retrive($indiceInicial,$mostrar));
+
+            $cidades = $this->Cidade_Model->retrive($indiceInicial,$mostrar);
+
+
+            //include_once('Tabela.php');
+            //$tabela = new Tabela();
+
+            $lista = [];
+            foreach($cidades as $cidade){
+
+                $estado = $this->Estado_Model->retriveId($cidade['estadoId']);
+
+                $data =
+                array(
+                    'id' => $cidade['id'],
+                    'nome' => $cidade['nome'],
+                    'estado' => $estado[0]['nome'],
+                    'sigla' => $estado[0]['sigla']
+                );
+
+                array_push($lista,$data);
+                
+            }
+            
+            
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $tabela /*$this->tabela(
+                'tabela'=>  $this->tabela->cidade($lista)/*$this->tabela(
                     $this->Cidade_Model->retrive($indiceInicial,$mostrar))*/,
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao(),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -40,7 +66,7 @@
             $dados = array(
                 'titulo' => self::$PAGINA_TITULO,
                 'pagina' => self::$PAGINA_FORM_CREATE,
-                'select'=>$this->select(),
+                'select'=> $this->selectEstado(),
             );
 
             $this->load->view('index', $dados);
@@ -99,7 +125,7 @@
             redirect('cidade');
         }
 
-        public function botao(){
+        public function botao($indice,$mostrar){
             return 
                 $this->botao->paginar(
                     'cidade',
@@ -113,39 +139,7 @@
             return
                 $this->Estado_Model->selectEstado();
         }
-        
-        public function tabela($listaDeCidade){
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Cidade</td>
-                        <td>Estado</td>
-                        <td>Sigla</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
 
-            foreach($listaDeCidade as $cidade){
-                
-                $estado = $this->Estado_Model->retriveId($cidade['estadoId']);
-                
-                $line .= 
-                    "<tr class='text-center'> 
-                            <td>{$cidade['id']}</td>
-                            <td>{$cidade['nome']}</td>
-                            <td>{$estado[0]['nome']}</td>
-                            <td>{$estado[0]['sigla']}</td>
-                            <td><a href='" . base_url() . "index.php/cidade/alterar/" . $cidade['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/cidade/deletar/" . $cidade['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
-
-            }
-            return $line;
-        }
 
         
 
@@ -160,7 +154,9 @@
             
             $options = "<option>Selecione uma cidade</option>";
 
-            foreach($this->Cidade_Model->selectCidade($estadoId) as $key => $value){
+            $array_cidades = $this->Cidade_Model->selectCidade($estadoId);
+
+            foreach($array_cidades as $key => $value){
                             
                 $options .= "<option value='{$key}'>{$value}</option>";
             }
