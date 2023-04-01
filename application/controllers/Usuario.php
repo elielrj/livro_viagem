@@ -70,7 +70,7 @@
                 $data['hierarquiaId'],
                 $data['email'],
                 md5($data['senha']),
-                $data['funcaoId'],
+                $data['funcaoId']
             );
 
             $this->Usuario_Model->criar($usuario);
@@ -115,7 +115,7 @@
                 $data['hierarquiaId'],
                 $data['email'],
                 md5($data['senha']),
-                $data['funcaoId'],
+                $data['funcaoId']
             );
 
             $this->Usuario_Model->update($usuario);

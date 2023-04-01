@@ -75,7 +75,7 @@
                     $linha->numero,
                     $linha->bairro,
                     $linha->cidadeId,
-                    $linha->usuarioId,
+                    $linha->usuarioId
                 );
 
                 array_push($listaDeEnderecos, $endereco);

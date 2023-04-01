@@ -79,7 +79,7 @@
                     $linha->dataIda,
                     $linha->dataVolta,
                     $linha->observacao,
-                    $linha->analisada,
+                    $linha->analisada
                 );
 
                 array_push($listaDeViagens, $viagem);

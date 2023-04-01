@@ -49,7 +49,7 @@
             $this->db->update(
                 self::$TABELA_DB,
                 array('status'=> false),
-                array('id'=> $id),
+                array('id'=> $id)
                 
             );
         }
@@ -58,7 +58,7 @@
             $this->db->update(
                 self::$TABELA_DB,
                 array('status'=> true),
-                array('id'=> $id),
+                array('id'=> $id)
                 
             );
         }
@@ -88,7 +88,7 @@
                     $linha->hierarquiaId,
                     $linha->email,
                     $linha->senha,
-                    $linha->funcaoId,
+                    $linha->funcaoId
                 );
 
                 array_push($listaDeUsuarios, $usuario);

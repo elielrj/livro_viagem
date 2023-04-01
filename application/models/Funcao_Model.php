@@ -61,7 +61,7 @@
                     $linha->id,
                     $linha->nome,
                     $linha->status,
-                    $linha->nivelDeAcesso,
+                    $linha->nivelDeAcesso
                 );
 
                 array_push($listaDeFuncoes, $funcao);
