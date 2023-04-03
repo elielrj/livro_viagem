@@ -15,16 +15,34 @@
             return $tabela;
         }
 
+        public function cidadeMaisVisitadas($cidades)
+        {
+            $tabela = $this->linhaDeCabecalhoDaCidadeMaisVisitadas();
+
+            foreach($cidades as $cidade)
+            {
+                $tabela .= $this->linhaDeCidadeMaisVisitadas($cidade);
+            }
+            return $tabela;
+        }
+
         private function linhaDeCabecalhoDaCidade()
+        {
+            return
+                "<tr class='text-center'> 
+                    <td>Cidade</td>
+                    <td>Quantidade</td>
+                    <td>Estado</td>              
+                </tr>";
+        }
+
+        private function linhaDeCabecalhoDaCidadeMaisVisitadas()
         {
             return
                 "<tr class='text-center'> 
                     <td>Id</td>
                     <td>Cidade</td>
-                    <td>Estado</td>
-                    <td>Sigla</td>
-                    <td>Alterar</td>
-                    <td>Excluir</td>               
+                    <td>Estado</td>             
                 </tr>";
         }
 
@@ -39,6 +57,18 @@
                     $this->cidadeSiglaDoEstado($cidade['sigla']) .
                     $this->cidadeAlterar($cidade['id']) .
                     $this->cidadeExcluir($cidade['id']) .
+                                
+                "</tr>";
+        }
+
+        private function linhaDeCidadeMaisVisitadas($cidade)
+        {
+            return
+                "<tr class='text-center'>" .
+                
+                    $this->cidadeId($cidade['cidade_nome']) .
+                    $this->cidadeNome($cidade['count']) .
+                    $this->cidadeNomeDoEstado($cidade['estado_nome']) .
                                 
                 "</tr>";
         }

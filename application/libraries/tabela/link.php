@@ -2,17 +2,37 @@
 
     class Link{
 
-        public function linkAlterar($tabela, $id)
+        public function linkAlterar($tabela, $id, $permitirAlterar = true)
         {
-            $link = "index.php/{$tabela}/alterar/{$id}";
-            return "<a href='" . base_url($link) . "'>Alterar</a>";
+     
+            if($permitirAlterar)
+            {
+                $link = "index.php/{$tabela}/alterar/{$id}";
+                return "<a href='" . base_url($link) . "'>Alterar</a>";
+            }
+            else{
+                return "-";
+            }           
         }
 
-        public function linkExcluir($tabela, $id)
+        public function linkExcluir($tabela, $id, $permitirExcluir = true, $recuperar = false)
         {
-            $link = "index.php/{$tabela}/deletar/{$id}";
-            return "<a href='" . base_url($link) . "'>Excluir</a>";
-        }
+            
+            if($permitirExcluir)
+            {
+                $link = "index.php/{$tabela}/deletar/{$id}";
+
+                if($recuperar)
+                {
+                    $link = "index.php/{$tabela}/recuperarUsuario/{$id}";
+                }
+                return "<a href='" . base_url($link) . "'>" . ($recuperar ? 'Recuperar': 'Excluir'). "</a>";
+            }
+            else
+            {
+                return "-";
+            }
+        }       
         
     }
 

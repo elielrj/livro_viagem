@@ -132,18 +132,11 @@
                 $data = $this->input->post();
 
                 $estadoId = $data['estadoId'];                
-            }          
-            
-            $options = "<option>Selecione uma cidade</option>";
+            }
 
             $array_cidades = $this->Cidade_Model->selectCidade($estadoId);
 
-            foreach($array_cidades as $key => $value){
-                            
-                $options .= "<option value='{$key}'>{$value}</option>";
-            }
-            
-            echo $options;
+            echo $this->opcoes->cidade($array_cidades);
         }
     }
 ?>

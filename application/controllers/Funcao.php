@@ -24,10 +24,10 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
+                'tabela'=> $this->tabela->funcao(
                     $this->Funcao_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -93,58 +93,19 @@
             redirect('funcao');
         }
 
-        public function deletar($id){            
-
+        public function deletar($id){   
             $this->Funcao_Model->delete($id);
-
             redirect('funcao');
         }
 
-        public function tabela($listaDeFucoes){
-
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Poder</td>
-                        <td>Status</td>
-                        <td>Nível de Acesso</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
-
-            foreach($listaDeFucoes as $funcao){
-
-                $line .= 
-                    "<tr class='text-center'> 
-                            <td>{$funcao['id']}</td>
-                            <td>{$funcao['nome']}</td>
-                            <td>{$funcao['status']}</td>
-                            <td>{$funcao['nivelDeAcesso']}</td>
-                            <td><a href='" . base_url() . "index.php/funcao/alterar/" . $funcao['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/funcao/deletar/" . $funcao['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
-
-            }
-            return $line;
-        }
-
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
+        public function botao($indice,$mostrar){
+            return $this->botao->paginar(
                     'funcao',
-                    $indiceInicial,
+                    $indice,
                     $this->Funcao_Model->quantidade(),
-                    $mostrar);
-        }
-
-        
+                    $mostrar
+                );
+        }        
     }
 
 ?>

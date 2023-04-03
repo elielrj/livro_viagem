@@ -24,10 +24,10 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
+                'tabela'=> $this->paraTabela(
                     $this->Endereco_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -47,7 +47,7 @@
                 'tabela'=> $this->tabela(
                     $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -146,73 +146,44 @@
             return $this->Estado_Model->selectEstado();
         }
         
-        public function tabela($listaDeEnderecos){
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Nome do Endereço</td>
-                        <td>Logradouro</td>
-                        <td>Número</td>
-                        <td>Bairro</td>
-                        <td>Cidade</td>
-                        <td>Estado</td>
-                        <td>Sigla</td>
-                        <td>Cadastrador</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
+        public function paraTabela($listaDeEnderecos){
 
-           
-                foreach($listaDeEnderecos as $endereco){
+            $line = [];               
 
-                    $usuario = $this->Usuario_Model->retriveId($endereco['usuarioId']); 
-                    $cidade = $this->Cidade_Model->retriveId($endereco['cidadeId']);
-                    $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
+            foreach($listaDeEnderecos as $endereco){
 
-                    $line .= 
-                        "<tr class='text-center'> 
-                                <td>{$endereco['id']}</td>
-                                <td>{$endereco['nome']}</td>
-                                <td>{$endereco['logradouro']}</td>
-                                <td>{$endereco['numero']}</td>
-                                <td>{$endereco['bairro']}</td>
-                                <td>{$cidade[0]['nome']}</td>
-                                <td>{$estado[0]['nome']}</td>
-                                <td>{$estado[0]['sigla']}</td>
-                                <td>{$usuario[0]['nome']}</td>";
-                            if(                                
-                                $endereco['usuarioId'] == $this->session->id ||
-                                $this->session->funcao['nivelDeAcesso'] == NivelDeAcesso::$ROOT
-                                ):
-                                $line .= "<td><a href='" . base_url() . "index.php/endereco/alterar/" . $endereco['id'] . "'>Alterar</a></td>
-                                <td><a href='" . base_url() . "index.php/endereco/deletar/" . $endereco['id'] . "'>Excluir</a></td>";
-                            elseif($endereco['usuarioId'] != $this->session->id):
-                                $line .= "<td>-</td>
-                                <td>-</td>";
-                            endif;
-                                $line .= "</tr>";
+                $usuario = $this->Usuario_Model->retriveId($endereco['usuarioId']); 
+                $cidade = $this->Cidade_Model->retriveId($endereco['cidadeId']);
+                $estado = $this->Estado_Model->retriveId($cidade[0]['estadoId']);
 
-                }
-                return $line;
-            
+                $data = array(
+                    'id' => $endereco['id'],
+                    'nome' => $endereco['nome'],
+                    'logradouro' => $endereco['logradouro'],
+                    'numero' => $endereco['numero'],
+                    'bairro' => $endereco['bairro'],
+                    'cidade' => $cidade[0]['nome'],
+                    'estado' => $estado[0]['nome'],
+                    'sigla' => $estado[0]['sigla'],
+                    'usuario' => $usuario[0]['nome'],
+                    'usuarioId' => $endereco['usuarioId'],
+                );
 
+                array_push($line, $data);
+            }
+            return $this->tabela->endereco($line);
         }
 
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
+
+
+        public function botao($indice,$mostrar){
+            return $this->botao->paginar(
                     'endereco',
-                    $indiceInicial,
+                    $indice,
                     $this->Endereco_Model->quantidade(),
-                    $mostrar);
+                    $mostrar
+                );
         }
-        
     }
 
 ?>

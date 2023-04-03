@@ -23,10 +23,10 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
+                'tabela'=> $this->tabela->hierarquia(
                     $this->Hierarquia_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -93,46 +93,14 @@
 
             redirect('hierarquia');
         }      
-        
-        public function tabela($listaDeHierarquias){
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Posto ou Graduação</td>
-                        <td>Sigla</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
 
-            foreach($listaDeHierarquias as $hierarquia){
-
-                $line .= 
-                    "<tr class='text-center'> 
-                            <td>{$hierarquia['id']}</td>
-                            <td>{$hierarquia['postoOuGraduacao']}</td>
-                            <td>{$hierarquia['sigla']}</td>
-                            <td><a href='" . base_url() . "index.php/hierarquia/alterar/" . $hierarquia['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/hierarquia/deletar/" . $hierarquia['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
-
-            }
-            return $line;
-        }
-
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
-                    'telefone',
-                    $indiceInicial,
+        public function botao($indice,$mostrar){
+            return $this->botao->paginar(
+                    'hierarquia',
+                    $indice,
                     $this->Hierarquia_Model->quantidade(),
-                    $mostrar);
+                    $mostrar
+                );
         }
 
     }

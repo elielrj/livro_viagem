@@ -34,7 +34,7 @@
                 'tabela'=> $this->tabela(
                     $this->Usuario_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -146,67 +146,38 @@
         }
         
         public function tabela($listaDeUsuarios){
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Nome</td>
-                        <td>Status</td>
-                        <td>Data de Criação</td>
-                        <td>Último Acesso</td>
-                        <td>Hierarquia</td>
-                        <td>Email</td>
-                        <td>Senha</td>
-                        <td>Função</td>
-                        <td>Nível de Acesso</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
+            $line = [];
 
             foreach($listaDeUsuarios as $usuario){
- 
+
                 $hierarquia = $this->Hierarquia_Model->retriveId($usuario['hierarquiaId']);
                 $funcao = $this->Funcao_Model->retriveId($usuario['funcaoId']);
 
-                $line .= 
-                    "<tr class='text-center'> 
-                            <td>{$usuario['id']}</td>
-                            <td>{$usuario['nome']}</td>
-                            <td>{$usuario['status']}</td>
-                            <td>{$usuario['dataDeCriacao']}</td>
-                            <td>{$usuario['ultimoAcesso']}</td>
-                            <td>{$hierarquia[0]['sigla']}</td>
-                            <td>{$usuario['email']}</td>
-                            <td>{$usuario['senha']}</td>
-                            <td>{$funcao[0]['nome']}</td>
-                            <td>{$funcao[0]['nivelDeAcesso']}</td>";
-                            if($usuario['status'] == 1):
-                                 $line .=
-                                "<td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
-                                <td><a href='" . base_url() . "index.php/usuario/deletar/" . $usuario['id'] . "'>Excluir</a></td>";
-                            elseif($usuario['status'] == 0):
-                                $line .=
-                                "<td><a href='" . base_url() . "index.php/usuario/alterar/" . $usuario['id'] . "'>Alterar</a></td>
-                                 <td><a href='" . base_url() . "index.php/usuario/recuperarUsuario/" . $usuario['id'] . "'>Recuperar</a></td>";
-                            endif;
-                                $line .= "</tr>";
+                $data = array(
+                    'id' => $usuario['id'],
+                    'nome' => $usuario['nome'],
+                    'status' => $usuario['status'],
+                    'dataDeCriacao' => $usuario['dataDeCriacao'],
+                    'ultimoAcesso' => $usuario['ultimoAcesso'],
+                    'hierarquia' => $hierarquia[0]['sigla'],
+                    'email' => $usuario['email'],
+                    'senha' => $usuario['senha'],
+                    'funcao' => $funcao[0]['nome'],
+                    'nivelDeAcesso' => $funcao[0]['nivelDeAcesso'],
+                );
+                array_push($line,$data);
 
             }
-            return $line;
+            return $this->tabela->usuario($line);
         }
 
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
+        public function botao($indice,$mostrar){
+            return $this->botao->paginar(
                     'usuario',
-                    $indiceInicial,
+                    $indice,
                     $this->Usuario_Model->quantidade(),
-                    $mostrar);
+                    $mostrar
+                );
         }
 
         public function removerSessao(){

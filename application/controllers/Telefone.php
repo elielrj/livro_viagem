@@ -23,10 +23,10 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
+                'tabela'=> $this->paraTabela(
                     $this->Telefone_Model->retrive($indiceInicial,$mostrar)),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botoes($indice,$mostrar),
+                'botoes'=> $this->botao($indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -99,52 +99,35 @@
             redirect('telefone');
         }      
         
-        public function tabela($listaDeTelefones){
+        public function paraTabela($listaDeTelefones){
 
-            $line =
-                "
-                    <tr class='text-center'>
-                        <td>Id</td>
-                        <td>Número</td>
-                        <td>Contato</td>
-                        <td>Parentesco do Contato</td>
-                        <td>Usuário</td>
-                        <td>Alterar</td>
-                        <td>Excluir</td>
-                    </tr>
-                "
-            ;
+            $line = [];
 
             foreach($listaDeTelefones as $telefone){
 
                 $usuario = $this->Usuario_Model->retriveId($telefone['usuarioId']);
 
-                $line .= 
-                    "<tr class='text-center'> 
-                            <td>{$telefone['id']}</td>
-                            <td>{$telefone['numero']}</td>
-                            <td>{$telefone['contato']}</td>
-                            <td>{$telefone['parentescoDoContato']}</td>
-                            <td>{$usuario[0]['nome']}</td>
-                            <td><a href='" . base_url() . "index.php/telefone/alterar/" . $telefone['id'] . "'>Alterar</a></td>
-                            <td><a href='" . base_url() . "index.php/telefone/deletar/" . $telefone['id'] . "'>Excluir</a></td>
-                    </tr>"
-                ;
-
+                $data = array(
+                    'id' => $telefone['id'],
+                    'numero' => $telefone['numero'],
+                    'contato' => $telefone['contato'],
+                    'parentescoDoContato' => $telefone['parentescoDoContato'],
+                    'usuario' => $usuario[0]['nome'],
+                    'usuarioId' => $telefone['usuarioId'],
+                );
+                    
+                array_push($line,$data);
             }
-            return $line;
+            return $this->tabela->telefone($line);
         }
 
-        public function botoes(
-            $indiceInicial,
-            $mostrar){
-                
-                return 
-                $this->botao->paginar(
+        public function botao($indice,$mostrar){
+            return $this->botao->paginar(
                     'telefone',
-                    $indiceInicial,
+                    $indice,
                     $this->Telefone_Model->quantidade(),
-                    $mostrar);
+                    $mostrar
+                );
         }
 
     }
