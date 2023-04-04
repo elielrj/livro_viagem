@@ -55,7 +55,7 @@
 
         private function funcaoStatus($status)
         {
-            return "<td>{$status}</td>";
+            return "<td><p style='color:" . ($status ? 'green' : 'red') ."'>" . ($status ? 'Ativo' : 'Inativo') . "</p></td>";
         }
 
         private function funcaoNivelDeAcesso($nivelDeAcesso)

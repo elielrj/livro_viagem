@@ -291,11 +291,11 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid table-responsive">
 
-                <?php                     
-                    require $pagina;
-                ?>
+                    <?php                     
+                        require $pagina;
+                    ?>
 
                 </div>
                 <!-- /.container-fluid -->

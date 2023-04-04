@@ -67,7 +67,7 @@
 
         private function usuarioStatus($status)
         {
-            return "<td>{$status}</td>";
+            return "<td><p style='color:" . ($status ? 'green' : 'red') . "'>" . ($status ? 'Ativo' : 'Inativo') . "</p></td>";
         }
 
         private function usuarioDataDeCriacao($dataDeCriacao)
@@ -124,7 +124,8 @@
         private function verificarNivelDeAcesso($usuarioId){
             if(
                 $usuarioId == $_SESSION['id'] ||
-                NivelDeAcesso::isRoot()
+                NivelDeAcesso::isRoot() ||
+                NivelDeAcesso::isAdmin()
             )
             {
                 return true;
