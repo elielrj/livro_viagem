@@ -11,70 +11,70 @@
 
     class Tabela {
 
-        public function cidade($cidades)
+        public function cidade($cidades, $ordem)
         {
             $tabelaCidade = new TabelaCidade();
-            return $tabelaCidade->cidade($cidades);
+            return $tabelaCidade->cidade($cidades, $ordem);
         }
 
-        public function cidadeMaisVisitadas($cidades)
+        public function cidadeMaisVisitadas($cidades, $ordem)
         {
             $tabelaCidade = new TabelaCidade();
-            return $tabelaCidade->cidadeMaisVisitadas($cidades);
+            return $tabelaCidade->cidadeMaisVisitadas($cidades, $ordem);
         }
 
-        public function estado($estados)
+        public function estado($estados, $ordem)
         {
             $tabelaEstado = new TabelaEstado();
-            return $tabelaEstado->estado($estados);
+            return $tabelaEstado->estado($estados, $ordem);
         }
 
-        public function endereco($enderecos)
+        public function endereco($enderecos, $ordem)
         {
             $tabelaEndereco = new TabelaEndereco();
-            return $tabelaEndereco->endereco($enderecos);
+            return $tabelaEndereco->endereco($enderecos, $ordem);
         }
 
-        public function funcao($funcoes)
+        public function funcao($funcoes, $ordem)
         {
             $tabelaFuncao = new TabelaFuncao();
-            return $tabelaFuncao->funcao($funcoes);
+            return $tabelaFuncao->funcao($funcoes, $ordem);
         }
 
-        public function telefone($telefones)
+        public function telefone($telefones, $ordem)
         {
             $tabelaTelefone = new TabelaTelefone();
-            return $tabelaTelefone->telefone($telefones);
+            return $tabelaTelefone->telefone($telefones, $ordem);
         }
 
-        public function usuario($usuarios)
+        public function usuario($usuarios, $ordem)
         {
             $tabelaUsuario = new TabelaUsuario();
-            return $tabelaUsuario->usuario($usuarios);
+            return $tabelaUsuario->usuario($usuarios, $ordem);
         }
 
-        public function hierarquia($hierarquias)
+        public function hierarquia($hierarquias, $ordem)
         {
             $tabelaHierarquia = new TabelaHierarquia();
-            return $tabelaHierarquia->hierarquia($hierarquias);
+            return $tabelaHierarquia->hierarquia($hierarquias, $ordem);
         }
 
-        public function viagem($viagens)
+        public function viagem($viagens, $ordem)
         {
             $tabelaViagem = new TabelaViagem();
-            return $tabelaViagem->viagem($viagens);
+            return $tabelaViagem->viagem($viagens, $ordem);
         }
 
-        public function viagemParaAprovacao($viagens)
+        public function viagemParaAprovacao($viagens, $ordem)
         {
             $tabelaViagem = new TabelaViagem();
-            return $tabelaViagem->viagemParaAprovacao($viagens);
+            return $tabelaViagem->viagemParaAprovacao($viagens, $ordem);
         }
 
-        public function viagensAnalisadas($viagens)
+        public function viagensAnalisadas($viagens, $ordem)
         {
             $tabelaViagem = new TabelaViagem();
-            return $tabelaViagem->viagensAnalisadas($viagens);
+            return $tabelaViagem->viagensAnalisadas($viagens, $ordem);
         }
     }
 

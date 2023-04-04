@@ -4,12 +4,16 @@
 
     class TabelaEndereco extends Link{
 
-        public function endereco($enderecos)
+        private $ordem;
+
+        public function endereco($enderecos, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDoEndereco();
 
             foreach($enderecos as $endereco)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDoEndereco($endereco);
             }
             return $tabela;
@@ -19,7 +23,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Nome do Endereço</td>
                     <td>Logradouro</td>
                     <td>Número</td>
@@ -38,7 +42,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->enderecoId($endereco['id']) .
+                    $this->enderecoOrdem() .
                     $this->enderecoNome($endereco['nome']) .
                     $this->enderecoLogradouro($endereco['logradouro']) .
                     $this->enderecoNumero($endereco['numero']) .
@@ -53,9 +57,9 @@
                 "</tr>";
         }
 
-        private function enderecoId($id)
+        private function enderecoOrdem()
         {
-            return "<td>{$id}</td>";
+            return "<td>{$this->ordem}</td>";
         }
 
         private function enderecoNome($nome)

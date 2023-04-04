@@ -4,12 +4,16 @@
 
     class TabelaUsuario extends Link{
 
-        public function usuario($usuarios)
+        private $ordem;
+
+        public function usuario($usuarios, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDoUsuario();
 
             foreach($usuarios as $usuario)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDoUsuario($usuario);
             }
             return $tabela;
@@ -19,7 +23,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Nome</td>
                     <td>Status</td>
                     <td>Data de Criação</td>
@@ -39,7 +43,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->usuarioId($usuario['id']) .
+                    $this->usuarioOrdem() .
                     $this->usuarioNome($usuario['nome']) .
                     $this->usuarioStatus($usuario['status']) .
                     $this->usuarioDataDeCriacao($usuario['dataDeCriacao']) .
@@ -55,9 +59,9 @@
                 "</tr>";
         }
 
-        private function usuarioId($id)
+        private function usuarioOrdem()
         {
-            return "<td>{$id}</td>";
+            return "<td>{$this->ordem}</td>";
         }
 
         private function usuarioNome($nome)

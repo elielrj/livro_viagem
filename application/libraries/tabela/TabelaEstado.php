@@ -4,12 +4,16 @@
 
     class TabelaEstado extends Link{
 
-        public function estado($estados)
+        private $ordem;
+
+        public function estado($estados, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDoEstado();
 
             foreach($estados as $estado)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDoEstado($estado);
             }
             return $tabela;
@@ -19,7 +23,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Estado</td>
                     <td>Sigla</td>
                     <td>Alterar</td>
@@ -32,7 +36,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->estadoId($estado['id']) .
+                    $this->estadoOrdem() .
                     $this->estadoNome($estado['nome']) .
                     $this->estadoSigla($estado['sigla']) .
                     $this->estadoAlterar($estado['id']) .
@@ -41,9 +45,9 @@
                 "</tr>";
         }
 
-        private function estadoId($id)
+        private function estadoOrdem()
         {
-            return "<td>{$id}</td>";
+            return "<td>{$this->ordem}</td>";
         }
 
         private function estadoNome($nome)

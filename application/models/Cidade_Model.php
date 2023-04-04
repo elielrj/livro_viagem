@@ -71,7 +71,8 @@
                 $cidade = $this->cidade(
                     $linha->id,
                     $linha->nome,
-                    $linha->estadoId
+                    $linha->estadoId,
+                    $linha->status
                 );
 
                 array_push($listaDeCidades, $cidade);
@@ -79,12 +80,13 @@
             return $listaDeCidades;
         }
         
-        public function cidade($id,$nome,$estadoId){            
+        public function cidade($id,$nome,$estadoId,$status){            
         
             return array(
                 'id' => $id,
                 'nome' => $nome,
-                'estadoId' => $estadoId
+                'estadoId' => $estadoId,
+                'status' => $status
             );
         }
         

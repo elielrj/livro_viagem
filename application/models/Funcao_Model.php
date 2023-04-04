@@ -47,9 +47,19 @@
         }       
 
         public function delete($id){
-            $this->db->delete(
+            $this->db->update(
                 self::$TABELA_DB,
-                array('id'=> $id));
+                array('status'=> false),
+                array('id'=> $id)
+            );
+        }
+
+        public function recuperar($id){
+            $this->db->update(
+                self::$TABELA_DB,
+                array('status'=> true),
+                array('id'=> $id)
+            );
         }
         
         public function montarObjetoFuncao($result){

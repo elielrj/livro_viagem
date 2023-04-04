@@ -46,9 +46,19 @@
         }
 
         public function delete($id){
-            $this->db->delete(
+            $this->db->update(
                 self::$TABELA_DB,
-                array('id'=> $id));
+                array('status'=> false),
+                array('id'=> $id)
+            );
+        }
+
+        public function recuperar($id){
+            $this->db->update(
+                self::$TABELA_DB,
+                array('status'=> true),
+                array('id'=> $id)                
+            );
         }
 
         public function montarObjetoHierarquia($result){
@@ -59,7 +69,8 @@
                 $hierarquia = $this->hierarquia(
                     $linha->id,
                     $linha->postoOuGraduacao,
-                    $linha->sigla
+                    $linha->sigla,
+                    $linha->status
                 );
 
                 array_push($listaDeHierarquias, $hierarquia);
@@ -70,12 +81,14 @@
         public function hierarquia(
             $id,
             $postoOuGraduacao,
-            $sigla){            
+            $sigla,
+            $status){            
         
             return array(
                 'id' => $id,
                 'postoOuGraduacao' => $postoOuGraduacao,
-                'sigla' => $sigla
+                'sigla' => $sigla,
+                'status' => $status
             );
         }
 

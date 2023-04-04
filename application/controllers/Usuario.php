@@ -32,7 +32,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Usuario_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Usuario_Model->retrive($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -130,9 +132,9 @@
             redirect('usuario');
         }
 
-        public function recuperarUsuario($id){            
+        public function recuperar($id){            
 
-            $this->Usuario_Model->recuperarUsuario($id);
+            $this->Usuario_Model->recuperar($id);
 
             redirect('usuario');
         }
@@ -145,7 +147,7 @@
             return $this->Funcao_Model->selectFuncao();
         }
         
-        public function tabela($listaDeUsuarios){
+        public function tabela($listaDeUsuarios, $ordem){
             $line = [];
 
             foreach($listaDeUsuarios as $usuario){
@@ -168,7 +170,7 @@
                 array_push($line,$data);
 
             }
-            return $this->tabela->usuario($line);
+            return $this->tabela->usuario($line, $ordem);
         }
 
         public function botao($indice,$mostrar){

@@ -25,7 +25,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela->estado(
-                    $this->Estado_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Estado_Model->retrive($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );

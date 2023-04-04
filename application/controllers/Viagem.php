@@ -31,7 +31,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Viagem_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Viagem_Model->retrive($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -51,7 +53,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar)),
+                    $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -95,7 +99,8 @@
                 $dataIda->format('Y-m-d'),
                 $dataVolta->format('Y-m-d'),
                 $data['observacao'],
-                false
+                $analisada = false,
+                $status = true
             );
 
             $this->Viagem_Model->criar($viagem);
@@ -137,7 +142,8 @@
                 $data['dataIda'],
                 $data['dataVolta'],
                 $data['observacao'],
-                $data['analisada']
+                $data['analisada'],
+                $data['status'],
             );
 
             $this->Viagem_Model->update($viagem);
@@ -181,7 +187,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO_NAO_ANALISADA,
                 'tabela'=> $this->tabelaAprovar(
-                    $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar)),
+                    $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_APROVAR,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -199,7 +207,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO_VIGEM_ANALISADA,
                 'tabela'=> $this->tabelaAnalisadas(
-                    $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar)),
+                    $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_APROVAR,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -207,7 +217,7 @@
             $this->load->view('index',$dados);
         }
 
-        public function tabela($listaDeViagens){
+        public function tabela($listaDeViagens, $ordem){
             
             $line = [];
 
@@ -218,10 +228,10 @@
                 array_push($line,$data);
             }
            
-            return $this->tabela->viagem($line);
+            return $this->tabela->viagem($line, $ordem);
         }
 
-        public function tabelaAprovar($listaDeViagens){
+        public function tabelaAprovar($listaDeViagens, $ordem){
             $line = [];
 
             foreach($listaDeViagens as $viagem){
@@ -230,10 +240,10 @@
 
                 array_push($line,$data);
             }
-            return $this->tabela->viagemParaAprovacao($line);
+            return $this->tabela->viagemParaAprovacao($line, $ordem);
         }
 
-        public function tabelaAnalisadas($listaDeViagens){
+        public function tabelaAnalisadas($listaDeViagens, $ordem){
             $line =[];
 
             foreach($listaDeViagens as $viagem){
@@ -243,7 +253,7 @@
                 array_push($line,$data);
 
             }
-            return $this->tabela->viagensAnalisadas($line);
+            return $this->tabela->viagensAnalisadas($line, $ordem);
         }
 
         private function montarArrayViagem($viagem)

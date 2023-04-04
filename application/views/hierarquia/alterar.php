@@ -2,6 +2,7 @@
 
     $form_open = array('class' => 'form-group');
     $input_id = array('name' => 'id','type' => 'hidden', 'value' => $tabela[0]['id']);
+    $input_status = array('name' => 'status','type' => 'hidden', 'value' => $tabela[0]['status']);
     $input_postoOuGraduacao = array('name' => 'postoOuGraduacao', 'class' => 'form-control', 'maxlength' => 100, 'value' => $tabela[0]['postoOuGraduacao']);
     $input_sigla = array('name' => 'sigla', 'class' => 'form-control', 'maxlength' => 10, 'value' => $tabela[0]['sigla']);
     $form_submit_btn = array('class' => 'btn btn-primary btn-lg btn-block');
@@ -14,6 +15,7 @@
 
 
     echo form_input($input_id);
+    echo form_input($input_status);
 
 
     echo form_label('Posto ou Graduação'); 

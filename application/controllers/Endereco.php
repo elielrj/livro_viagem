@@ -25,7 +25,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->paraTabela(
-                    $this->Endereco_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Endereco_Model->retrive($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -45,7 +47,7 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar)),
+                    $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar), $indiceInicial),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -146,7 +148,7 @@
             return $this->Estado_Model->selectEstado();
         }
         
-        public function paraTabela($listaDeEnderecos){
+        public function paraTabela($listaDeEnderecos, $ordem){
 
             $line = [];               
 
@@ -171,7 +173,7 @@
 
                 array_push($line, $data);
             }
-            return $this->tabela->endereco($line);
+            return $this->tabela->endereco($line, $ordem);
         }
 
 

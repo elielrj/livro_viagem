@@ -24,7 +24,7 @@
 
                 if($recuperar)
                 {
-                    $link = "index.php/{$tabela}/recuperarUsuario/{$id}";
+                    $link = "index.php/{$tabela}/recuperar/{$id}";
                 }
                 return "<a href='" . base_url($link) . "'>" . ($recuperar ? 'Recuperar': 'Excluir'). "</a>";
             }

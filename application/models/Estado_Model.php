@@ -61,7 +61,8 @@
                 $estado = $this->estado(
                     $linha->id,
                     $linha->nome,
-                    $linha->sigla
+                    $linha->sigla,
+                    $linha->status
                 );
 
                 array_push($listaDeEstados, $estado);
@@ -69,12 +70,13 @@
             return $listaDeEstados;
         }
 
-        public function estado($id,$nome,$sigla){            
+        public function estado($id,$nome,$sigla,$status){            
         
             return array(
                 'id' => $id,
                 'nome' => $nome,
-                'sigla' => $sigla
+                'sigla' => $sigla,
+                'status' => $status
             );
         }
 

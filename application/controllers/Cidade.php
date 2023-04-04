@@ -42,7 +42,7 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=>  $this->tabela->cidade($listaDeCidadesParaExibirEmTabela),
+                'tabela'=>  $this->tabela->cidade($listaDeCidadesParaExibirEmTabela,$indiceInicial),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );

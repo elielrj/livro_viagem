@@ -4,12 +4,16 @@
 
     class TabelaCidade extends Link{
 
-        public function cidade($cidades)
+        private $ordem;
+        
+        public function cidade($cidades, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDaCidade();
 
             foreach($cidades as $cidade)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDeCidade($cidade);
             }
             return $tabela;
@@ -19,9 +23,11 @@
         {
             $tabela = $this->linhaDeCabecalhoDaCidadeMaisVisitadas();
 
+            $ordem = 0;
             foreach($cidades as $cidade)
             {
-                $tabela .= $this->linhaDeCidadeMaisVisitadas($cidade);
+                $ordem++;
+                $tabela .= $this->linhaDeCidadeMaisVisitadas($cidade, $ordem);
             }
             return $tabela;
         }
@@ -30,7 +36,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Cidade</td>
                     <td>Estado</td>
                     <td>Sigla</td>
@@ -43,7 +49,8 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
+                    <td>Quantidades de Viagens</td>
                     <td>Cidade</td>
                     <td>Estado</td>             
                 </tr>";
@@ -54,7 +61,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->cidadeId($cidade['id']) .
+                    $this->cidadeOrdem() .
                     $this->cidadeNome($cidade['nome']) .
                     $this->cidadeNomeDoEstado($cidade['estado']) .
                     $this->cidadeSiglaDoEstado($cidade['sigla']) .
@@ -64,16 +71,22 @@
                 "</tr>";
         }
 
-        private function linhaDeCidadeMaisVisitadas($cidade)
+        private function linhaDeCidadeMaisVisitadas($cidade, $ordem)
         {
             return
                 "<tr class='text-center'>" .
                 
-                    $this->cidadeId($cidade['cidade_nome']) .
+                    $this->cidadeOrdem() .
                     $this->cidadeNome($cidade['count']) .
+                    $this->cidadeId($cidade['cidade_nome']) .
                     $this->cidadeNomeDoEstado($cidade['estado_nome']) .
                                 
                 "</tr>";
+        }
+
+        private function cidadeOrdem()
+        {
+            return "<td>{$this->ordem}</td>";
         }
 
         private function cidadeId($id)

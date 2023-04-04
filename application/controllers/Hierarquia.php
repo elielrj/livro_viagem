@@ -24,7 +24,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela->hierarquia(
-                    $this->Hierarquia_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Hierarquia_Model->retrive($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -51,6 +53,7 @@
                 null,
                 ucwords(strtolower($data['postoOuGraduacao'])),
                 $data['sigla'],
+                true,
             );
 
             $this->Hierarquia_Model->criar($hierarquia);
@@ -80,6 +83,7 @@
                 $data['id'],
                 ucwords(strtolower($data['postoOuGraduacao'])),
                 $data['sigla'],
+                $data['status'],
             );
 
             $this->Hierarquia_Model->update($hierarquia);
@@ -92,7 +96,14 @@
             $this->Hierarquia_Model->delete($id);
 
             redirect('hierarquia');
-        }      
+        }  
+        
+        public function recuperar($id){            
+
+            $this->Hierarquia_Model->recuperar($id);
+
+            redirect('hierarquia');
+        }
 
         public function botao($indice,$mostrar){
             return $this->botao->paginar(

@@ -4,12 +4,16 @@
 
     class TabelaTelefone extends Link{
 
-        public function telefone($telefones)
+        private $ordem;
+
+        public function telefone($telefones, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDoTelefone();
 
             foreach($telefones as $telefone)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDoTelefone($telefone);
             }
             return $tabela;
@@ -19,7 +23,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Número</td>
                     <td>Contato</td>
                     <td>Parentesco do Contato</td>
@@ -34,7 +38,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->telefoneId($telefone['id']) .
+                    $this->telefoneOrdem() .
                     $this->telefoneNumero($telefone['numero']) .
                     $this->telefoneContato($telefone['contato']) .
                     $this->telefoneParentescoDoContato($telefone['parentescoDoContato']) .
@@ -45,9 +49,9 @@
                 "</tr>";
         }
 
-        private function telefoneId($id)
+        private function telefoneOrdem()
         {
-            return "<td>{$id}</td>";
+            return "<td>{$this->ordem}</td>";
         }
 
         private function telefoneNumero($numero)

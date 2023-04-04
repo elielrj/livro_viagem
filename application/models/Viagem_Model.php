@@ -91,7 +91,8 @@
                     $linha->dataIda,
                     $linha->dataVolta,
                     $linha->observacao,
-                    $linha->analisada
+                    $linha->analisada,
+                    $linha->status,
                 );
 
                 array_push($listaDeViagens, $viagem);
@@ -109,7 +110,8 @@
             $dataIda,
             $dataVolta,
             $observacao,
-            $analisada){            
+            $analisada,
+            $status){            
         
             return array(
                 'id' => $id,
@@ -122,6 +124,7 @@
                 'dataVolta' => $dataVolta,
                 'observacao' => $observacao,
                 'analisada' => $analisada,
+                'status' => $status,
             );
         }
 
@@ -133,17 +136,12 @@
             
             $query = $this->db->query(
                 "
-                    SELECT v.territorio, c.nome, c.estadoId, c.id, COUNT(*) 
-                        FROM viagem as v
+                    SELECT c.nome, c.estadoId, COUNT(*) FROM viagem as v
+                    INNER JOIN endereco as e ON e.id = v.enderecoId 
+                    JOIN cidade as c ON e.cidadeId = c.id
+                    GROUP BY c.nome, v.territorio
+                    HAVING count(*) >= 0;
 
-                        INNER JOIN endereco as e
-                        ON e.id = v.enderecoId and v.territorio = 'Nacional'
-
-                        JOIN cidade as c
-                        ON e.cidadeId = c.id
-
-                        GROUP BY c.nome
-                        HAVING count(*) >= 0
                 ");
             
             $dados = [];
@@ -168,31 +166,7 @@
             //var_dump($dados);
             return $dados;
         }
-/*
-        public function retriveViagensNaoAprovadas($indiceInicial,$mostrar){
-            
-            $resultado = 
-            $this->db
-                ->where('aprovada', false)
-                ->where('analisada', true)
-                ->order_by('dataIda')
-                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
-            
-            return $this->montarObjetoViagem($resultado->result());
-        }
 
-        public function retriveViagensAprovadas($indiceInicial,$mostrar){
-            
-            $resultado = 
-            $this->db
-                ->where('aprovada', true)
-                ->where('analisada', true)
-                ->order_by('dataIda')
-                ->get(self::$TABELA_DB,$indiceInicial,$mostrar); 
-            
-            return $this->montarObjetoViagem($resultado->result());
-        }
-*/
         public function retriveViagensNaoAnalisada($indiceInicial,$mostrar){
             
             $resultado = 

@@ -61,7 +61,8 @@
                     $linha->numero,
                     $linha->contato,
                     $linha->parentescoDoContato,
-                    $linha->usuarioId
+                    $linha->usuarioId,
+                    $linha->status
                 );
 
                 array_push($listaDeTelefones, $telefone);
@@ -74,14 +75,16 @@
             $numero,
             $contato,
             $parentescoDoContato,            
-            $usuarioId){            
+            $usuarioId,
+            $status){            
         
             return array(
                 'id' => $id,
                 'numero' => $numero,
                 'contato' => $contato,
                 'parentescoDoContato' => $parentescoDoContato,                
-                'usuarioId' => $usuarioId
+                'usuarioId' => $usuarioId,
+                'status' => $status
             );
         }
 

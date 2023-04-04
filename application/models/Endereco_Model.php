@@ -75,7 +75,8 @@
                     $linha->numero,
                     $linha->bairro,
                     $linha->cidadeId,
-                    $linha->usuarioId
+                    $linha->usuarioId,
+                    $linha->status
                 );
 
                 array_push($listaDeEnderecos, $endereco);
@@ -83,7 +84,7 @@
             return $listaDeEnderecos;
         }
         
-        public function endereco($id,$nome,$logradouro,$numero,$bairro,$cidadeId,$usuarioId){            
+        public function endereco($id,$nome,$logradouro,$numero,$bairro,$cidadeId,$usuarioId,$status){            
         
             return array(
                 'id' => $id,
@@ -93,6 +94,7 @@
                 'bairro' => $bairro,
                 'cidadeId' => $cidadeId,
                 'usuarioId' => $usuarioId,
+                'status' => $status,
             );
         }
         

@@ -4,34 +4,42 @@
 
     class TabelaViagem extends Link{
 
-        public function viagem($viagens)
+        private $ordem;
+
+        public function viagem($viagens, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDeViagem();
 
             foreach($viagens as $viagem)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDeViagem($viagem);
             }
             return $tabela;
         }
 
-        public function viagemParaAprovacao($viagens)
+        public function viagemParaAprovacao($viagens, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDeViagemParaAprovacao();
 
             foreach($viagens as $viagem)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDeViagemParaAprovar($viagem);
             }
             return $tabela;
         }
 
-        public function viagensAnalisadas($viagens)
+        public function viagensAnalisadas($viagens, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDeViagemAnalisada();
 
             foreach($viagens as $viagem)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDeViagemAnalisada($viagem);
             }
             return $tabela;
@@ -41,7 +49,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Aprovada</td>
                     <td>Território</td>
                     <td>Motivo</td>
@@ -60,7 +68,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Aprovada</td>
                     <td>Território</td>
                     <td>Motivo</td>
@@ -79,7 +87,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Aprovada</td>
                     <td>Território</td>
                     <td>Motivo</td>
@@ -97,7 +105,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->viagemId($viagem['id']) .
+                    $this->viagemOrdem() .
                     $this->viagemAprovada($viagem['aprovada']) .
                     $this->viagemTerritorio($viagem['territorio']) .
                     $this->viagemMotivo($viagem['motivo']) .
@@ -118,7 +126,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->viagemId($viagem['id']) .
+                    $this->viagemOrdem() .
                     $this->viagemAprovada($viagem['aprovada']) .
                     $this->viagemTerritorio($viagem['territorio']) .
                     $this->viagemMotivo($viagem['motivo']) .
@@ -139,7 +147,7 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->viagemId($viagem['id']) .
+                    $this->viagemOrdem() .
                     $this->viagemAprovada($viagem['aprovada']) .
                     $this->viagemTerritorio($viagem['territorio']) .
                     $this->viagemMotivo($viagem['motivo']) .
@@ -153,9 +161,9 @@
                 "</tr>";
         }
 
-        private function viagemId($id)
+        private function viagemOrdem()
         {
-            return "<td>{$id}</td>";
+            return "<td>{$this->ordem}</td>";
         }
 
         private function viagemAprovada($aprovada)
@@ -170,6 +178,11 @@
 
         private function viagemTerritorio($territorio)
         {
+            if($territorio == Viagem_Model::$NACIONAL){
+                $territorio = Viagem_Model::$NACIONAL_PT;
+            }else{
+                $territorio = Viagem_Model::$INTERNACIONAL_PT;
+            }
             return "<td>{$territorio}</td>";
         }
 
@@ -197,12 +210,13 @@
 
         private function viagemDataIda($dataIda)
         {
-            return "<td>{$dataIda}</td>";
+            return "<td>" . $this->formatarData($dataIda) ."</td>";
         }
 
         private function viagemDataVolta($dataVolta)
         {
-            return "<td>{$dataVolta}</td>";
+            
+            return "<td>" . $this->formatarData($dataVolta) ."</td>";
         }
 
         private function viagemObservacao($observacao)
@@ -291,5 +305,10 @@
             else{
                 return "-";
             }
+        }
+
+        public function formatarData($data)
+        {
+            return form_input(array('type' => 'date', 'value' => $data, 'disabled' => 'disable'));
         }
     }

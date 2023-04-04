@@ -4,12 +4,16 @@
 
     class TabelaFuncao extends Link{
 
-        public function funcao($funcoes)
+        private $ordem;
+
+        public function funcao($funcoes, $ordem)
         {
+            $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDaFuncao();
 
             foreach($funcoes as $funcao)
             {
+                $this->ordem++;
                 $tabela .= $this->linhaDaFuncao($funcao);
             }
             return $tabela;
@@ -19,7 +23,7 @@
         {
             return
                 "<tr class='text-center'> 
-                    <td>Id</td>
+                    <td>Ordem</td>
                     <td>Nome da Função</td>
                     <td>Status</td>
                     <td>Nível de Acesso</td>
@@ -33,19 +37,19 @@
             return
                 "<tr class='text-center'>" .
                 
-                    $this->funcaoId($funcao['id']) .
+                    $this->funcaoOrdem() .
                     $this->funcaoNome($funcao['nome']) .
                     $this->funcaoStatus($funcao['status']) .
                     $this->funcaoNivelDeAcesso($funcao['nivelDeAcesso']) .
                     $this->funcaoAlterar($funcao['id']) .
-                    $this->funcaoExcluir($funcao['id']) .
+                    $this->funcaoExcluir($funcao['id'],$funcao['status']) .
                                 
                 "</tr>";
         }
 
-        private function funcaoId($id)
+        private function funcaoOrdem()
         {
-            return "<td>{$id}</td>";
+            return "<td>{$this->ordem}</td>";
         }
 
         private function funcaoNome($nome)
@@ -65,12 +69,31 @@
 
         private function funcaoAlterar($id)
         {
-            return "<td>{$this->linkAlterar('funcao',$id)}</td>";
+            $permissao = $this->verificarNivelDeAcesso();
+
+            return "<td>{$this->linkAlterar('funcao',$id,$permissao)}</td>";
         }
 
-        private function funcaoExcluir($id)
+        private function funcaoExcluir($id,$status)
         {
-            return "<td>{$this->linkExcluir('funcao',$id)}</td>";
+            $permissao = $this->verificarNivelDeAcesso();
+
+            $recuperar = $status ? false : true;
+
+            return "<td>{$this->linkExcluir('funcao',$id,$permissao,$recuperar)}</td>";
+        }
+
+        private function verificarNivelDeAcesso(){
+            if(
+                NivelDeAcesso::isRoot() ||
+                NivelDeAcesso::isAdmin()
+            )
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         
     }

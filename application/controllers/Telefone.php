@@ -24,7 +24,9 @@
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->paraTabela(
-                    $this->Telefone_Model->retrive($indiceInicial,$mostrar)),
+                    $this->Telefone_Model->retrive($indiceInicial,$mostrar),
+                    $indiceInicial
+                ),
                 'pagina'=> self::$PAGINA_INDEX,
                 'botoes'=> $this->botao($indice,$mostrar),
             );
@@ -99,7 +101,7 @@
             redirect('telefone');
         }      
         
-        public function paraTabela($listaDeTelefones){
+        public function paraTabela($listaDeTelefones, $ordem){
 
             $line = [];
 
@@ -118,7 +120,7 @@
                     
                 array_push($line,$data);
             }
-            return $this->tabela->telefone($line);
+            return $this->tabela->telefone($line, $ordem);
         }
 
         public function botao($indice,$mostrar){
