@@ -3,6 +3,18 @@
     class Viagem_Model extends CI_Model{
 
         public static $TABELA_DB = 'viagem';
+
+        public static $PARTICULAR = 'PARTICULAR';
+        public static $SERVICO = 'SERVICO';
+        public static $FERIAS = 'FERIAS';
+        public static $PARTICULAR_PT = 'Particular';
+        public static $SERVICO_PT = 'Serviço';
+        public static $FERIAS_PT = 'Férias';
+
+        public static $NACIONAL = 'NACIONAL';
+        public static $INTERNACIONAL = 'INTERNACIONAL';
+        public static $NACIONAL_PT = 'Nacional';
+        public static $INTERNACIONAL_PT = 'Internacional';
         
         public function __construct(){
             parent::__construct();

@@ -14,7 +14,7 @@
     $status_territorio_nacional = false;
     $status_territorio_internacional = false;
 
-    if($tabela[0]['territorio'] == 'NACIONAL'){
+    if($tabela[0]['territorio'] == Viagem_Model::$NACIONAL){
         $status_territorio_nacional = true;
     }else{
         $status_territorio_internacional = true;
@@ -22,11 +22,14 @@
 
     $motivo_particular = false;
     $motivo_servico = false;
+    $motivo_ferias = false;
 
-    if($tabela[0]['motivo'] == 'PARTICULAR'){
+    if($tabela[0]['motivo'] == Viagem_Model::$PARTICULAR){
         $motivo_particular = true;
-    }else{
+    }else if($tabela[0]['motivo'] == Viagem_Model::$SERVICO){
         $motivo_servico = true;
+    }else{
+        $motivo_ferias = true;
     }
 
     echo "<h1>{$titulo}</h1>";
@@ -48,9 +51,9 @@
 
             echo form_label('Território da Viagem:');
                 echo "</br>";
-            echo form_radio('territorio', 'NACIONAL', $status_territorio_nacional) . form_label('Nacional');
+            echo form_radio('territorio', Viagem_Model::$NACIONAL, $status_territorio_nacional) . form_label(Viagem_Model::$NACIONAL_PT);
                 echo "</br>";
-            echo form_radio('territorio', 'INTERNACIONAL',$status_territorio_internacional) . form_label('Internacional');
+            echo form_radio('territorio', Viagem_Model::$INTERNACIONAL,$status_territorio_internacional) . form_label(Viagem_Model::$INTERNACIONAL_PT);
 
                 echo "</br>";
 
@@ -59,9 +62,11 @@
 
             echo form_label('Motivo da Viagem:');
                 echo "</br>";
-            echo form_radio('motivo', 'PARTICULAR', $motivo_particular) . form_label('Particular');
+            echo form_radio('motivo', Viagem_Model::$PARTICULAR, $motivo_particular) . form_label(Viagem_Model::$PARTICULAR_PT);
                 echo "</br>";
-            echo form_radio('motivo', 'SERVICO', $motivo_servico) . form_label('Serviço');
+            echo form_radio('motivo', Viagem_Model::$SERVICO, $motivo_servico) . form_label(Viagem_Model::$SERVICO_PT);
+                echo "</br>";
+            echo form_radio('motivo', Viagem_Model::$FERIAS, $motivo_ferias) . form_label(Viagem_Model::$FERIAS_PT);
 
         echo "</div></div>";
 

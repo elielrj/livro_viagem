@@ -26,9 +26,9 @@
 
             echo form_label('Território da Viagem:');
                 echo "</br>";
-            echo form_radio('territorio', 'NACIONAL', true) . form_label('Nacional');
+            echo form_radio('territorio', Viagem_Model::$NACIONAL, true) . form_label(Viagem_Model::$NACIONAL_PT);
                 echo "</br>";
-            echo form_radio('territorio', 'INTERNACIONAL') . form_label('Internacional');
+            echo form_radio('territorio', Viagem_Model::$INTERNACIONAL) . form_label(Viagem_Model::$INTERNACIONAL_PT);
 
                 echo "</br></br>";
 
@@ -37,9 +37,11 @@
 
             echo form_label('Motivo da Viagem:');
                 echo "</br>";
-            echo form_radio('motivo', 'PARTICULAR', true) . form_label('Particular');
+            echo form_radio('motivo', Viagem_Model::$PARTICULAR, true) . form_label(Viagem_Model::$PARTICULAR_PT);
                 echo "</br>";
-            echo form_radio('motivo', 'SERVICO') . form_label('Serviço');
+            echo form_radio('motivo', Viagem_Model::$SERVICO) . form_label(Viagem_Model::$SERVICO_PT);
+                echo "</br>";
+            echo form_radio('motivo', Viagem_Model::$FERIAS) . form_label(Viagem_Model::$FERIAS_PT);
 
         echo "</div></div>";
 

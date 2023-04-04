@@ -175,6 +175,13 @@
 
         private function viagemMotivo($motivo)
         {
+            if($motivo == Viagem_Model::$PARTICULAR){
+                $motivo = Viagem_Model::$PARTICULAR_PT;
+            }else if($motivo == Viagem_Model::$SERVICO){
+                $motivo = Viagem_Model::$SERVICO_PT;
+            }else{
+                $motivo = Viagem_Model::$FERIAS_PT;
+            }
             return "<td>{$motivo}</td>";
         }
 

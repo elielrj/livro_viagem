@@ -30,9 +30,12 @@
         {
             return
                 "<tr class='text-center'> 
+                    <td>Id</td>
                     <td>Cidade</td>
-                    <td>Quantidade</td>
-                    <td>Estado</td>              
+                    <td>Estado</td>
+                    <td>Sigla</td>
+                    <td>Alterar</td>
+                    <td>Excluir</td>              
                 </tr>";
         }
 
