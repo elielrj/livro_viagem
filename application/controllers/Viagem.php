@@ -95,7 +95,7 @@
                 $dataIda->format('Y-m-d'),
                 $dataVolta->format('Y-m-d'),
                 $data['observacao'],
-                false,
+                false
             );
 
             $this->Viagem_Model->criar($viagem);
@@ -137,7 +137,7 @@
                 $data['dataIda'],
                 $data['dataVolta'],
                 $data['observacao'],
-                $data['analisada'],
+                $data['analisada']
             );
 
             $this->Viagem_Model->update($viagem);

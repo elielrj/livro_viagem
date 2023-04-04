@@ -125,7 +125,7 @@
                         FROM viagem as v
 
                         INNER JOIN endereco as e
-                        ON e.id = v.enderecoId and v.territorio = 'NACIONAL'
+                        ON e.id = v.enderecoId and v.territorio = 'Nacional'
 
                         JOIN cidade as c
                         ON e.cidadeId = c.id
