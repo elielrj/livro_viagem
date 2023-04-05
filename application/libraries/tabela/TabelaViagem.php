@@ -59,6 +59,7 @@
                     <td>Data Volta</td>
                     <td>Observação</td>
                     <td>Análisada</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>              
                 </tr>";
@@ -78,6 +79,7 @@
                     <td>Data Volta</td>
                     <td>Observação</td>
                     <td>Análisada</td>
+                    <td>Status</td>
                     <td>Autorizar</td>
                     <td>Não Autorizar</td>              
                 </tr>";
@@ -97,6 +99,7 @@
                     <td>Data Volta</td>
                     <td>Observação</td>
                     <td>Análisada</td>
+                    <td>Status</td>
                 </tr>";
         }
 
@@ -115,8 +118,9 @@
                     $this->viagemDataVolta($viagem['dataVolta']) .
                     $this->viagemObservacao($viagem['observacao']) .
                     $this->viagemAnalisada($viagem['analisada']) .
+                    $this->viagemStatus($viagem['status']) .
                     $this->viagemAlterar($viagem['id'],$viagem['usuarioId'],$viagem['analisada']) .
-                    $this->viagemExcluir($viagem['id'],$viagem['usuarioId'],$viagem['analisada']) .
+                    $this->viagemExcluir($viagem['id'],$viagem['usuarioId'],$viagem['analisada'],$viagem['status']) .
                                 
                 "</tr>";
         }
@@ -136,6 +140,7 @@
                     $this->viagemDataVolta($viagem['dataVolta']) .
                     $this->viagemObservacao($viagem['observacao']) .
                     $this->viagemAnalisada($viagem['analisada']) .
+                    $this->viagemStatus($viagem['status']) .
                     $this->viagemAutorizar($viagem['id'],$viagem['usuarioId'],$viagem['analisada']) .
                     $this->viagemNaoAutorizar($viagem['id'],$viagem['usuarioId'],$viagem['analisada']) .
                                 
@@ -157,6 +162,7 @@
                     $this->viagemDataVolta($viagem['dataVolta']) .
                     $this->viagemObservacao($viagem['observacao']) .
                     $this->viagemAnalisada($viagem['analisada']) .
+                    $this->viagemStatus($viagem['status']) .
                                 
                 "</tr>";
         }
@@ -230,6 +236,12 @@
                 "<td><p style='color:" . ($analisada ? 'green' : 'red') ."'>" . ($analisada ? 'Sim' : 'Não') . "</p></td>";
         }
 
+        private function viagemStatus($status)
+        {
+            return 
+                "<td><p style='color:" . ($status ? 'green' : 'red') ."'>" . ($status ? 'Ativo' : 'Inativa') . "</p></td>";
+        }
+
         private function viagemAlterar($id,$usuarioId,$analisada)
         {
             $permissao = $this->verificarNivelDeAcesso($usuarioId,$analisada);
@@ -237,11 +249,13 @@
             return "<td>{$this->linkAlterar('viagem',$id,$permissao)}</td>";
         }
         
-        private function viagemExcluir($id,$usuarioId,$analisada)
+        private function viagemExcluir($id,$usuarioId,$analisada,$status)
         {
             $permissao = $this->verificarNivelDeAcesso($usuarioId,$analisada);
 
-            return "<td>{$this->linkExcluir('viagem',$id,$permissao)}</td>";
+            $recuperar = $status ? false : true;
+
+            return "<td>{$this->linkExcluir('viagem',$id,$permissao,$recuperar)}</td>";
         }
         
         private function verificarNivelDeAcesso($usuarioId, $analisada){            

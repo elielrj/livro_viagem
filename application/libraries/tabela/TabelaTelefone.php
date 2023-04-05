@@ -28,6 +28,7 @@
                     <td>Contato</td>
                     <td>Parentesco do Contato</td>
                     <td>Usuário</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>              
                 </tr>";
@@ -43,8 +44,9 @@
                     $this->telefoneContato($telefone['contato']) .
                     $this->telefoneParentescoDoContato($telefone['parentescoDoContato']) .
                     $this->telefoneUsuario($telefone['usuario']) .
+                    $this->telefoneStatus($telefone['status']) .
                     $this->telefoneAlterar($telefone['id'],$telefone['usuarioId']) .
-                    $this->telefoneExcluir($telefone['id'],$telefone['usuarioId']) .
+                    $this->telefoneExcluir($telefone['id'],$telefone['usuarioId'], $telefone['status']) .
                                 
                 "</tr>";
         }
@@ -74,6 +76,12 @@
             return "<td>{$usuario}</td>";
         }
 
+        private function telefoneStatus($status)
+        {
+            return 
+                "<td><p style='color:" . ($status ? 'green' : 'red') ."'>" . ($status ? 'Ativo' : 'Inativa') . "</p></td>";
+        }
+
         private function telefoneAlterar($id,$usuarioId)
         {
             $permissao = $this->verificarNivelDeAcesso($usuarioId);
@@ -81,11 +89,13 @@
             return "<td>{$this->linkAlterar('telefone',$id,$permissao)}</td>";
         }
 
-        private function telefoneExcluir($id,$usuarioId)
+        private function telefoneExcluir($id,$usuarioId,$status)
         {
             $permissao = $this->verificarNivelDeAcesso($usuarioId);
 
-            return "<td>{$this->linkExcluir('telefone',$id,$permissao)}</td>";
+            $recuperar = $status ? false : true;
+
+            return "<td>{$this->linkExcluir('telefone',$id,$permissao,$recuperar)}</td>";
         }
         
         private function verificarNivelDeAcesso($usuarioId){

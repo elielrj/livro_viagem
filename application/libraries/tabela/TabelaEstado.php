@@ -26,6 +26,7 @@
                     <td>Ordem</td>
                     <td>Estado</td>
                     <td>Sigla</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -39,8 +40,9 @@
                     $this->estadoOrdem() .
                     $this->estadoNome($estado['nome']) .
                     $this->estadoSigla($estado['sigla']) .
+                    $this->estadoStatus($estado['status']) .
                     $this->estadoAlterar($estado['id']) .
-                    $this->estadoExcluir($estado['id']) .
+                    $this->estadoExcluir($estado['id'],$estado['status']) .
                                 
                 "</tr>";
         }
@@ -60,14 +62,36 @@
             return "<td>{$estado}</td>";
         }
 
+        private function estadoStatus($status)
+        {
+            return "<td><p style='color:" . ($status ? 'green' : 'red') . "'>" . ($status ? 'Ativo' : 'Inativo') . "</p></td>";
+        }
+
         private function estadoAlterar($id)
         {
             return "<td>{$this->linkAlterar('estado',$id)}</td>";
         }
 
-        private function estadoExcluir($id)
+        private function estadoExcluir($id,$status)
         {
-            return "<td>{$this->linkExcluir('estado',$id)}</td>";
+            $permissao = $this->verificarNivelDeAcesso();
+
+            $recuperar = $status ? false : true;
+
+            return "<td>{$this->linkExcluir('estado',$id,$permissao,$recuperar)}</td>";
+        }
+
+        private function verificarNivelDeAcesso(){
+            if(
+                NivelDeAcesso::isRoot() ||
+                NivelDeAcesso::isAdmin()
+            )
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         
     }

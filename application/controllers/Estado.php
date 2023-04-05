@@ -54,6 +54,7 @@
                 null,
                 ucwords(strtolower($data['nome'])),
                 mb_strtoupper($data['sigla']),
+                $status = true
             );
 
             $this->Estado_Model->create($estado);
@@ -80,7 +81,8 @@
             $this->Estado_Model->estado(
                 $data['id'],
                 ucwords(strtolower(($data['nome']))),
-                mb_strtoupper($data['sigla'])
+                mb_strtoupper($data['sigla']),
+                $data['status']
             );
 
             $this->Estado_Model->update($estado);
@@ -91,6 +93,13 @@
         public function deletar($id){            
 
             $this->Estado_Model->delete($id);
+
+            redirect('estado');
+        }
+
+        public function recuperar($id){            
+
+            $this->Estado_Model->recuperar($id);
 
             redirect('estado');
         }

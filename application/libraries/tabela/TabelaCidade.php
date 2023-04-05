@@ -40,6 +40,7 @@
                     <td>Cidade</td>
                     <td>Estado</td>
                     <td>Sigla</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>              
                 </tr>";
@@ -65,8 +66,9 @@
                     $this->cidadeNome($cidade['nome']) .
                     $this->cidadeNomeDoEstado($cidade['estado']) .
                     $this->cidadeSiglaDoEstado($cidade['sigla']) .
+                    $this->cidadeStatus($cidade['status']) .
                     $this->cidadeAlterar($cidade['id']) .
-                    $this->cidadeExcluir($cidade['id']) .
+                    $this->cidadeExcluir($cidade['id'],$cidade['status']) .
                                 
                 "</tr>";
         }
@@ -108,15 +110,37 @@
         {
             return "<td>{$sigla}</td>";
         }
+        
+        private function cidadeStatus($status)
+        {
+            return "<td><p style='color:" . ($status ? 'green' : 'red') . "'>" . ($status ? 'Ativo' : 'Inativo') . "</p></td>";
+        }
 
         private function cidadeAlterar($id)
         {
             return "<td>{$this->linkAlterar('cidade',$id)}</td>";
         }
 
-        private function cidadeExcluir($id)
+        private function cidadeExcluir($id,$status)
         {
-            return "<td>{$this->linkExcluir('cidade',$id)}</td>";
+            $permissao = $this->verificarNivelDeAcesso();
+
+            $recuperar = $status ? false : true;
+
+            return "<td>{$this->linkExcluir('cidade',$id,$permissao,$recuperar)}</td>";
+        }
+
+        private function verificarNivelDeAcesso(){
+            if(
+                NivelDeAcesso::isRoot() ||
+                NivelDeAcesso::isAdmin()
+            )
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         
     }

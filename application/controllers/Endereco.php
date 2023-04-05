@@ -82,6 +82,7 @@
                 ucwords(strtolower($data['bairro'])),
                 $data['cidadeId'],
                 $this->session->id,
+                $status = true
             );
 
             $this->Endereco_Model->criar($endereco);
@@ -126,6 +127,7 @@
                 ucwords(strtolower($data['bairro'])),
                 $data['cidadeId'],
                 $data['usuarioId'],
+                $data['status']
             );
 
             $this->Endereco_Model->update($endereco);
@@ -136,6 +138,13 @@
         public function deletar($id){            
 
             $this->Endereco_Model->delete($id);
+
+            redirect('endereco');
+        }
+
+        public function recuperar($id){            
+
+            $this->Endereco_Model->recuperar($id);
 
             redirect('endereco');
         }
@@ -169,6 +178,7 @@
                     'sigla' => $estado[0]['sigla'],
                     'usuario' => $usuario[0]['nome'],
                     'usuarioId' => $endereco['usuarioId'],
+                    'status' => $endereco['status']
                 );
 
                 array_push($line, $data);

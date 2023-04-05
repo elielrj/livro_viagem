@@ -34,7 +34,8 @@
                     'id' => $cidade['id'],
                     'nome' => $cidade['nome'],
                     'estado' => $estado[0]['nome'],
-                    'sigla' => $estado[0]['sigla']
+                    'sigla' => $estado[0]['sigla'],
+                    'status' => $cidade['status'],
                 );
 
                 array_push($listaDeCidadesParaExibirEmTabela,$linhaDaTabela);                
@@ -69,7 +70,8 @@
             $this->Cidade_Model->cidade(
                 null,
                 ucwords(strtolower($data['nome'])),
-                $data['estadoId']
+                $data['estadoId'],
+                $status = true
             );
 
             $this->Cidade_Model->create($cidade);
@@ -99,7 +101,8 @@
             $this->Cidade_Model->cidade(
                 $data['id'],
                 ucwords(strtolower($data['nome'])),
-                $data['estadoId']
+                $data['estadoId'],
+                $data['status']
             );
 
             $this->Cidade_Model->update($cidade);
@@ -109,6 +112,11 @@
 
         public function deletar($id){            
             $this->Cidade_Model->delete($id);
+            redirect('cidade');
+        }
+
+        public function recuperar($id){            
+            $this->Cidade_Model->recuperar($id);
             redirect('cidade');
         }
 

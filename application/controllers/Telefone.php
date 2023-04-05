@@ -56,6 +56,7 @@
                 $data['contato'],
                 $data['parentescoDoContato'],
                 $data['usuarioId'],
+                $status = true
             );
 
             $this->Telefone_Model->criar($telefone);
@@ -87,6 +88,7 @@
                 $data['contato'],
                 $data['parentescoDoContato'],
                 $data['usuarioId'],
+                $data['status']
             );
 
             $this->Telefone_Model->update($telefone);
@@ -100,6 +102,13 @@
 
             redirect('telefone');
         }      
+
+        public function recuperar($id){            
+
+            $this->Telefone_Model->recuperar($id);
+
+            redirect('telefone');
+        }
         
         public function paraTabela($listaDeTelefones, $ordem){
 
@@ -116,6 +125,7 @@
                     'parentescoDoContato' => $telefone['parentescoDoContato'],
                     'usuario' => $usuario[0]['nome'],
                     'usuarioId' => $telefone['usuarioId'],
+                    'status' => $endereco['status']
                 );
                     
                 array_push($line,$data);

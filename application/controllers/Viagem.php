@@ -157,6 +157,13 @@
 
             redirect('viagem');
         }
+        
+        public function recuperar($id){            
+
+            $this->Viagem_Model->recuperar($id);
+
+            redirect('viagem');
+        }
 
         public function aprovar($id){                
             $this->aprovarAnalisarViagem($id,true);
@@ -274,6 +281,7 @@
                 'observacao' => $viagem['observacao'],
                 'analisada' => $viagem['analisada'],
                 'usuarioId' => $viagem['usuarioId'],
+                'status' => $viagem['status'],
             );
         }
 

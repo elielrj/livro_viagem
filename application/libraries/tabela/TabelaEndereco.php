@@ -32,6 +32,7 @@
                     <td>Estado</td>
                     <td>Sigla</td>
                     <td>Cadastrador</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -51,8 +52,9 @@
                     $this->enderecoNomeDoEstado($endereco['estado']) .
                     $this->enderecoSiglaDoEstado($endereco['sigla']) .
                     $this->enderecoNomeDoCadastrador($endereco['usuario']) .
+                    $this->enderecoStatus($endereco['status']) .
                     $this->enderecoAlterar($endereco['id'], $endereco['usuarioId']) .
-                    $this->enderecoExcluir($endereco['id'], $endereco['usuarioId']) .
+                    $this->enderecoExcluir($endereco['id'], $endereco['usuarioId'], $endereco['status']) .
                                 
                 "</tr>";
         }
@@ -102,6 +104,12 @@
             return "<td>{$usuario}</td>";
         }
 
+        private function enderecoStatus($status)
+        {
+            return 
+                "<td><p style='color:" . ($status ? 'green' : 'red') ."'>" . ($status ? 'Ativo' : 'Inativa') . "</p></td>";
+        }
+
         private function enderecoAlterar($id,$usuarioId)
         {
             $permissao = $this->verificarNivelDeAcesso($usuarioId);
@@ -109,11 +117,13 @@
             return "<td>{$this->linkAlterar('endereco',$id,$permissao)}</td>";
         }
 
-        private function enderecoExcluir($id,$usuarioId)
+        private function enderecoExcluir($id,$usuarioId,$status)
         {
             $permissao = $this->verificarNivelDeAcesso($usuarioId);
 
-            return "<td>{$this->linkExcluir('endereco',$id,$permissao)}</td>";
+            $recuperar = $status ? false : true;
+
+            return "<td>{$this->linkExcluir('endereco',$id,$permissao,$recuperar)}</td>";
         }
         
         private function verificarNivelDeAcesso($usuarioId){
