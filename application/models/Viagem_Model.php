@@ -92,7 +92,7 @@
                     $linha->dataVolta,
                     $linha->observacao,
                     $linha->analisada,
-                    $linha->status,
+                    $linha->status
                 );
 
                 array_push($listaDeViagens, $viagem);

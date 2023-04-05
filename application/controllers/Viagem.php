@@ -143,7 +143,7 @@
                 $data['dataVolta'],
                 $data['observacao'],
                 $data['analisada'],
-                $data['status'],
+                $data['status']
             );
 
             $this->Viagem_Model->update($viagem);
