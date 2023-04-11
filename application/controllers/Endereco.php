@@ -49,7 +49,7 @@
                 'tabela'=> $this->paraTabela(
                     $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar), 
                     $indiceInicial),
-                'pagina'=> self::$PAGINA_INDEX,
+                'pagina'=> 'endereco/consultar.php',
                 'botoes'=> $this->botao('endereco/listarPorUsuarioId',$indice,$mostrar),
             );
             

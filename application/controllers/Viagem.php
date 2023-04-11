@@ -35,7 +35,7 @@
                     $this->Viagem_Model->retrive($indiceInicial,$mostrar),
                     $indiceInicial
                 ),
-                'pagina'=> self::$PAGINA_INDEX,
+                'pagina'=> 'viagem/consultar.php',
                 'botoes'=> $this->botao('viagem/listar',$indice,$mostrar),
             );
             
@@ -57,7 +57,7 @@
                     $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar),
                     $indiceInicial
                 ),
-                'pagina'=> self::$PAGINA_INDEX,
+                'pagina'=> 'viagem/consultar.php',
                 'botoes'=> $this->botao('viagem/listarPorUsuarioId',$indice,$mostrar),
             );
             
