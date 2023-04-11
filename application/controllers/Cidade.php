@@ -41,11 +41,14 @@
                 array_push($listaDeCidadesParaExibirEmTabela,$linhaDaTabela);                
             }          
 
+            $cidades = $this->tabela->cidade($listaDeCidadesParaExibirEmTabela,$indiceInicial);
+            $botoes =  empty($cidades) ? '' : $this->botao('cidade/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=>  $this->tabela->cidade($listaDeCidadesParaExibirEmTabela,$indiceInicial),
+                'tabela'=>  $cidades,
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('cidade/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

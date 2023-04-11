@@ -21,14 +21,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $hierarquias = $this->Hierarquia_Model->retrive($indiceInicial,$mostrar);
+            $botoes =  empty($hierarquias) ? '' : $this->botao('hierarquia/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela->hierarquia(
-                    $this->Hierarquia_Model->retrive($indiceInicial,$mostrar),
+                    $hierarquias,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('hierarquia/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

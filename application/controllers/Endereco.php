@@ -22,14 +22,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $enderecos = $this->Endereco_Model->retrive($indiceInicial,$mostrar);
+            $botoes =  empty($enderecos) ? '' : $this->botao('endereco/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->paraTabela(
-                    $this->Endereco_Model->retrive($indiceInicial,$mostrar),
+                    $enderecos,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('endereco/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);
@@ -44,13 +47,16 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $enderecos = $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar);
+            $botoes =  empty($enderecos) ? '' : $this->botao('endereco/listarPorUsuarioId',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->paraTabela(
-                    $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar), 
+                    $enderecos, 
                     $indiceInicial),
                 'pagina'=> 'endereco/consultar.php',
-                'botoes'=> $this->botao('endereco/listarPorUsuarioId',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

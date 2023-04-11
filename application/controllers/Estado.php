@@ -22,14 +22,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $estados = $this->Estado_Model->retrive($indiceInicial,$mostrar);
+            $botoes =  empty($estados) ? '' : $this->botao('estado/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela->estado(
-                    $this->Estado_Model->retrive($indiceInicial,$mostrar),
+                    $estados,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('estado/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

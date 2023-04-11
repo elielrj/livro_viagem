@@ -29,14 +29,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $viagens = $this->Viagem_Model->retrive($indiceInicial,$mostrar);
+            $botoes = empty($viagens) ? '' : $this->botao('viagem/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Viagem_Model->retrive($indiceInicial,$mostrar),
+                    $viagens,
                     $indiceInicial
                 ),
                 'pagina'=> 'viagem/consultar.php',
-                'botoes'=> $this->botao('viagem/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);
@@ -51,14 +54,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $viagens = $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar);
+            $botoes = empty($viagens) ? '' : $this->botao('viagem/listarPorUsuarioId',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar),
+                    $viagens,
                     $indiceInicial
                 ),
                 'pagina'=> 'viagem/consultar.php',
-                'botoes'=> $this->botao('viagem/listarPorUsuarioId',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);
@@ -245,14 +251,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $viagens = $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar);
+            $botoes = empty($viagens) ? '' : $this->botao('viagem/viagensNaoAnalisada',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO_NAO_ANALISADA,
                 'tabela'=> $this->tabelaAprovar(
-                    $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar),
+                    $viagens,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_APROVAR,
-                'botoes'=> $this->botao('viagem/viagensNaoAnalisada',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);
@@ -265,14 +274,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $viagens = $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar);
+            $botoes = empty($viagens) ? '' : $this->botao('viagem/viagensAnalisada',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO_VIGEM_ANALISADA,
                 'tabela'=> $this->tabelaAnalisadas(
-                    $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar),
+                    $viagens,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_APROVAR,
-                'botoes'=> $this->botao('viagem/viagensAnalisada',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

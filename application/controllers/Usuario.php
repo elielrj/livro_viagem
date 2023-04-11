@@ -29,14 +29,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $usuarios = $this->Usuario_Model->retrive($indiceInicial,$mostrar);
+            $botoes = empty($usuarios) ? '' : $this->botao('usuario/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela(
-                    $this->Usuario_Model->retrive($indiceInicial,$mostrar),
+                    $usuarios,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('usuario/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

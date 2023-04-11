@@ -21,14 +21,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $telefones = $this->Telefone_Model->retrive($indiceInicial,$mostrar);
+            $botoes =  empty($telefones) ? '' : $this->botao('telefone/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->paraTabela(
-                    $this->Telefone_Model->retrive($indiceInicial,$mostrar),
+                    $telefones,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('telefone/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);

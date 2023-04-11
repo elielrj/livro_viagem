@@ -22,14 +22,17 @@
             $mostrar = 10;
             $indiceInicial  = $indice * $mostrar;
 
+            $funcoes = $this->Funcao_Model->retrive($indiceInicial,$mostrar);
+            $botoes =  empty($funcoes) ? '' : $this->botao('funcao/listar',$indice,$mostrar);
+
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=> $this->tabela->funcao(
-                    $this->Funcao_Model->retrive($indiceInicial,$mostrar),
+                    $funcoes,
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao('funcao/listar',$indice,$mostrar),
+                'botoes'=> $botoes,
             );
             
             $this->load->view('index',$dados);
