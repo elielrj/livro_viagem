@@ -12,7 +12,7 @@
 
     echo "<h1>{$titulo}</h1>";
 
-    echo form_open('endereco/criar', $form_open);
+    echo form_open($metodo, $form_open);
 
     echo form_label('Nome do Endereço (Exemplo: Home, Casa de Praia, Casa do Pai, Férias)');
     echo form_input($input_nome);

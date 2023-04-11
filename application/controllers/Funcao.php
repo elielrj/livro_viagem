@@ -29,7 +29,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('funcao/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -107,9 +107,9 @@
             redirect('funcao');
         }
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'funcao',
+                    $link,
                     $indice,
                     $this->Funcao_Model->quantidade(),
                     $mostrar

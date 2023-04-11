@@ -23,11 +23,11 @@
         {
             $tabela = $this->linhaDeCabecalhoDaCidadeMaisVisitadas();
 
-            $ordem = 0;
+            $this->ordem = 0;
             foreach($cidades as $cidade)
             {
-                $ordem++;
-                $tabela .= $this->linhaDeCidadeMaisVisitadas($cidade, $ordem);
+                $this->ordem++;
+                $tabela .= $this->linhaDeCidadeMaisVisitadas($cidade);
             }
             return $tabela;
         }
@@ -73,7 +73,7 @@
                 "</tr>";
         }
 
-        private function linhaDeCidadeMaisVisitadas($cidade, $ordem)
+        private function linhaDeCidadeMaisVisitadas($cidade)
         {
             return
                 "<tr class='text-center'>" .

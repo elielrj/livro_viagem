@@ -69,13 +69,13 @@
                 <nav aria-label='Page navigation'>
                     <ul class='pagination'>
                         <li>
-                            <a class='btn btn-primary' href='" . base_url() . "index.php/{$this->linkPrincipal}/listar/1' aria-label='Previous'>
+                            <a class='btn btn-primary' href='" . base_url() . "index.php/{$this->linkPrincipal}/1' aria-label='Previous'>
                                 <span aria-hidden='true'>&laquo;</span>
                             </a>
                         </li> 
                         ". $this->linkDoBatao() ." 
                         <li>
-                            <a class='btn btn-primary' href='" . base_url() . "index.php/{$this->linkPrincipal}/listar/" . ($this->numeroDePaginas() ) ."' aria-label='Next'>
+                            <a class='btn btn-primary' href='" . base_url() . "index.php/{$this->linkPrincipal}/" . ($this->numeroDePaginas() ) ."' aria-label='Next'>
                                 <span aria-hidden='true'>&raquo;</span>
                             </a>
                         </li>
@@ -98,7 +98,7 @@
 
                 $li .= " <li>
                     <a class='btn btn-primary {$disabled}' 
-                    href='" . base_url() . "index.php/{$this->linkPrincipal}/listar/{$index}'>" . ($index ) . "</a></li> ";
+                    href='" . base_url() . "index.php/{$this->linkPrincipal}/{$index}'>" . ($index ) . "</a></li> ";
 
             }
 

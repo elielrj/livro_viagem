@@ -7,7 +7,7 @@
 
     echo "<h1>{$titulo}</h1>";
     
-    echo form_open('estado/criar', $form_open);
+    echo form_open($metodo, $form_open);
     
         echo form_label( 'Nome', 'nome');        
         echo form_input($input_nome);

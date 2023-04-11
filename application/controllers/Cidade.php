@@ -45,7 +45,7 @@
                 'titulo'=> self::$PAGINA_TITULO,
                 'tabela'=>  $this->tabela->cidade($listaDeCidadesParaExibirEmTabela,$indiceInicial),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('cidade/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -120,9 +120,9 @@
             redirect('cidade');
         }
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'cidade',
+                    $link,
                     $indice,
                     $this->Cidade_Model->quantidade(),
                     $mostrar

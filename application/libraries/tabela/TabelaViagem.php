@@ -323,6 +323,6 @@
 
         public function formatarData($data)
         {
-            return form_input(array('type' => 'date', 'value' => $data, 'disabled' => 'disable'));
+            return form_input(array('type' => 'date', 'value' => $data, 'disabled' => 'disable',  'class' => 'text-center'));
         }
     }

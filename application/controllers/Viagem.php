@@ -9,7 +9,8 @@
         public static $PAGINA_TITULO_VIGEM_ANALISADA = 'Viagens Analisada';
         public static $PAGINA_INDEX = 'viagem/index.php';
         public static $PAGINA_APROVAR = 'viagem/aprovar.php';
-        public static $PAGINA_FORM_CREATE = 'viagem/novo.php';
+        public static $PAGINA_FORM_INFORMAR = 'viagem/novo.php';
+        public static $PAGINA_FORM_NOVO = 'viagem/novo.php';
         public static $PAGINA_FORM_UPDATE = 'viagem/alterar.php';
 
         public function __contruct(){            
@@ -35,7 +36,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('viagem/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -57,7 +58,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('viagem/listarPorUsuarioId',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -72,15 +73,36 @@
 
             $dados = array(
                 'titulo' => self::$PAGINA_TITULO,
-                'pagina' => self::$PAGINA_FORM_CREATE,
+                'pagina' => self::$PAGINA_FORM_NOVO,
                 'usuario' => $usuario,
                 'select_endereco' => $selectEndereco,
-                //'selected_endereco' => $selectEndereco[0],
+                'metodo' => 'viagem/criar'
             );
 
             $this->load->view('index', $dados);
         }
+        
+        public function informar(){
 
+            $usuario = $this->Usuario_Model->buscarUsuario();
+
+            $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
+
+            $dados = array(
+                'titulo' => self::$PAGINA_TITULO,
+                'pagina' => self::$PAGINA_FORM_INFORMAR,
+                'usuario' => $usuario,
+                'select_endereco' => $selectEndereco,
+                'metodo' => 'viagem/criarInformacao',
+            );
+
+            $this->load->view('index', $dados);
+        }
+        /**
+         * recebe como parâmetro o nome do menu criado
+         * por meio do objeto Menu, na biblioteca do CI,
+         * para designar a rota correta
+         */
         public function criar(){
 
             $data = $this->input->post();
@@ -104,8 +126,40 @@
             );
 
             $this->Viagem_Model->criar($viagem);
+                redirect('viagem');
+            
+                  
+        }
 
-            redirect('viagem');       
+        public function criarInformacao(){
+
+            $data = $this->input->post();
+
+            $dataIda = new DateTime($data['dataIda']);
+            $dataVolta = new DateTime($data['dataVolta']);
+            
+            $viagem = 
+            $this->Viagem_Model->viagem(
+                null,
+                null,
+                $data['territorio'],
+                $data['motivo'],
+                $data['usuarioId'],
+                $data['enderecoId'],
+                $dataIda->format('Y-m-d'),
+                $dataVolta->format('Y-m-d'),
+                $data['observacao'],
+                $analisada = false,
+                $status = true
+            );
+
+            $this->Viagem_Model->criar($viagem);
+
+           
+            redirect('viagem/listarPorUsuarioId'); 
+           
+            
+                  
         }
 
         public function alterar($id){                
@@ -198,7 +252,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_APROVAR,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('viagem/viagensNaoAnalisada',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -218,7 +272,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_APROVAR,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('viagem/viagensAnalisada',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -285,9 +339,9 @@
             );
         }
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'viagem',
+                    $link,
                     $indice,
                     $this->Viagem_Model->quantidade(),
                     $mostrar
@@ -312,4 +366,5 @@
         public function tabelaDeCidadesMaisVisitadas($listaDeCidades){
             return $this->tabela->cidadeMaisVisitadas($listaDeCidades);
         }
+
     }

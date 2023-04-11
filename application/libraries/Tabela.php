@@ -17,10 +17,10 @@
             return $tabelaCidade->cidade($cidades, $ordem);
         }
 
-        public function cidadeMaisVisitadas($cidades, $ordem)
+        public function cidadeMaisVisitadas($cidades)
         {
             $tabelaCidade = new TabelaCidade();
-            return $tabelaCidade->cidadeMaisVisitadas($cidades, $ordem);
+            return $tabelaCidade->cidadeMaisVisitadas($cidades);
         }
 
         public function estado($estados, $ordem)

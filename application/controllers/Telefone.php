@@ -28,7 +28,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('telefone/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -125,7 +125,7 @@
                     'parentescoDoContato' => $telefone['parentescoDoContato'],
                     'usuario' => $usuario[0]['nome'],
                     'usuarioId' => $telefone['usuarioId'],
-                    'status' => $endereco['status']
+                    'status' => $telefone['status']
                 );
                     
                 array_push($line,$data);
@@ -133,9 +133,9 @@
             return $this->tabela->telefone($line, $ordem);
         }
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'telefone',
+                    $link,
                     $indice,
                     $this->Telefone_Model->quantidade(),
                     $mostrar

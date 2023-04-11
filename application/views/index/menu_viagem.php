@@ -24,7 +24,8 @@
 
                 <h6 class="collapse-header">índices:</h6>
 
-                <a class="collapse-item" href="<?php echo base_url('index.php/viagem/novo');?>">
+                <!-- Passa como parâmetro qual o nome do menu clicado -->
+                <a class="collapse-item" href="<?php echo base_url('index.php/viagem/informar/');?>"> 
                     Informar</a>
 
                 <a class="collapse-item" href="<?php echo base_url('index.php/viagem/listarPorUsuarioId');?>">

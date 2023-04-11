@@ -7,7 +7,7 @@
     
     echo "<h1>{$titulo}</h1>";
 
-    echo form_open('hierarquia/criar', $form_open);
+    echo form_open($metodo, $form_open);
 
         echo form_label('Posto ou Graduação');
         echo form_input($input_postoOuGraduacao);

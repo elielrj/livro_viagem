@@ -29,7 +29,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('estado/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -104,9 +104,9 @@
             redirect('estado');
         }
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'estado',
+                    $link,
                     $indice,
                     $this->Estado_Model->quantidade(),
                     $mostrar

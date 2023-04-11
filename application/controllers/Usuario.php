@@ -8,7 +8,7 @@
         public static $PAGINA_FORM_UPDATE = 'usuario/alterar.php';
 
         public function __contruct(){            
-            parent::__contruct();              
+            parent::__contruct();         
         }
 
         public function index(){   
@@ -36,7 +36,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('usuario/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -173,30 +173,18 @@
             return $this->tabela->usuario($line, $ordem);
         }
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'usuario',
+                    $link,
                     $indice,
                     $this->Usuario_Model->quantidade(),
                     $mostrar
                 );
         }
 
-        public function removerSessao(){
-
-            $data = array(
-                'id',
-                'nome' ,
-                'status',
-                'dataDeCriacao',
-                'ultimoAcesso',
-                'hierarquia',
-                'email',
-                'email_valido',
-                'senha_valida',
-           );
-
-            $this->session->sess_destroy();
+        public function sair()
+        {
+            $this->Sessao_Model->remover();
 
             redirect(base_url());
         }
@@ -211,42 +199,33 @@
 
             $funcao = $this->Funcao_Model->retriveId($usuario[0]['funcaoId']);
             
-           $data = array(
-            'id' => $usuario[0]['id'],
-            'nome' => $usuario[0]['nome'],
-            'status' => $usuario[0]['status'],
-            'dataDeCriacao' => $usuario[0]['dataDeCriacao'],
-            'ultimoAcesso' => $usuario[0]['ultimoAcesso'],
-            'hierarquia' => $hierarquia[0],
-            'email' => $usuario[0]['email'],
-            'funcao' => $funcao[0],
-            //'nivelDeAcesso' => $funcao[0]['nivelDeAcesso'],
-           );     
+            $data = array(
+                'id' => $usuario[0]['id'],
+                'nome' => $usuario[0]['nome'],
+                'status' => $usuario[0]['status'],
+                'dataDeCriacao' => $usuario[0]['dataDeCriacao'],
+                'ultimoAcesso' => $usuario[0]['ultimoAcesso'],
+                'hierarquia' => $hierarquia[0],
+                'email' => $usuario[0]['email'],
+                'funcao' => $funcao[0],
+            ); 
 
-           $this->session->set_userdata($data);            
+            $this->Sessao_Model->criar($data);          
         }
 
         public function logar(){
 
-                if($this->verificarEmail()){
-             
-                    if($this->verificarSenha()){
+            if($this->verificarEmail()){
+            
+                if($this->verificarSenha()){
 
-                     $this->criarSessao();
-                     //$this->redirecionaParaTelaViagem();
-                     //$this->index();
-                        redirect('viagem');
-                    }else{
-                        //$this->redirecionarParaTelaLogin();
-                    }
-
-                }else{
-                    //$this->redirecionarParaTelaLogin();
+                    $this->criarSessao();
+                    
+                    redirect('viagem');
                 }
 
-    
-            //$this->index();
-            //redirect('LoginController');
+            }
+
             redirect(base_url());
         }
 
@@ -255,8 +234,6 @@
             $email = $this->input->post('email');
 
             $where = array('email' => $email);
-
-            //$this->load->model('Login');
 
            
            $resultado = $this->Usuario_Model->verificarEmail($where); 
@@ -280,9 +257,6 @@
 
             $where = array('senha' => $senha);
 
-            //$this->load->model('Login');
-
-
            $resultado = $this->Usuario_Model->verificarSenha($where);
 
            if(isset($resultado[0])){
@@ -296,6 +270,10 @@
            return isset($resultado[0]);
         }
         
+       public function menu($menu)
+       {
+            $this->Sessao_Model->createSession($menu);
+       }
     }
        
 

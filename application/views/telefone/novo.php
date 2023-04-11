@@ -10,7 +10,7 @@
     
     echo "<h1>{$titulo}</h1>";
     
-    echo form_open('telefone/criar', $form_open);
+    echo form_open($metodo, $form_open);
 
         //* id  *//
         //* número  *//

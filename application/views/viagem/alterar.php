@@ -2,6 +2,7 @@
 
     $form_open = array('class' => 'form-group');
     $input_id = array('name' => 'id','type' => 'hidden', 'value' => $tabela[0]['id']);
+    $input_status = array('name' => 'status','type' => 'hidden', 'value' => $tabela[0]['status']);
     $input_aprovada = array('name' => 'aprovada','type' => 'hidden', 'value' => $tabela[0]['aprovada']);
     $input_usuario = array('name' => 'usuarioId','type' => 'hidden', 'value' => $usuario[0]['id']);
     $form_dropdown_endereco = array('class' => 'form-control');
@@ -43,6 +44,10 @@
         //* aprovada  *//
 
         echo form_input($input_aprovada);
+       
+        //* status  *//
+
+        echo form_input($input_status);
 
             echo "</br>";
 

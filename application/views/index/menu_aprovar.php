@@ -4,11 +4,12 @@
         
         <a 
             class="nav-link collapsed" 
-            href="#" 
+            href="viagem/viagensAnalisada" 
             data-toggle="collapse" 
             data-target="#collapseAprovarViagem"
             aria-expanded="true" 
-            aria-controls="collapseAprovarViagem">
+            aria-controls="collapseAprovarViagem"
+             >
 
                 <i class="fas fa-fw fa-wrench"></i>
 

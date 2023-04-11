@@ -26,7 +26,7 @@
 
                 <h6 class="collapse-header">índices:</h6>
                 
-                <a class="collapse-item" href="<?php echo base_url('index.php/endereco/novo');?>">
+                <a class="collapse-item" href="<?php echo base_url('index.php/endereco/cadastrar');?>">
                     Cadastrar</a>
             
                 <a class="collapse-item" href="<?php echo base_url('index.php/endereco/listarPorUsuarioId');?>">

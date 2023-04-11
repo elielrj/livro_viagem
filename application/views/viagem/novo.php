@@ -12,7 +12,7 @@
 
     echo "<h1>{$titulo}</h1>";
     
-    echo form_open('viagem/criar', $form_open);
+    echo form_open($metodo, $form_open);
 
         //* aprovada  *//
 
@@ -43,7 +43,7 @@
                 echo "</br>";
             echo form_radio('motivo', Viagem_Model::$FERIAS) . form_label(Viagem_Model::$FERIAS_PT);
 
-        echo "</div></div>";
+         echo "</div></div>";
 
             echo "</br>";
 

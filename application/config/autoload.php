@@ -151,4 +151,5 @@ $autoload['model'] = array(
     'Hierarquia_Model',
     'Telefone_Model',
     'Funcao_Model',
+    'Sessao_Model',
 );

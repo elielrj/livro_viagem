@@ -29,7 +29,7 @@
                     $indiceInicial
                 ),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('endereco/listar',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -46,10 +46,11 @@
 
             $dados = array(
                 'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
-                    $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar), $indiceInicial),
+                'tabela'=> $this->paraTabela(
+                    $this->Endereco_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar), 
+                    $indiceInicial),
                 'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $this->botao($indice,$mostrar),
+                'botoes'=> $this->botao('endereco/listarPorUsuarioId',$indice,$mostrar),
             );
             
             $this->load->view('index',$dados);
@@ -64,6 +65,22 @@
                 'selected_estado' => array('id' => 24),
                 'select_cidade' => $this->selectCidade(24),
                 'selected_cidade' => array('id' => 4429),
+                'metodo' => 'endereco/criar',
+            );
+
+            $this->load->view('index', $dados);
+        }
+
+        public function cadastrar()       {
+            
+            $dados = array(
+                'titulo' => self::$PAGINA_TITULO,
+                'pagina' => self::$PAGINA_FORM_CREATE,
+                'select_estado' => $this->selectEstado(),
+                'selected_estado' => array('id' => 24),
+                'select_cidade' => $this->selectCidade(24),
+                'selected_cidade' => array('id' => 4429),
+                'metodo' => 'endereco/criarCadastro',
             );
 
             $this->load->view('index', $dados);
@@ -87,7 +104,33 @@
 
             $this->Endereco_Model->criar($endereco);
 
-            redirect('endereco');       
+            
+           
+            redirect('endereco');
+            
+                  
+        }
+
+         public function criarCadastro(){
+
+            $data = $this->input->post();
+
+            $endereco = 
+            $this->Endereco_Model->endereco(
+                null,
+                ucwords(strtolower($data['nome'])),
+                ucwords(strtolower($data['logradouro'])),
+                ucwords(strtolower($data['numero'])),
+                ucwords(strtolower($data['bairro'])),
+                $data['cidadeId'],
+                $this->session->id,
+                $status = true
+            );
+
+            $this->Endereco_Model->criar($endereco);
+
+            redirect('endereco/listarPorUsuarioId');
+                  
         }
 
         public function alterar($id){  
@@ -188,9 +231,9 @@
 
 
 
-        public function botao($indice,$mostrar){
+        public function botao($link,$indice,$mostrar){
             return $this->botao->paginar(
-                    'endereco',
+                    $link,
                     $indice,
                     $this->Endereco_Model->quantidade(),
                     $mostrar
