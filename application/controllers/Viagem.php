@@ -23,26 +23,35 @@
         
         public function listar($indice = 1){
 
-            $indice--;
-            
+            if(NivelDeAcesso::isRoot()){
+                $indice--;
+                
 
-            $mostrar = 10;
-            $indiceInicial  = $indice * $mostrar;
+                $mostrar = 10;
+                $indiceInicial  = $indice * $mostrar;
 
-            $viagens = $this->Viagem_Model->retrive($indiceInicial,$mostrar);
-            $botoes = empty($viagens) ? '' : $this->botao('viagem/listar',$indice,$mostrar);
+                $viagens = $this->Viagem_Model->retrive($indiceInicial,$mostrar);
+                $botoes = empty($viagens) ? '' : $this->botao('viagem/listar',$indice,$mostrar);
 
-            $dados = array(
-                'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
-                    $viagens,
-                    $indiceInicial
-                ),
-                'pagina'=> 'viagem/consultar.php',
-                'botoes'=> $botoes,
-            );
-            
-            $this->load->view('index',$dados);
+                $dados = array(
+                    'titulo'=> self::$PAGINA_TITULO,
+                    'tabela'=> $this->tabela(
+                        $viagens,
+                        $indiceInicial
+                    ),
+                    'pagina'=> 'viagem/consultar.php',
+                    'botoes'=> $botoes,
+                );
+                
+                $this->load->view('index',$dados);
+
+            }else{
+                //session_destroy();
+                //if(!isset($_SESSION['email'])){
+                header("Location:" . base_url());
+               // exit();
+    //}
+            }
         }
 
         public function listarPorUsuarioId($indice = 1){
