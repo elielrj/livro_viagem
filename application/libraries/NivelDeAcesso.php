@@ -14,53 +14,81 @@
         // Leitor
         public static function isReader(){
 
-            if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$LER){
-                return true;
+            if($this->isSessaoNivelDeAcesso()){
+                if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$LER){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
-            }
+            }            
         }
 
         //Escritor
         public static function isWriter(){
 
-            if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ESCREVER){
-                return true;
+            if($this->isSessaoNivelDeAcesso()){
+                if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ESCREVER){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
-            }
+            }            
         }
 
         //despachante
         public static function isDispatcher(){
 
-            if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$DESPACHAR){
-                return true;
+            if($this->isSessaoNivelDeAcesso()){
+                if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$DESPACHAR){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
-            }
+            }            
         }
 
         //administrador
         public static function isAdmin(){
 
-            if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ADMINISTRAR){
-                return true;
+            if($this->isSessaoNivelDeAcesso()){
+                if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ADMINISTRAR){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
-            }
+            }            
         }
 
         //super Usuário
         public static function isRoot(){
 
-            if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ROOT){
+            if($this->isSessaoNivelDeAcesso()){
+                if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ROOT){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }            
+        }
+
+        //verificar se existe sessão para nivel de acesso
+        public static function isSessaoNivelDeAcesso(){
+
+            if(isset($_SESSION[self::$funcao][self::$nivel_de_acesso])){
                 return true;
             }else{
                 return false;
             }
         }
-
-        
     }
 ?>
