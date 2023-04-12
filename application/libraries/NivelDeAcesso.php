@@ -14,7 +14,7 @@
         // Leitor
         public static function isReader(){
 
-            if($this->isSessaoNivelDeAcesso()){
+            if(self::isSessaoNivelDeAcesso()){
                 if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$LER){
                     return true;
                 }else{
@@ -28,7 +28,7 @@
         //Escritor
         public static function isWriter(){
 
-            if($this->isSessaoNivelDeAcesso()){
+            if(self::isSessaoNivelDeAcesso()){
                 if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ESCREVER){
                     return true;
                 }else{
@@ -42,7 +42,7 @@
         //despachante
         public static function isDispatcher(){
 
-            if($this->isSessaoNivelDeAcesso()){
+            if(self::isSessaoNivelDeAcesso()){
                 if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$DESPACHAR){
                     return true;
                 }else{
@@ -56,7 +56,7 @@
         //administrador
         public static function isAdmin(){
 
-            if($this->isSessaoNivelDeAcesso()){
+            if(self::isSessaoNivelDeAcesso()){
                 if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ADMINISTRAR){
                     return true;
                 }else{
@@ -70,7 +70,7 @@
         //super Usuário
         public static function isRoot(){
 
-            if($this->isSessaoNivelDeAcesso()){
+            if(self::isSessaoNivelDeAcesso()){
                 if($_SESSION[self::$funcao][self::$nivel_de_acesso] == self::$ROOT){
                     return true;
                 }else{

@@ -46,37 +46,37 @@
                 $this->load->view('index',$dados);
 
             }else{
-                //session_destroy();
-                //if(!isset($_SESSION['email'])){
                 header("Location:" . base_url());
-               // exit();
-    //}
             }
         }
 
         public function listarPorUsuarioId($indice = 1){
 
-            $indice--;
-            
-            $usuarioId = $this->session->id;
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isWriter()){
+                $indice--;
+                
+                $usuarioId = $this->session->id;
 
-            $mostrar = 10;
-            $indiceInicial  = $indice * $mostrar;
+                $mostrar = 10;
+                $indiceInicial  = $indice * $mostrar;
 
-            $viagens = $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar);
-            $botoes = empty($viagens) ? '' : $this->botao('viagem/listarPorUsuarioId',$indice,$mostrar);
+                $viagens = $this->Viagem_Model->retriveUsuarioId($usuarioId,$indiceInicial,$mostrar);
+                $botoes = empty($viagens) ? '' : $this->botao('viagem/listarPorUsuarioId',$indice,$mostrar);
 
-            $dados = array(
-                'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
-                    $viagens,
-                    $indiceInicial
-                ),
-                'pagina'=> 'viagem/consultar.php',
-                'botoes'=> $botoes,
-            );
-            
-            $this->load->view('index',$dados);
+                $dados = array(
+                    'titulo'=> self::$PAGINA_TITULO,
+                    'tabela'=> $this->tabela(
+                        $viagens,
+                        $indiceInicial
+                    ),
+                    'pagina'=> 'viagem/consultar.php',
+                    'botoes'=> $botoes,
+                );
+                
+                $this->load->view('index',$dados);
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
 
