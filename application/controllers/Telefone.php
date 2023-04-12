@@ -1,4 +1,5 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
     class Telefone extends CI_Controller{
 
         public static $PAGINA_TITULO = 'Cadastro de Telefone';

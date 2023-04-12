@@ -1,4 +1,5 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
     class Hierarquia extends CI_Controller{
 
         public static $PAGINA_TITULO = 'Cadastro de Hierarquia';
@@ -86,7 +87,7 @@
                 $data['id'],
                 ucwords(strtolower($data['postoOuGraduacao'])),
                 $data['sigla'],
-                $data['status']
+                $data['status'] 
             );
 
             $this->Hierarquia_Model->update($hierarquia);
