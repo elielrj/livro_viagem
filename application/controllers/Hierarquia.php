@@ -56,7 +56,7 @@
                 null,
                 ucwords(strtolower($data['postoOuGraduacao'])),
                 $data['sigla'],
-                true,
+                true
             );
 
             $this->Hierarquia_Model->criar($hierarquia);
@@ -86,7 +86,7 @@
                 $data['id'],
                 ucwords(strtolower($data['postoOuGraduacao'])),
                 $data['sigla'],
-                $data['status'],
+                $data['status']
             );
 
             $this->Hierarquia_Model->update($hierarquia);

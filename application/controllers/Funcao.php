@@ -58,7 +58,7 @@
                 null,
                 ucwords(strtolower($data['nome'])),
                 $data['status'],
-                $data['nivelDeAcesso'],
+                $data['nivelDeAcesso']
             );
 
             $this->Funcao_Model->criar($funcao);
