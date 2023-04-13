@@ -13,133 +13,167 @@
 
         public function index(){   
 
-            if(!isset($this->session->email)){
+           if(!isset($this->session->email)){
 
                 $this->load->view('login.php');
 
             }else{
                 $this->listar();
-            }            
+            }         
         }
 
         public function listar($indice = 1){
 
-            $indice--;
-            
-            $mostrar = 10;
-            $indiceInicial  = $indice * $mostrar;
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
 
-            $usuarios = $this->Usuario_Model->retrive($indiceInicial,$mostrar);
-            $botoes = empty($usuarios) ? '' : $this->botao('usuario/listar',$indice,$mostrar);
+                $indice--;
+                
+                $mostrar = 10;
+                $indiceInicial  = $indice * $mostrar;
 
-            $dados = array(
-                'titulo'=> self::$PAGINA_TITULO,
-                'tabela'=> $this->tabela(
-                    $usuarios,
-                    $indiceInicial
-                ),
-                'pagina'=> self::$PAGINA_INDEX,
-                'botoes'=> $botoes,
-            );
-            
-            $this->load->view('index',$dados);
+                $usuarios = $this->Usuario_Model->retrive($indiceInicial,$mostrar);
+                $botoes = empty($usuarios) ? '' : $this->botao('usuario/listar',$indice,$mostrar);
+
+                $dados = array(
+                    'titulo'=> self::$PAGINA_TITULO,
+                    'tabela'=> $this->tabela(
+                        $usuarios,
+                        $indiceInicial
+                    ),
+                    'pagina'=> self::$PAGINA_INDEX,
+                    'botoes'=> $botoes,
+                );
+                
+                $this->load->view('index',$dados);
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
-       public function novo(){
+        public function novo(){
 
-          $dados = array(
-                'titulo' => self::$PAGINA_TITULO,
-                'pagina' => self::$PAGINA_FORM_CREATE,
-                'select_hierarquia' => $this->selectHierarquia(),
-                'select_funcao' => $this->selectFuncao(),
-            );
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
+                $dados = array(
+                        'titulo' => self::$PAGINA_TITULO,
+                        'pagina' => self::$PAGINA_FORM_CREATE,
+                        'select_hierarquia' => $this->selectHierarquia(),
+                        'select_funcao' => $this->selectFuncao(),
+                );
 
-            $this->load->view('index', $dados);
+                $this->load->view('index', $dados);
+
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function criar(){
 
-            $data = $this->input->post();
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
+                $data = $this->input->post();
 
-            $timestamp = now('America/Sao_Paulo');
-            $datestring = '%Y-%m-%d';
-            $dataHoraAgora = mdate($datestring,$timestamp);
+                $timestamp = now('America/Sao_Paulo');
+                $datestring = '%Y-%m-%d';
+                $dataHoraAgora = mdate($datestring,$timestamp);
 
-            $usuario = 
-            $this->Usuario_Model->usuario(
-                null,
-                ucwords(strtolower($data['nome'])),
-                $data['status'],
-                $dataHoraAgora,
-                $dataHoraAgora,
-                $data['hierarquiaId'],
-                $data['email'],
-                md5($data['senha']),
-                $data['funcaoId']
-            );
+                $usuario = 
+                $this->Usuario_Model->usuario(
+                    null,
+                    ucwords(strtolower($data['nome'])),
+                    $data['status'],
+                    $dataHoraAgora,
+                    $dataHoraAgora,
+                    $data['hierarquiaId'],
+                    $data['email'],
+                    md5($data['senha']),
+                    $data['funcaoId']
+                );
 
-            $this->Usuario_Model->criar($usuario);
+                $this->Usuario_Model->criar($usuario);
 
-            redirect('usuario');       
+                redirect('usuario');      
+            }else{
+                header("Location:" . base_url());
+            } 
         }
         
         public function alterar($id){                
             
-            $tabela = $this->Usuario_Model->retriveId($id);
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
+                    
+                $tabela = $this->Usuario_Model->retriveId($id);
 
-            $dados = array(
-                'titulo'=> self::$PAGINA_TITULO,
-                'pagina'=> self::$PAGINA_FORM_UPDATE,
-                'tabela'=> $tabela,
-                'select_hierarquia' => $this->selectHierarquia(),
-                'selected_hierarquia' => $tabela[0]['hierarquiaId'],
-                'select_funcao' => $this->selectFuncao(),
-                'selected_funcao' => $tabela[0]['funcaoId'],
-            );
+                $dados = array(
+                    'titulo'=> self::$PAGINA_TITULO,
+                    'pagina'=> self::$PAGINA_FORM_UPDATE,
+                    'tabela'=> $tabela,
+                    'select_hierarquia' => $this->selectHierarquia(),
+                    'selected_hierarquia' => $tabela[0]['hierarquiaId'],
+                    'select_funcao' => $this->selectFuncao(),
+                    'selected_funcao' => $tabela[0]['funcaoId'],
+                );
 
-            $this->load->view('index',$dados);
+                $this->load->view('index',$dados);
+            }else{
+                header("Location:" . base_url());
+            } 
         }
 
         public function atualizar(){
 
-            $data = $this->input->post();
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
 
-            $dataDeCriacao = new DateTime($data['dataDeCriacao']);
+                $data = $this->input->post();
 
-            $timestamp = now('America/Sao_Paulo');
-            $datestring = '%Y-%m-%d';
-            $dataHoraAgora = mdate($datestring,$timestamp);
-            
-            $usuario = 
-            $this->Usuario_Model->usuario(
-                $data['id'],
-                ucwords(strtolower($data['nome'])),
-                $data['status'],
-                $dataDeCriacao->format('Y-m-d'),
-                $dataHoraAgora,
-                $data['hierarquiaId'],
-                $data['email'],
-                md5($data['senha']),
-                $data['funcaoId']
-            );
+                $dataDeCriacao = new DateTime($data['dataDeCriacao']);
 
-            $this->Usuario_Model->update($usuario);
+                $timestamp = now('America/Sao_Paulo');
+                $datestring = '%Y-%m-%d';
+                $dataHoraAgora = mdate($datestring,$timestamp);
+                
+                $usuario = 
+                $this->Usuario_Model->usuario(
+                    $data['id'],
+                    ucwords(strtolower($data['nome'])),
+                    $data['status'],
+                    $dataDeCriacao->format('Y-m-d'),
+                    $dataHoraAgora,
+                    $data['hierarquiaId'],
+                    $data['email'],
+                    md5($data['senha']),
+                    $data['funcaoId']
+                );
 
-            redirect('usuario');
+                $this->Usuario_Model->update($usuario);
+
+                redirect('usuario');
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function deletar($id){            
 
-            $this->Usuario_Model->delete($id);
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
 
-            redirect('usuario');
+                $this->Usuario_Model->delete($id);
+
+                redirect('usuario');
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function recuperar($id){            
 
-            $this->Usuario_Model->recuperar($id);
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
 
-            redirect('usuario');
+                $this->Usuario_Model->recuperar($id);
+
+                redirect('usuario');
+            }else{
+                header("Location:" . base_url());
+            }
         }
         
         public function selectHierarquia(){

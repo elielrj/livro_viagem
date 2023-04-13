@@ -18,7 +18,14 @@
         }
 
         public function index(){   
-            $this->listarPorUsuarioId();
+
+            if(!isset($this->session->email)){
+
+                $this->load->view('login.php');
+
+            }else{
+                $this->cidadesNacionaisMaisVisitadas();
+            }
         }
         
         public function listar($indice = 1){
@@ -52,7 +59,7 @@
 
         public function listarPorUsuarioId($indice = 1){
 
-            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isWriter()){
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isWriter() || NivelDeAcesso::isDispacher()){
                 $indice--;
                 
                 $usuarioId = $this->session->id;
@@ -82,19 +89,25 @@
 
         public function novo(){
 
-            $usuario = $this->Usuario_Model->buscarUsuario();
+            if(!NivelDeAcesso::isReader()){
 
-            $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
+                $usuario = $this->Usuario_Model->buscarUsuario();
 
-            $dados = array(
-                'titulo' => self::$PAGINA_TITULO,
-                'pagina' => self::$PAGINA_FORM_NOVO,
-                'usuario' => $usuario,
-                'select_endereco' => $selectEndereco,
-                'metodo' => 'viagem/criar'
-            );
+                $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
 
-            $this->load->view('index', $dados);
+                $dados = array(
+                    'titulo' => self::$PAGINA_TITULO,
+                    'pagina' => self::$PAGINA_FORM_NOVO,
+                    'usuario' => $usuario,
+                    'select_endereco' => $selectEndereco,
+                    'metodo' => 'viagem/criar'
+                );
+
+                $this->load->view('index', $dados); 
+                
+            }else{
+                header("Location:" . base_url());
+            }
         }
         
         public function informar(){

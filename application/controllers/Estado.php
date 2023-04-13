@@ -12,7 +12,13 @@
         }
 
         public function index(){   
-            $this->listar();
+           if(!isset($this->session->email)){
+
+                $this->load->view('login.php');
+
+            }else{
+                $this->listar();
+            } 
         }
 
         public function listar($indice = 1){
