@@ -385,7 +385,7 @@
         public function cidadesNacionaisMaisVisitadas(){
 
             $listaDeCidades =  $this->Viagem_Model->cidadesNacionaisMaisVisitadas();
-
+        
             $tabela = $this->tabelaDeCidadesMaisVisitadas($listaDeCidades);
 
             $dados = array(
@@ -394,7 +394,7 @@
                 'tabela' => $tabela,
             );
 
-            $this->load->view('index',$dados);
+            $this->load->view('index',$dados);            
         }
 
         public function tabelaDeCidadesMaisVisitadas($listaDeCidades){

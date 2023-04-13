@@ -142,6 +142,7 @@
 
         public function cidadesNacionaisMaisVisitadas(){
             
+           
             $query = $this->db->query(
                 "
                     SELECT c.nome, c.estadoId, COUNT(*) FROM viagem as v
@@ -169,9 +170,7 @@
                 );
 
                 array_push($dados,$cidade);
-            }
-
-            //var_dump($dados);
+            }                
             return $dados;
         }
 
