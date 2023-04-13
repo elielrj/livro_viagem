@@ -7,18 +7,18 @@ use livro_viagem;
 
 
 
-INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (DEFAULT,'Ler','Ler',true);
-INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (DEFAULT,'Escrever','Escrever',true);
-INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (DEFAULT,'Despachar','Despachar',true);
-INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (DEFAULT,'Administrar','Administrar',true);
-INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (DEFAULT,'Root','Root',true);
+INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (1,'Ler','Ler',true);
+INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (2,'Escrever','Escrever',true);
+INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (3,'Despachar','Despachar',true);
+INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (4,'Administrar','Administrar',true);
+INSERT INTO `funcao`(`id`, `nome`, `nivelDeAcesso`, `status`) VALUES (5,'Root','Root',true);
 
 INSERT INTO `usuario`(
 `id`, `nome`, `status`, `dataDeCriacao`, `ultimoAcesso`, `hierarquiaId`, `email`, `senha`, funcaoId
 ) 
 VALUES 
-(DEFAULT,'Eliel',true,now(),now(),'15','ler@gmail.com',md5(9524), 2),
-(DEFAULT,'Eliel',true,now(),now(),'15','esc@gmail.com',md5(9524), 3),
-(DEFAULT,'Eliel',true,now(),now(),'15','adm@gmail.com',md5(9524), 5),
-(DEFAULT,'Eliel',true,now(),now(),'15','roo@gmail.com',md5(9524), 1),
-(DEFAULT,'Eliel',true,now(),now(),'15','des@gmail.com',md5(9524), 4);
+(DEFAULT,'Leitor',true,now(),now(),'15','leitor@leitor',md5(123), 1),
+(DEFAULT,'Escritor',true,now(),now(),'15','escrito@escritor',md5(123), 2),
+(DEFAULT,'Despachante',true,now(),now(),'15','despachante@despachante',md5(123), 3),
+(DEFAULT,'Administrador',true,now(),now(),'15','admin@admin',md5(123), 4),
+(DEFAULT,'Super Usuário',true,now(),now(),'15','root@root',md5(123), 5);
