@@ -30,9 +30,8 @@
         
         public function listar($indice = 1){
 
-            if(NivelDeAcesso::isRoot()){
-                $indice--;
-                
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isAdmin()){
+                $indice--;                
 
                 $mostrar = 10;
                 $indiceInicial  = $indice * $mostrar;
@@ -89,7 +88,7 @@
 
         public function novo(){
 
-            if(!NivelDeAcesso::isReader()){
+             if(NivelDeAcesso::isRoot() || NivelDeAcesso::isDispacher()){
 
                 $usuario = $this->Usuario_Model->buscarUsuario();
 
@@ -112,204 +111,261 @@
         
         public function informar(){
 
-            $usuario = $this->Usuario_Model->buscarUsuario();
+            if(!NivelDeAcesso::isReader()){
 
-            $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
+                $usuario = $this->Usuario_Model->buscarUsuario();
 
-            $dados = array(
-                'titulo' => self::$PAGINA_TITULO,
-                'pagina' => self::$PAGINA_FORM_INFORMAR,
-                'usuario' => $usuario,
-                'select_endereco' => $selectEndereco,
-                'metodo' => 'viagem/criarInformacao',
-            );
+                $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
 
-            $this->load->view('index', $dados);
+                $dados = array(
+                    'titulo' => self::$PAGINA_TITULO,
+                    'pagina' => self::$PAGINA_FORM_INFORMAR,
+                    'usuario' => $usuario,
+                    'select_endereco' => $selectEndereco,
+                    'metodo' => 'viagem/criarInformacao',
+                );
+
+                $this->load->view('index', $dados);
+            
+            }else{
+                header("Location:" . base_url());
+            }
         }
-        /**
-         * recebe como parâmetro o nome do menu criado
-         * por meio do objeto Menu, na biblioteca do CI,
-         * para designar a rota correta
-         */
+        
         public function criar(){
 
-            $data = $this->input->post();
+            if(NivelDeAcesso::isRoot() || NivelDeAcesso::isWriter() || NivelDeAcesso::isDispacher()){
 
-            $dataIda = new DateTime($data['dataIda']);
-            $dataVolta = new DateTime($data['dataVolta']);
-            
-            $viagem = 
-            $this->Viagem_Model->viagem(
-                null,
-                null,
-                $data['territorio'],
-                $data['motivo'],
-                $data['usuarioId'],
-                $data['enderecoId'],
-                $dataIda->format('Y-m-d'),
-                $dataVolta->format('Y-m-d'),
-                $data['observacao'],
-                $analisada = false,
-                $status = true
-            );
+                $data = $this->input->post();
 
-            $this->Viagem_Model->criar($viagem);
+                $dataIda = new DateTime($data['dataIda']);
+                $dataVolta = new DateTime($data['dataVolta']);
+                
+                $viagem = 
+                $this->Viagem_Model->viagem(
+                    null,
+                    null,
+                    $data['territorio'],
+                    $data['motivo'],
+                    $data['usuarioId'],
+                    $data['enderecoId'],
+                    $dataIda->format('Y-m-d'),
+                    $dataVolta->format('Y-m-d'),
+                    $data['observacao'],
+                    $analisada = false,
+                    $status = true
+                );
+
+                $this->Viagem_Model->criar($viagem);
                 redirect('viagem');
             
-                  
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function criarInformacao(){
 
-            $data = $this->input->post();
+            if(!NivelDeAcesso::isReader()){
 
-            $dataIda = new DateTime($data['dataIda']);
-            $dataVolta = new DateTime($data['dataVolta']);
+                $data = $this->input->post();
+
+                $dataIda = new DateTime($data['dataIda']);
+                $dataVolta = new DateTime($data['dataVolta']);
+                
+                $viagem = 
+                $this->Viagem_Model->viagem(
+                    null,
+                    null,
+                    $data['territorio'],
+                    $data['motivo'],
+                    $data['usuarioId'],
+                    $data['enderecoId'],
+                    $dataIda->format('Y-m-d'),
+                    $dataVolta->format('Y-m-d'),
+                    $data['observacao'],
+                    $analisada = false,
+                    $status = true
+                );
+
+                $this->Viagem_Model->criar($viagem);
+
             
-            $viagem = 
-            $this->Viagem_Model->viagem(
-                null,
-                null,
-                $data['territorio'],
-                $data['motivo'],
-                $data['usuarioId'],
-                $data['enderecoId'],
-                $dataIda->format('Y-m-d'),
-                $dataVolta->format('Y-m-d'),
-                $data['observacao'],
-                $analisada = false,
-                $status = true
-            );
-
-            $this->Viagem_Model->criar($viagem);
-
+                redirect('viagem/listarPorUsuarioId'); 
            
-            redirect('viagem/listarPorUsuarioId'); 
-           
-            
+            }else{
+                header("Location:" . base_url());
+            }
                   
         }
 
         public function alterar($id){                
             
-            $tabela = $this->Viagem_Model->retriveId($id);
-            
-            $usuario = $this->Usuario_Model->buscarUsuario();
+            if(!NivelDeAcesso::isReader()){
 
-            $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
+                $tabela = $this->Viagem_Model->retriveId($id);
+                
+                $usuario = $this->Usuario_Model->buscarUsuario();
 
-            $dados = array(
-                'titulo' => self::$PAGINA_TITULO,
-                'pagina' => self::$PAGINA_FORM_UPDATE,
-                'tabela' => $tabela,
-                'usuario' => $usuario,
-                'select_endereco' => $selectEndereco,
-            );
+                $selectEndereco = $this->Endereco_Model->selectEndereco($usuario);
 
-            $this->load->view('index',$dados);
+                $dados = array(
+                    'titulo' => self::$PAGINA_TITULO,
+                    'pagina' => self::$PAGINA_FORM_UPDATE,
+                    'tabela' => $tabela,
+                    'usuario' => $usuario,
+                    'select_endereco' => $selectEndereco,
+                );
+
+                $this->load->view('index',$dados);
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function atualizar(){
 
-            $data = $this->input->post();
-            
-            $viagem = 
-            $this->Viagem_Model->viagem(
-                $data['id'],
-                $data['aprovada'],
-                $data['territorio'],
-                $data['motivo'],
-                $data['usuarioId'],
-                $data['enderecoId'],
-                $data['dataIda'],
-                $data['dataVolta'],
-                $data['observacao'],
-                $data['analisada'],
-                $data['status']
-            );
+            if(!NivelDeAcesso::isReader()){
+                    
+                $data = $this->input->post();
+                
+                $viagem = 
+                $this->Viagem_Model->viagem(
+                    $data['id'],
+                    $data['aprovada'],
+                    $data['territorio'],
+                    $data['motivo'],
+                    $data['usuarioId'],
+                    $data['enderecoId'],
+                    $data['dataIda'],
+                    $data['dataVolta'],
+                    $data['observacao'],
+                    $data['analisada'],
+                    $data['status']
+                );
 
-            $this->Viagem_Model->update($viagem);
+                $this->Viagem_Model->update($viagem);
 
-            redirect('viagem');
+                redirect('viagem');
+
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function deletar($id){            
 
-            $this->Viagem_Model->delete($id);
+            if(!NivelDeAcesso::isReader()){
 
-            redirect('viagem');
+                $this->Viagem_Model->delete($id);
+                
+                redirect('viagem');
+            }else{
+                header("Location:" . base_url());
+            }
         }
         
         public function recuperar($id){            
 
-            $this->Viagem_Model->recuperar($id);
+            if(!NivelDeAcesso::isReader()){
 
-            redirect('viagem');
+                $this->Viagem_Model->recuperar($id);
+
+                redirect('viagem');
+            }else{
+                header("Location:" . base_url());
+
+            }
         }
 
-        public function aprovar($id){                
-            $this->aprovarAnalisarViagem($id,true);
+        public function aprovar($id){       
+            
+            if(!NivelDeAcesso::isDispatcher()){
+                $this->aprovarAnalisarViagem($id,true);
+            }else{
+                header("Location:" . base_url());
+            }
+            
         }
 
         public function naoAprovar($id){              
-            $this->aprovarAnalisarViagem($id,false);
+            if(!NivelDeAcesso::isDispatcher()){
+                $this->aprovarAnalisarViagem($id,false);
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         private function aprovarAnalisarViagem($id,$estaAprovada){
-            $viagem = $this->Viagem_Model->retriveId($id);
+            
+            if(!NivelDeAcesso::isDispatcher()){
+                $viagem = $this->Viagem_Model->retriveId($id);
 
-            $viagem[0]['aprovada'] = $estaAprovada;
-            $viagem[0]['analisada'] = true;
+                $viagem[0]['aprovada'] = $estaAprovada;
+                $viagem[0]['analisada'] = true;
 
-            $this->Viagem_Model->update($viagem[0]);
+                $this->Viagem_Model->update($viagem[0]);
 
-            redirect('viagem/viagensNaoAnalisada');
+                redirect('viagem/viagensNaoAnalisada');
+            }else{
+                header("Location:" . base_url());
+            }
+            
         }
 
         public function  viagensNaoAnalisada($indice = 1){
 
-            $indice--;
-            
-            $mostrar = 10;
-            $indiceInicial  = $indice * $mostrar;
+            if(!NivelDeAcesso::isDispatcher()){
+                $indice--;
+                
+                $mostrar = 10;
+                $indiceInicial  = $indice * $mostrar;
 
-            $viagens = $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar);
-            $botoes = empty($viagens) ? '' : $this->botao('viagem/viagensNaoAnalisada',$indice,$mostrar);
+                $viagens = $this->Viagem_Model->retriveViagensNaoAnalisada($indiceInicial,$mostrar);
+                $botoes = empty($viagens) ? '' : $this->botao('viagem/viagensNaoAnalisada',$indice,$mostrar);
 
-            $dados = array(
-                'titulo'=> self::$PAGINA_TITULO_NAO_ANALISADA,
-                'tabela'=> $this->tabelaAprovar(
-                    $viagens,
-                    $indiceInicial
-                ),
-                'pagina'=> self::$PAGINA_APROVAR,
-                'botoes'=> $botoes,
-            );
-            
-            $this->load->view('index',$dados);
+                $dados = array(
+                    'titulo'=> self::$PAGINA_TITULO_NAO_ANALISADA,
+                    'tabela'=> $this->tabelaAprovar(
+                        $viagens,
+                        $indiceInicial
+                    ),
+                    'pagina'=> self::$PAGINA_APROVAR,
+                    'botoes'=> $botoes,
+                );
+                
+                $this->load->view('index',$dados);
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function  viagensAnalisada($indice = 1){
 
-            $indice--;
-            
-            $mostrar = 10;
-            $indiceInicial  = $indice * $mostrar;
+            if(!NivelDeAcesso::isDispatcher()){
+                    
+                $indice--;
+                
+                $mostrar = 10;
+                $indiceInicial  = $indice * $mostrar;
 
-            $viagens = $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar);
-            $botoes = empty($viagens) ? '' : $this->botao('viagem/viagensAnalisada',$indice,$mostrar);
+                $viagens = $this->Viagem_Model->retriveViagensAnalisada($indiceInicial,$mostrar);
+                $botoes = empty($viagens) ? '' : $this->botao('viagem/viagensAnalisada',$indice,$mostrar);
 
-            $dados = array(
-                'titulo'=> self::$PAGINA_TITULO_VIGEM_ANALISADA,
-                'tabela'=> $this->tabelaAnalisadas(
-                    $viagens,
-                    $indiceInicial
-                ),
-                'pagina'=> self::$PAGINA_APROVAR,
-                'botoes'=> $botoes,
-            );
-            
-            $this->load->view('index',$dados);
+                $dados = array(
+                    'titulo'=> self::$PAGINA_TITULO_VIGEM_ANALISADA,
+                    'tabela'=> $this->tabelaAnalisadas(
+                        $viagens,
+                        $indiceInicial
+                    ),
+                    'pagina'=> self::$PAGINA_APROVAR,
+                    'botoes'=> $botoes,
+                );
+                
+                $this->load->view('index',$dados);
+            }else{
+                header("Location:" . base_url());
+            }
         }
 
         public function tabela($listaDeViagens, $ordem){
