@@ -271,7 +271,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href=<?php echo base_url('index.php/usuario/alterar/' . $this->session->id); ?>>
+                                <a class="dropdown-item" href="<?php echo base_url('index.php/usuario/alterar/' . $this->session->id); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Minhas Configurações
                                 </a>
@@ -293,9 +293,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid table-responsive">
 
-                    <?php                     
-                        require $pagina;
-                    ?>
+                   <?php require $pagina; ?>
 
                 </div>
                 <!-- /.container-fluid -->
