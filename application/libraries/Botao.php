@@ -10,10 +10,6 @@
         private $quantidadesDeRegistrosParaMostrar;
         private $quantidadeDeRegistrosNoDB;
 
-        public function __contruct(){
-            parent::__contruct();
-        }
-
         private function contarNumeroDePaginas(
             $apartirDoIndiceDoVetor,
             $quantidadeDeRegistrosNoDB,
@@ -109,6 +105,3 @@
 
 
     }
-
-
-?>
